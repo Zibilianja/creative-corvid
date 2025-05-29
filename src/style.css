@@ -100,5 +100,6 @@ button:focus-visible {
   }
   .logo {
   background: url(/vite.svg) no-repeat;
+  height: 300px;
   
   }

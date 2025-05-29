@@ -1,0 +1,71 @@
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import {
+  faFacebook,
+  faTwitter,
+  faYoutube,
+  faInstagram,
+} from '@fortawesome/free-brands-svg-icons';
+import {
+  faBars,
+  faTimes,
+  faCircleCheck,
+  faTrashAlt,
+  faPenToSquare,
+  faBugs,
+  faExclamationCircle,
+  faPlus,
+  faUpload,
+  faDownload,
+  faFilter,
+  faCircleXmark,
+  faSort,
+  faCaretUp,
+  faCaretDown,
+  faCaretRight,
+  faArrowLeft,
+  faArrowRight,
+  faFloppyDisk,
+  faFileExport,
+  faSpinner,
+  faWallet,
+  faXmarksLines,
+  faFireFlameCurved,
+  faTree,
+} from '@fortawesome/free-solid-svg-icons';
+import { faShop } from '@fortawesome/free-solid-svg-icons/faShop';
+
+library.add(
+  faBars,
+  faFacebook,
+  faTwitter,
+  faYoutube,
+  faInstagram,
+  faTimes,
+  faCircleCheck,
+  faTrashAlt,
+  faPenToSquare,
+  faBugs,
+  faExclamationCircle,
+  faPlus,
+  faUpload,
+  faDownload,
+  faFilter,
+  faCircleXmark,
+  faSort,
+  faCaretUp,
+  faCaretDown,
+  faCaretRight,
+  faArrowLeft,
+  faArrowRight,
+  faFloppyDisk,
+  faFileExport,
+  faSpinner,
+  faWallet,
+  faXmarksLines,
+  faFireFlameCurved,
+  faTree,
+  faShop
+);
+
+export default FontAwesomeIcon;

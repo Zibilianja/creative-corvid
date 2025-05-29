@@ -6,14 +6,14 @@ native HTML button element.
 
 /* Template ============================================================== */
 <template>
-  <button class="dps__button">
+  <button class="CC__button">
     <slot />
   </button>
 </template>
 
 /* Styles ================================================================ */
 <style lang="postcss">
-.dps__button {
+.CC__button {
   display: inline-block;
   padding: 0.5rem 1rem;
   border: 0;
@@ -38,7 +38,7 @@ native HTML button element.
     border: 1px solid #bababa;
   }
 
-  &.dps__blue:not([disabled]) {
+  &.CC__blue:not([disabled]) {
     background-color: #005b94;
     color: #fff;
     &:hover {
@@ -46,7 +46,7 @@ native HTML button element.
     }
   }
 
-  &.dps__green:not([disabled]) {
+  &.CC__green:not([disabled]) {
     background-color: #037109;
     color: #fff;
     &:hover {
@@ -54,7 +54,7 @@ native HTML button element.
     }
   }
 
-  &.dps__red:not([disabled]) {
+  &.CC__red:not([disabled]) {
     background-color: #a41d33;
     color: #fff;
     &:hover {
@@ -62,7 +62,7 @@ native HTML button element.
     }
   }
 
-  &.dps__gray:not([disabled]) {
+  &.CC__gray:not([disabled]) {
     background-color: #4c4c4c;
     color: #fff;
     &:hover {
@@ -70,7 +70,7 @@ native HTML button element.
     }
   }
 
-  &.dps__navy:not([disabled]) {
+  &.CC__navy:not([disabled]) {
     background-color: #024d7c;
     color: #fff;
     &:hover {
@@ -78,7 +78,7 @@ native HTML button element.
     }
   }
 
-  &.dps__purple:not([disabled]) {
+  &.CC__purple:not([disabled]) {
     background-color: #51286c;
     color: #fff;
     &:hover {
@@ -86,7 +86,7 @@ native HTML button element.
     }
   }
 
-  &.dps__pink:not([disabled]) {
+  &.CC__pink:not([disabled]) {
     background-color: #a72067;
     color: #fff;
     &:hover {
@@ -94,7 +94,7 @@ native HTML button element.
     }
   }
 
-  &.dps__orange:not([disabled]) {
+  &.CC__orange:not([disabled]) {
     background-color: #c9362b;
     color: #fff;
     &:hover {
@@ -102,7 +102,7 @@ native HTML button element.
     }
   }
 
-  &.dps__white:not([disabled]) {
+  &.CC__white:not([disabled]) {
     background-color: #fff;
     color: #4c4c4c;
     border: 1px solid #4c4c4c;

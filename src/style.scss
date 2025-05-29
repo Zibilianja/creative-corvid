@@ -99,6 +99,9 @@ button:focus-visible {
   background-color: tomato;
   }
   .logo {
-  background: url(/vite.svg) no-repeat;
+  background: url(/assets/BlackCrowLogo.svg) no-repeat center;
+  background-size: contain;
   height: 300px;
+  width: 300px;
+  background-color: white;
   }

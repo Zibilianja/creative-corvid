@@ -1,31 +1,17 @@
-/* ==========================================================================
-Button.vue This is the standard button component. It is a wrapper around the
-native HTML button element.
-========================================================================== */
-<script setup lang="ts"></script>
-
-/* Template ============================================================== */
+<script setup lang="ts">
+defineEmits(['close']);
+</script>
+/*==========================================================================
+Template
+==========================================================================
 <template>
-  <button class="CC__button">
+  <button class="CC__close-button" @click="$emit('close')">
     <slot />
   </button>
 </template>
-
-/* Styles ================================================================ */
 <style lang="postcss">
-.CC__button {
-  display: inline-block;
-  padding: 1rem;
-  border: 0;
-  border-radius: 0.5rem;
-  font-size: 1rem;
-  font-weight: 500;
-  text-align: center;
-  text-decoration: none;
-  vertical-align: middle;
-  user-select: none;
-  transition: all 0.2s ease-in-out;
-
+.CC__close-button {
+  cursor: pointer;
   &:hover:not([disabled]) {
     text-decoration: underline;
   }
@@ -86,7 +72,7 @@ native HTML button element.
     background-color: #432d50;
     color: #fff;
     &:hover {
-      background-color: #766086;
+      background-color: #291338;
     }
   }
 

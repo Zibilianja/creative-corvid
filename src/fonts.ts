@@ -32,6 +32,12 @@ import {
   faXmarksLines,
   faFireFlameCurved,
   faTree,
+  faSkullCrossbones,
+  faCircleInfo,
+  faRadiation,
+  faTriangleExclamation,
+  faBullhorn,
+  faStickyNote,
 } from '@fortawesome/free-solid-svg-icons';
 import { faShop } from '@fortawesome/free-solid-svg-icons/faShop';
 
@@ -65,7 +71,13 @@ library.add(
   faXmarksLines,
   faFireFlameCurved,
   faTree,
-  faShop
+  faShop,
+  faSkullCrossbones,
+  faCircleInfo,
+  faRadiation,
+  faTriangleExclamation,
+  faBullhorn,
+  faStickyNote
 );
 
 export default FontAwesomeIcon;

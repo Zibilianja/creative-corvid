@@ -25,6 +25,7 @@ native HTML button element.
   vertical-align: middle;
   user-select: none;
   transition: all 0.2s ease-in-out;
+  max-height: 3.5rem;
 
   &:hover:not([disabled]) {
     text-decoration: underline;

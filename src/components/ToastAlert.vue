@@ -6,6 +6,8 @@ import IconError from './Icons/IconError.vue';
 import IconWarn from './Icons/IconWarn.vue';
 import IconAnnouncement from './Icons/IconAnnouncement.vue';
 
+const emit = defineEmits(['update:modelValue']);
+
 const props = defineProps({
   state: {
     type: String,
@@ -55,6 +57,7 @@ const cancelToast = () => {
   if (timeoutId.value !== null) {
     clearTimeout(timeoutId.value); // Cancel the timeout
     timeoutId.value = null; // Reset the timeout ID
+    emit('update:modelValue', false); // Emit the update to the parent
   }
 };
 </script>

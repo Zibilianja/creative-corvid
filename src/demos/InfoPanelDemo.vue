@@ -33,7 +33,11 @@ const resetPanels = () => {
 };
 
 const resetButtonShow = computed((): boolean => {
-  return Object.values(panelOpen.value).some((open) => !open);
+  if (Object.values(panelOpen.value).every((open) => open)) {
+    return false;
+  } else {
+    return Object.values(panelOpen.value).some((open) => !open);
+  }
 });
 </script>
 
@@ -47,10 +51,10 @@ const resetButtonShow = computed((): boolean => {
       </div>
 
       <Button
-        :class="resetButtonShow ? 'shown' : 'hidden'"
+        :class="!resetButtonShow ? 'hidden' : 'shown'"
         class="CC__gray reset-button"
         @click="resetPanels"
-        >Reset All</Button
+        >Reset All Panels</Button
       >
     </div>
 
@@ -91,7 +95,7 @@ const resetButtonShow = computed((): boolean => {
         <template #message> This is an error message. </template>
       </InfoPanel>
       <Button class="CC__red" @click="errorClosable = !errorClosable"
-        >Toggle Error Closable: {{ errorClosable }}</Button
+        >Toggle 'Error' Closable: {{ errorClosable }}</Button
       >
     </div>
     <div class="info-panel" :class="panelOpen.warning ? 'shown' : 'hidden'">
@@ -101,7 +105,7 @@ const resetButtonShow = computed((): boolean => {
         @close="panelOpen.warning = false"
       >
         <template #heading> Warning </template>
-        <template #message> Lorem ipsum dolor sit amet. </template>
+        <template #message> Be warned by this message. </template>
       </InfoPanel>
       <Button class="CC__orange" @click="warningClosable = !warningClosable"
         >Toggle Warning Closable: {{ warningClosable }}</Button
@@ -136,7 +140,12 @@ const resetButtonShow = computed((): boolean => {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.37);
   margin: 1rem 0;
   .reset-button {
-    margin-top: 0.5rem;
+    margin-top: 1rem;
+    margin-bottom: -1rem;
+  }
+  .info-panel {
+    margin-bottom: -1rem;
+    padding: 0;
   }
 }
 

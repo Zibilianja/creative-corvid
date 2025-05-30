@@ -1,12 +1,9 @@
-<script setup lang="ts">
-defineEmits(['close']);
-</script>
 /*==========================================================================
 Template
 ==========================================================================
 <template>
-  <button class="CC__close-button" @click="$emit('close')">
-    <slot />
+  <button class="CC__close-button" aria-label="close-button">
+    <font-awesome-icon icon="times" class="dps__close-icon" />
   </button>
 </template>
 <style lang="postcss">

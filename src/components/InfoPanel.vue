@@ -36,7 +36,7 @@ const slots: SetupContext['slots'] = useSlots();
 
 // Method to handle the close button click
 const handleClose = () => {
-  emit('close'); // Emit the close event for the parent to handle the 'open' prop
+  emit('close');
 };
 </script>
 
@@ -59,13 +59,7 @@ const handleClose = () => {
         <slot name="message" />
       </div>
     </div>
-    <CloseButton v-if="closable" class="close-button">
-      <font-awesome-icon
-        icon="times"
-        class="dps__close-icon"
-        @click="handleClose"
-      />
-    </CloseButton>
+    <CloseButton v-if="closable" class="close-button" @click="handleClose" />
   </div>
 </template>
 
@@ -89,8 +83,8 @@ const handleClose = () => {
     &:not(.closable) {
       display: grid;
       grid-template-columns: auto 1fr;
-      padding-right: 5rem;
-      padding-bottom: 1.35rem;
+      padding-right: 2.9rem;
+      padding-bottom: 1rem;
     }
 
     padding: 1rem;

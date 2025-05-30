@@ -1,16 +1,23 @@
+/* App.vue - Main app file for the Creative Corvid Library demo
+==========================================================================
 <script lang="ts" setup>
 import ButtonDemo from './demos/ButtonDemo.vue';
 import Logo from './components/Logo.vue';
 import InfoPanelDemo from './demos/InfoPanelDemo.vue';
+import InputTextDemo from './demos/InputTextDemo.vue';
 </script>
+/* Template ============================================================== */
 <template>
   <div class="app-container">
     <Logo />
-    <h1>Creative Corvid Custom Components</h1>
+    <h1>Creative Corvid Library:</h1>
+    <h2>Components Demo</h2>
+    <InputTextDemo />
     <ButtonDemo />
     <InfoPanelDemo />
   </div>
 </template>
+/* Styles ================================================================ */
 <style lang="postcss">
 .app-container {
   max-width: 85%;

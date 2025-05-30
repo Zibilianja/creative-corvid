@@ -1,53 +1,54 @@
 <script lang="ts" setup>
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 import Button from '@/components/Button.vue';
 import ToastAlert from '@/components/ToastAlert.vue';
 
 const toastValue = ref('default');
-const valueToast = computed(() => {
-  if (toastValue.value != 'default') {
-    return true;
-  } else return false;
-});
+const valueToast = ref(false);
 
 const displayToast = (message: string): void => {
+  valueToast.value = true;
   toastValue.value = message;
-  setTimeout(() => {
-    toastValue.value = 'default';
-  }, 3000);
 };
 </script>
+/* Template ============================================================== */
 <template>
-  <header>
-    <h2>Button Demo</h2>
-    <p>Click the buttons below to see a demo of Toast alerts.</p>
-  </header>
-  <div class="CC__button-demo">
-    <Button class="CC__blue-gray" @click="displayToast('announcement')"
-      >Announcement Button</Button
+  <div class="CC__button-demo-container">
+    <div>
+      <header>
+        <h2>Button Demo</h2>
+        <p>Click the buttons below to see a demo of Toast alerts.</p>
+      </header>
+    </div>
+    <div class="CC__button-demo">
+      <Button class="CC__blue-gray" @click="displayToast('announcement')"
+        >Announcement Button</Button
+      >
+      <Button class="CC__green" @click="displayToast('success')"
+        >Success Button</Button
+      >
+      <Button class="CC__red" @click="displayToast('error')"
+        >Error Button</Button
+      >
+      <Button class="CC__purple" @click="displayToast('info')"
+        >Info Button</Button
+      >
+      <Button disabled>Disabled Button</Button>
+      <Button class="CC__blue loading-button" disabled
+        >Loading...<font-awesome-icon id="spinner" :icon="['fas', 'spinner']"
+      /></Button>
+    </div>
+    <ToastAlert
+      v-model="valueToast"
+      :state="toastValue"
+      @update:modelValue="valueToast = $event"
     >
-    <Button class="CC__green" @click="displayToast('success')"
-      >Success Button</Button
-    >
-    <Button class="CC__red" @click="displayToast('error')">Error Button</Button>
-    <Button class="CC__purple" @click="displayToast('info')"
-      >Info Button</Button
-    >
-    <Button disabled>Disabled Button</Button>
-    <Button class="CC__blue loading-button" disabled
-      >Loading...<font-awesome-icon id="spinner" :icon="['fas', 'spinner']"
-    /></Button>
+      <template v-slot:title>Toast: {{ toastValue }}</template>
+      <template v-slot:message
+        >This is a toast {{ toastValue }} message.</template
+      >
+    </ToastAlert>
   </div>
-  <ToastAlert
-    v-model="valueToast"
-    :state="toastValue"
-    :class="valueToast ? 'shown' : 'hidden'"
-  >
-    <template v-slot:title>Toast: {{ toastValue }}</template>
-    <template v-slot:message
-      >This is a toast {{ toastValue }} message.</template
-    >
-  </ToastAlert>
 </template>
 <style lang="postcss">
 header {
@@ -55,12 +56,15 @@ header {
   margin-bottom: 1rem;
 }
 .CC__button-demo {
+  &-container {
+    padding: 1rem 0;
+    background-color: #f3f0f0;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.37);
+  }
   display: flex;
   justify-content: space-around;
   padding: 1rem;
-  background-color: #f3f0f0;
-  border-radius: 0.5rem;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.37);
 }
 .loading-button {
   #spinner {

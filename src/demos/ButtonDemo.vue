@@ -61,6 +61,7 @@ header {
     background-color: #f3f0f0;
     border-radius: 0.5rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.37);
+    margin-bottom: 1rem;
   }
   display: flex;
   justify-content: space-around;

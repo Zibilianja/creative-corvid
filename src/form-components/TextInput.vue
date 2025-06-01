@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import CloseButton from '@/components/CloseButton.vue';
-import { defineProps, defineEmits, type PropType } from 'vue';
+import { defineProps, defineEmits, computed, type PropType } from 'vue';
 import { vMaska } from 'maska/vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
@@ -66,14 +66,14 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue']);
 
-const handleInputChange = () => {
-  console.log('validate method here');
-};
-
 const clearInput = () => {
   model.value = '';
   emit('update:modelValue', '');
 };
+
+const leadingIcon = computed(() => {
+  return !props.leadingIcon.includes('') ? 'has-leading-icon' : '';
+});
 </script>
 
 <template>
@@ -83,26 +83,32 @@ const clearInput = () => {
       <span v-if="props.required" class="required">*</span>
     </label>
     <div class="CC__text-input-wrapper">
-      <font-awesome-icon class="leading-icon" :icon="props.leadingIcon" />
+      <div
+        class="CC__text-input-leading-icon-container"
+        v-if="props.leadingIcon.length > 0"
+      >
+        <font-awesome-icon class="leading-icon" :icon="props.leadingIcon" />
+      </div>
       <input
         v-model="model"
         :id="props.inputId"
         :maxlength="props.maxLength"
         v-maska="props.maska"
-        :class="['text-input', { invalid: props.error }]"
+        class="text-input"
+        :class="[leadingIcon, { invalid: props.error }]"
         :type="props.type"
-        @input="handleInputChange()"
         :placeholder="placeholder"
         :disabled="disabled"
       />
       <CloseButton
         v-if="props.clearable && model"
         class="clear-button"
+        :class="model ? 'button-present' : ''"
         @click="clearInput()"
       />
     </div>
-    <template v-if="props.errorMessages">
-      <div class="dps__input-message">{{ props.errorMessages }}</div>
+    <template v-if="props.errorMessages.length > 0">
+      <div class="CC__input-error-message">{{ props.errorMessages }}</div>
     </template>
   </div>
 </template>
@@ -110,49 +116,57 @@ const clearInput = () => {
 <style lang="postcss">
 .CC__text-input {
   &-container {
-    width: fit-content;
     margin-bottom: 1rem;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    width: auto;
     .CC__text-input-wrapper {
       display: flex;
       align-items: center;
       justify-content: space-evenly;
-      border: 1px solid #3b475e;
+      border: 1px solid #7b7c7e;
       background-color: #fff;
+      box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.264);
       border-radius: 0.75rem;
       line-height: 1.5rem;
-      width: fit-content;
-      padding: 0 1rem;
+      padding: 0 0.75rem;
       &:focus-within {
-        border-color: #5fcebe;
+        border-color: #42a798;
         .clear-button {
-          background-color: #5fcebd3b;
+          background-color: #4fbdad;
         }
       }
+
       .clear-button {
         width: 1.5rem;
         height: 1.5rem;
-        color: #3b475e;
+        color: #303e59;
         background-color: #f2f1f1;
         border: none;
         border-radius: 50%;
         padding: 0.24rem;
         cursor: pointer;
-        margin-left: 0.5rem;
-
+        &.button-present {
+          margin-left: -1.5rem;
+          transition:
+            background-color 0.5s ease,
+            color 0.5s ease;
+        }
         &:hover {
-          background-color: #f0f0f0;
+          background-color: #637cabac;
+          color: #fff;
         }
       }
     }
     .leading-icon {
       margin-right: 0.5rem;
     }
+
     label {
       font-size: 1.2rem;
-      margin-bottom: 0.5rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
       color: #333;
     }
     input {
@@ -161,10 +175,12 @@ const clearInput = () => {
       min-height: 2.5rem;
       min-width: 15rem;
       border: none;
-      border-left: 2px solid #40495b44;
       padding-left: 0.5rem;
       &:focus {
         outline: none;
+      }
+      &.has-leading-icon {
+        border-left: 2px solid #40495b7b;
       }
     }
   }

@@ -5,6 +5,7 @@ import ButtonDemo from './demos/ButtonDemo.vue';
 import Logo from './components/Logo.vue';
 import InfoPanelDemo from './demos/InfoPanelDemo.vue';
 import InputTextDemo from './demos/InputTextDemo.vue';
+import InputTextAreaInputDemo from './demos/TextAreaInputDemo.vue';
 </script>
 /* Template ============================================================== */
 <template>
@@ -12,8 +13,9 @@ import InputTextDemo from './demos/InputTextDemo.vue';
     <Logo />
     <h1>Creative Corvid Library:</h1>
     <h2>Components Demo</h2>
-    <InputTextDemo />
     <ButtonDemo />
+    <InputTextDemo />
+    <InputTextAreaInputDemo />
     <InfoPanelDemo />
   </div>
 </template>

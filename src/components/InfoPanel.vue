@@ -43,19 +43,19 @@ const handleClose = () => {
 /* Template ============================================================== */
 <template>
   <div
-    class="dps__info-panel-container"
+    class="CC__info-panel-container"
     :class="[type, closable ? 'closable' : '']"
   >
-    <div class="dps__info-panel-icon" :class="type">
+    <div class="CC__info-panel-icon" :class="type">
       <component :is="ICONS[type]" />
     </div>
 
     <div>
-      <div class="dps__info-panel-heading">
+      <div class="CC__info-panel-heading">
         <slot name="heading" />
       </div>
 
-      <div v-if="slots.message" class="dps__info-panel-message">
+      <div v-if="slots.message" class="CC__info-panel-message">
         <slot name="message" />
       </div>
     </div>
@@ -65,7 +65,7 @@ const handleClose = () => {
 
 /* Styles ================================================================ */
 <style lang="postcss">
-.dps__info-panel {
+.CC__info-panel {
   &-container {
     .close-button {
       width: 1.4rem;

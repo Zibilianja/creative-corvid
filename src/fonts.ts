@@ -38,6 +38,7 @@ import {
   faTriangleExclamation,
   faBullhorn,
   faStickyNote,
+  faMagnifyingGlass,
 } from '@fortawesome/free-solid-svg-icons';
 import { faShop } from '@fortawesome/free-solid-svg-icons/faShop';
 
@@ -77,7 +78,8 @@ library.add(
   faRadiation,
   faTriangleExclamation,
   faBullhorn,
-  faStickyNote
+  faStickyNote,
+  faMagnifyingGlass
 );
 
 export default FontAwesomeIcon;

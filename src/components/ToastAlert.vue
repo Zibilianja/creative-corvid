@@ -104,7 +104,7 @@ const cancelToast = () => {
     padding: 1rem;
     border-radius: 0.5rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    animation: dpsToastFadeInOut 3s ease-in-out;
+    animation: CCToastFadeInOut 3s ease-in-out;
     display: grid;
     grid-template-columns: 1.25rem 1fr;
     column-gap: 0.5rem;
@@ -177,7 +177,7 @@ const cancelToast = () => {
   }
 }
 
-@keyframes dpsToastFadeInOut {
+@keyframes CCToastFadeInOut {
   0% {
     opacity: 0;
     transform: translateY(20px);

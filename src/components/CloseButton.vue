@@ -3,7 +3,7 @@ Template
 ==========================================================================
 <template>
   <button class="CC__close-button" aria-label="close-button">
-    <font-awesome-icon icon="times" class="dps__close-icon" />
+    <font-awesome-icon icon="times" class="CC__close-icon" />
   </button>
 </template>
 <style lang="postcss">

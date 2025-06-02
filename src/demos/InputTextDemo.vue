@@ -128,4 +128,13 @@ const submitInput = () => {
   justify-content: space-evenly;
   width: 100%;
 }
+@media (max-width: 960px) {
+  .demo__inputs-container {
+    flex-direction: column;
+    align-items: left;
+    margin: 1rem 0.5rem;
+    width: auto;
+    padding: 0 0.5rem;
+  }
+}
 </style>

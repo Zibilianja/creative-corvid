@@ -82,7 +82,7 @@ const leadingIcon = computed(() => {
       {{ props.label }}
       <span v-if="props.required" class="required">*</span>
     </label>
-    <div class="CC__text-input-wrapper">
+    <div class="CC__text-input-wrapper" :class="`${leadingIcon}-wrapper`">
       <div
         class="CC__text-input-leading-icon-container"
         v-if="props.leadingIcon.length > 0"
@@ -131,6 +131,7 @@ const leadingIcon = computed(() => {
       border-radius: 0.75rem;
       line-height: 1.5rem;
       padding: 0 0.75rem;
+      min-width: 18rem;
       &:focus-within {
         border-color: #42a798;
         .clear-button {
@@ -159,9 +160,6 @@ const leadingIcon = computed(() => {
         }
       }
     }
-    .leading-icon {
-      margin-right: 0.5rem;
-    }
 
     label {
       font-size: 1.2rem;
@@ -169,18 +167,20 @@ const leadingIcon = computed(() => {
       margin-bottom: 0.25rem;
       color: #333;
     }
-    input {
+    .text-input {
       font-size: 1rem;
       width: 80%;
       min-height: 2.5rem;
-      min-width: 15rem;
+      width: 100%;
       border: none;
-      padding-left: 0.5rem;
+
       &:focus {
         outline: none;
       }
       &.has-leading-icon {
         border-left: 2px solid #40495b7b;
+        padding-left: 0.5rem;
+        margin-left: 0.5rem;
       }
     }
   }

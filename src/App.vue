@@ -6,16 +6,18 @@ import Logo from './components/Logo.vue';
 import InfoPanelDemo from './demos/InfoPanelDemo.vue';
 import InputTextDemo from './demos/InputTextDemo.vue';
 import InputTextAreaInputDemo from './demos/TextAreaInputDemo.vue';
+import DateDemo from './demos/DateDemo.vue';
 </script>
 /* Template ============================================================== */
 <template>
   <div class="app-container">
     <Logo />
-    <h1>Creative Corvid Library:</h1>
+    <h1>Creative Corvid Component and Style Library:</h1>
     <h2>Components Demo</h2>
     <ButtonDemo />
     <InputTextDemo />
     <InputTextAreaInputDemo />
+    <DateDemo />
     <InfoPanelDemo />
   </div>
 </template>
@@ -27,7 +29,7 @@ import InputTextAreaInputDemo from './demos/TextAreaInputDemo.vue';
   margin: 0 auto;
   padding: 1.5rem;
   font-family: 'Quicksand', sans-serif;
-  background-color: #e0dcdc;
+  background-color: #dfd5d5;
   color: #242323;
   text-align: center;
 

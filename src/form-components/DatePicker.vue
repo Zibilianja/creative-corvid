@@ -118,7 +118,7 @@ const isFullDate = computed(() => {
 
 watch(
   date,
-  (newVal, oldVal) => {
+  (newVal) => {
     if (newVal.month !== '' && newVal.day !== '' && newVal.year !== '') {
       const _date = `${newVal.year}-${newVal.month}-${newVal.day}`;
       const formattedDate = dayjs(_date, 'YYYY-MM-DD', true).format(

@@ -60,6 +60,7 @@ const submitInput = () => {
           :leadingIcon="['fas', 'magnifying-glass']"
           :maxLength="50"
           clearable
+          required
           @update:model-value="handleInputChange"
         />
         <TextInput

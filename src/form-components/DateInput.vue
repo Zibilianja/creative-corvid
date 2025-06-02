@@ -15,7 +15,6 @@ import {
   reactive,
   ref,
   useSlots,
-  useAttrs,
   watch,
   type PropType,
   type SetupContext,
@@ -74,7 +73,6 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue']);
 
 const slots: SetupContext['slots'] = useSlots();
-const attrs: SetupContext['attrs'] = useAttrs();
 const inputId = GetInputId();
 const isDirty = ref(false);
 const isInvalid = ref(false);
@@ -132,7 +130,6 @@ const showDetails = computed(() => {
 const yearOptions = computed(() => {
   const currentYear = new Date().getFullYear();
   const startYears = currentYear - 200;
-  const endYears = currentYear + 100;
   const years = [];
   for (let i = 0; i < 300; i++) {
     years.push(startYears + i);

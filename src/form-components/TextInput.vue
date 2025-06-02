@@ -121,6 +121,9 @@ const leadingIcon = computed(() => {
     flex-direction: column;
     align-items: flex-start;
     width: auto;
+    .required {
+      color: #a41d33;
+    }
     .CC__text-input-wrapper {
       display: flex;
       align-items: center;

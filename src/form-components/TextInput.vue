@@ -5,8 +5,11 @@ import { vMaska } from 'maska/vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 const model = defineModel({
-  type: [String, null] as PropType<string | null>,
+  type: [String] as PropType<string>,
+  default: '',
 });
+
+const emit = defineEmits(['update:focus', 'update:blur', 'update:modelValue']);
 
 const props = defineProps({
   label: {
@@ -16,6 +19,10 @@ const props = defineProps({
   inputId: {
     type: String,
     default: '',
+  },
+  inputRef: {
+    type: String,
+    default: 'defaultInputRef',
   },
   type: {
     type: String,
@@ -64,15 +71,18 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(['update:modelValue']);
-
 const clearInput = () => {
   model.value = '';
-  emit('update:modelValue', '');
 };
 
 const leadingIcon = computed(() => {
   return !props.leadingIcon.includes('') ? 'has-leading-icon' : '';
+});
+
+const invalidInput = computed(() => {
+  return model.value.length === 0
+    ? 'invalid__input'
+    : 'valid__input-after-error';
 });
 </script>
 
@@ -82,23 +92,33 @@ const leadingIcon = computed(() => {
       {{ props.label }}
       <span v-if="props.required" class="required">*</span>
     </label>
-    <div class="CC__text-input-wrapper" :class="`${leadingIcon}-wrapper`">
+    <div
+      class="CC__text-input-wrapper"
+      :class="[`${leadingIcon}-wrapper`, props.error ? invalidInput : 'WIN']"
+    >
       <div
         class="CC__text-input-leading-icon-container"
         v-if="props.leadingIcon.length > 0"
       >
-        <font-awesome-icon class="leading-icon" :icon="props.leadingIcon" />
+        <font-awesome-icon
+          v-if="props.leadingIcon[0]"
+          class="leading-icon"
+          :icon="props.leadingIcon"
+        />
       </div>
       <input
         v-model="model"
         :id="props.inputId"
+        :ref="props.inputRef"
         :maxlength="props.maxLength"
         v-maska="props.maska"
         class="text-input"
-        :class="[leadingIcon, { invalid: props.error }]"
+        :class="[leadingIcon]"
         :type="props.type"
         :placeholder="placeholder"
         :disabled="disabled"
+        @focus="emit('update:focus')"
+        @blur="emit('update:blur')"
       />
       <CloseButton
         v-if="props.clearable && model"
@@ -110,11 +130,20 @@ const leadingIcon = computed(() => {
     <template v-if="props.errorMessages.length > 0">
       <div class="CC__input-error-message">{{ props.errorMessages }}</div>
     </template>
+    <template v-if="props.hint && props.errorMessages.length === 0">
+      <div class="CC__text-input-hint">Hint: {{ props.hint }}</div>
+    </template>
   </div>
 </template>
 /* Style ============================================================== */
 <style lang="postcss">
 .CC__text-input {
+  &-hint {
+    font-size: 0.875rem;
+    color: #6c757d;
+    margin-top: 0.4rem;
+    margin-left: 0.5rem;
+  }
   &-container {
     margin-bottom: 1rem;
     display: flex;
@@ -124,6 +153,7 @@ const leadingIcon = computed(() => {
     .required {
       color: #a41d33;
     }
+
     .CC__text-input-wrapper {
       display: flex;
       align-items: center;
@@ -135,6 +165,10 @@ const leadingIcon = computed(() => {
       line-height: 1.5rem;
       padding: 0 0.75rem;
       min-width: 18rem;
+      &.invalid__input {
+        border: 2px solid #a41d33;
+      }
+
       &:focus-within {
         border-color: #42a798;
         .clear-button {

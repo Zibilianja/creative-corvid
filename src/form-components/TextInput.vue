@@ -140,7 +140,7 @@ const invalidInput = computed(() => {
 .CC__text-input {
   &-hint {
     font-size: 0.875rem;
-    color: #6c757d;
+    color: #41474c;
     margin-top: 0.4rem;
     margin-left: 0.5rem;
   }
@@ -198,12 +198,6 @@ const invalidInput = computed(() => {
       }
     }
 
-    label {
-      font-size: 1.2rem;
-      font-weight: 600;
-      margin-bottom: 0.25rem;
-      color: #333;
-    }
     .text-input {
       font-size: 1rem;
       width: 80%;

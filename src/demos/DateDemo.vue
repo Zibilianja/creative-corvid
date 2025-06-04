@@ -17,7 +17,7 @@ const rules = {
 </script>
 /* Template ============================================================== */
 <template>
-  <div class="demo__panel-container">
+  <div class="CC__demo-container">
     <div class="demo__panel-header">
       <h2 class="demo-header">Date Input Demo</h2>
       <div class="demo-description">
@@ -25,16 +25,26 @@ const rules = {
         variations.
       </div>
     </div>
-    <DateInput v-model="dateValue" label="Date Input" is-clearable required />
-    <DatePicker
-      :value="datePickerValue"
-      label="Date Picker"
-      format="MM/DD/YYYY"
-      :required="false"
-      :end-year="2050"
-      :future-year="2050"
-    />
+    <div class="demo__date-input-container">
+      <DateInput v-model="dateValue" label="Date Input" is-clearable required />
+      <DatePicker
+        :value="datePickerValue"
+        label="Date Picker"
+        format="MM/DD/YYYY"
+        :required="false"
+        :end-year="2050"
+        :future-year="2050"
+      />
+    </div>
   </div>
 </template>
 /* Styles ================================================================ */
-<style lang="postcss"></style>
+<style lang="postcss">
+.demo__date-input-container {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 1rem;
+  justify-content: space-evenly;
+  margin: 1rem 0;
+}
+</style>

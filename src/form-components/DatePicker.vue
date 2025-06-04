@@ -266,7 +266,7 @@ Styles
 .dps__input-date-select-container {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  min-width: 20rem;
 
   label {
     font-size: 1rem;
@@ -301,6 +301,7 @@ Styles
   border-radius: 0.25em;
   padding: 5px;
   column-gap: 0.75rem;
+  background-color: #fff;
 
   &.invalid__input {
     border: 1px solid #ff0000;

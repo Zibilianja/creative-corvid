@@ -43,7 +43,7 @@ const resetButtonShow = computed((): boolean => {
 
 /* Template ============================================================== */
 <template>
-  <div class="demo__panel-container">
+  <div class="CC__demo-container">
     <div class="demo__panel-header">
       <h2 class="demo-header">Info Panel Demo</h2>
       <div class="demo-description">

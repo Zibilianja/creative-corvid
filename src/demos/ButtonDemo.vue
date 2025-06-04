@@ -13,7 +13,7 @@ const displayToast = (message: string): void => {
 </script>
 /* Template ============================================================== */
 <template>
-  <div class="CC__button-demo-container">
+  <div class="CC__demo-container">
     <div>
       <header>
         <h2>Button Demo</h2>
@@ -25,10 +25,10 @@ const displayToast = (message: string): void => {
         >Announcement Button</Button
       >
       <Button class="CC__green" @click="displayToast('success')"
-        >Success Button</Button
+        >Submit Button</Button
       >
       <Button class="CC__red" @click="displayToast('error')"
-        >Error Button</Button
+        >Delete Button</Button
       >
       <Button class="CC__purple" @click="displayToast('info')"
         >Info Button</Button
@@ -50,63 +50,10 @@ const displayToast = (message: string): void => {
     </ToastAlert>
   </div>
 </template>
+/* Styles ============================================================== */
 <style lang="postcss">
-header {
-  text-align: center;
-  margin-bottom: 1rem;
-}
 .CC__button-demo {
-  &-container {
-    padding: 1rem 0;
-    background-color: #f3f0f0;
-    border-radius: 0.5rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.37);
-    margin-bottom: 1rem;
-  }
   display: flex;
-  justify-content: space-around;
-  padding: 1rem;
-}
-.loading-button {
-  #spinner {
-    margin-left: 0.5rem;
-    animation: spin 1.75s linear infinite;
-  }
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-.shown {
-  animation: showToast 0.5s ease-in-out forwards;
-  @keyframes showToast {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  .hidden {
-    animation: hideToast 0.5s ease-in-out forwards;
-    @keyframes hideToast {
-      from {
-        opacity: 1;
-        transform: translateY(0);
-      }
-      to {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-    }
-  }
+  justify-content: space-evenly;
 }
 </style>

@@ -60,7 +60,7 @@ const validateInput = (value: string): boolean => {
 </script>
 /* Template ============================================================== */
 <template>
-  <div class="demo__input-container">
+  <div class="CC__demo-container">
     <div class="demo__input-btn-container">
       <div class="demo__input-header">
         <h2 class="demo__input-title">Text Input Demo</h2>
@@ -82,6 +82,7 @@ const validateInput = (value: string): boolean => {
           required
           :error="inputValues.text.error"
           @update:focus="inputValues.text.error = false"
+          @update:blur=""
           @update:model-value="handleInputChange"
         />
         <TextInput
@@ -136,7 +137,6 @@ const validateInput = (value: string): boolean => {
   &-title {
     padding-top: 0;
     margin-bottom: 1rem;
-    text-decoration: underline;
   }
   &-btn-container {
     display: flex;
@@ -144,12 +144,10 @@ const validateInput = (value: string): boolean => {
     flex-direction: column;
     gap: 0.5rem;
     align-items: center;
-    border: 1px solid #ccc;
     margin-bottom: 1rem;
     padding: 1rem;
-    background-color: #f3f0f0;
+
     border-radius: 0.5rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.37);
 
     .submit-button {
       padding: 0.75rem 1rem;

@@ -31,7 +31,7 @@ const onInputUpdate = (): void => {
 Template
 ========================================================================== */
 <template>
-  <div class="demo__panel-container">
+  <div class="CC__demo-container">
     <div>
       <div class="demo-header">InputTextarea</div>
       <div class="demo-description">

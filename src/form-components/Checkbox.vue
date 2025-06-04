@@ -79,9 +79,9 @@ defineExpose({
 
 /* Template ============================================================== */
 <template>
-  <div class="dps__input-checkbox-container">
+  <div class="CC__input-checkbox-container">
     <div
-      class="dps__input-checkbox-inline"
+      class="CC__input-checkbox-inline"
       :class="{ invalid__input: hasError }"
     >
       <input
@@ -89,7 +89,7 @@ defineExpose({
         v-model="value"
         v-bind="$attrs"
         type="checkbox"
-        class="dps__input-checkbox-input"
+        class="CC__input-checkbox-input"
         :checked="value"
       />
       <label :for="inputId">
@@ -101,11 +101,11 @@ defineExpose({
       v-show="_errorMessages"
       :id="`${inputId}-messages`"
       role="alert"
-      class="dps__input-text-details"
+      class="CC__input-text-details"
       :class="{ invalid__input: hasError }"
     >
-      <div class="dps__input-messages">
-        <div class="dps__input-message">{{ _errorMessages }}</div>
+      <div class="CC__input-messages">
+        <div class="CC__input-message">{{ _errorMessages }}</div>
       </div>
     </div>
   </div>
@@ -113,7 +113,7 @@ defineExpose({
 
 /* Styles ================================================================ */
 <style lang="postcss">
-.dps__input-checkbox {
+.CC__input-checkbox {
   &-container {
     display: inline-block;
     cursor: pointer;

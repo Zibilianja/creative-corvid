@@ -21,7 +21,7 @@ import {
 } from 'vue';
 import { GetInputId, months } from '@/utils';
 import { Calendar } from '@/models';
-import { Button } from '../components';
+import { Button } from '@/components';
 import { vMaska } from 'maska/vue';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
@@ -507,11 +507,9 @@ defineExpose({
     line-height: 1.5;
     background-color: #fff;
     border-right: 0;
-    border-top: 0.0625rem solid #4a4a4a;
-    border-left: 0.0625rem solid #4a4a4a;
-    border-bottom: 0.0625rem solid #4a4a4a;
-    border-top-left-radius: 0.25rem;
-    border-bottom-left-radius: 0.25rem;
+    border: 0.0625rem solid #4a4a4a;
+    border-right: none;
+    border-radius: 0.5rem 0 0 0.5rem;
     box-sizing: border-box;
     color: #4a4a4a;
     min-height: 48px;
@@ -539,16 +537,14 @@ defineExpose({
 
     button {
       line-height: 1.5;
-      height: 46px;
       border-radius: 0;
 
       &.dps__calendar-btn {
         padding: 0.375rem;
-        border-top: 0.0625rem solid #4a4a4a;
-        border-right: 0.0625rem solid #4a4a4a;
-        border-bottom: 0.0625rem solid #4a4a4a;
-        border-top-right-radius: 0.25rem;
-        border-bottom-right-radius: 0.25rem;
+        border: 0.0625rem solid #4a4a4a;
+        border-left: none;
+        border-radius: 0 0.5rem 0.5rem 0;
+        height: 3rem;
 
         &[disabled] {
           background-color: #f1f1f1;
@@ -585,7 +581,7 @@ defineExpose({
   right: 0;
   background-color: #fff;
   padding: 0 0.25rem 0.25rem 0.25rem;
-  border-radius: 0.25rem;
+  border-radius: 0.5rem;
   box-shadow: 2px 2px 4px 1px rgba(10, 10, 10, 0.2);
 }
 
@@ -615,7 +611,7 @@ defineExpose({
 
 .dps__calendar-date {
   background-color: #fff;
-  border-radius: 50%;
+  border-radius: 0.5rem;
   box-sizing: border-box;
   /* padding: 0.25rem; */
   cursor: pointer;

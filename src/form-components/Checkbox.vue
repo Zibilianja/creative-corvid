@@ -1,15 +1,14 @@
 /* ==========================================================================
 InputCheckbox.vue - This component is used to display a checkbox input field.
 ========================================================================== */
-<script lang="ts">
-export default {
-  inheritAttrs: false,
-};
-</script>
 
 <script lang="ts" setup>
 import { computed, ref, watch, type PropType } from 'vue';
 import { GetInputId } from '@/utils';
+
+defineOptions({
+  inheritAttrs: false,
+});
 
 const props = defineProps({
   label: {
@@ -43,6 +42,20 @@ const isInvalid = ref(false);
 const value = computed({
   get: () => props.modelValue,
   set: (value) => emit('update:modelValue', value),
+});
+
+const checkIcon = computed(() => {
+  return value.value ? 'check-square' : 'square';
+});
+
+const iconStyleClasses = computed(() => {
+  if (hasError.value) {
+    return 'invalid__input';
+  } else if (value.value) {
+    return 'checked';
+  } else {
+    return '';
+  }
 });
 
 const _errorMessages = computed((): string => {
@@ -82,17 +95,23 @@ defineExpose({
   <div class="CC__input-checkbox-container">
     <div
       class="CC__input-checkbox-inline"
-      :class="{ invalid__input: hasError }"
+      
     >
-      <input
-        :id="inputId"
-        v-model="value"
-        v-bind="$attrs"
-        type="checkbox"
-        class="CC__input-checkbox-input"
-        :checked="value"
-      />
-      <label :for="inputId">
+      <label :for="inputId" class="CC__input-checkbox-label">
+        <input
+          :id="inputId"
+          v-model="value"
+          v-bind="$attrs"
+          type="checkbox"
+          class="CC__input-checkbox-input"
+          :checked="value"
+        >
+        <font-awesome-icon
+          class="CC__input-checkbox-icon"
+          :class="iconStyleClasses"
+          :icon="['fas', checkIcon]"
+        />
+        </input>
         {{ label }}
       </label>
     </div>
@@ -117,7 +136,6 @@ defineExpose({
   &-container {
     display: inline-block;
     cursor: pointer;
-    margin-right: 0.5em;
     width: fit-content;
   }
 
@@ -125,23 +143,19 @@ defineExpose({
     width: fit-content;
     display: flex;
     align-items: center;
-    padding: 0.375em;
+    padding: 0.5rem;
     column-gap: 0.5em;
-    border: 1px solid #fff;
 
     label {
       cursor: pointer;
-      margin-bottom: 0 !important;
+      
     }
 
-    &.invalid__input {
-      color: #a41d33;
-      border: 1px solid #a41d33;
-    }
+    
   }
 
   &-input {
-    cursor: pointer;
+    opacity: 0;
   }
 }
 </style>

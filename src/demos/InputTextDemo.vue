@@ -62,7 +62,7 @@ const validateInput = (value: string): boolean => {
 <template>
   <div class="CC__demo-container">
     <div class="demo__input-btn-container">
-      <div class="demo__input-header">
+      <div class="CC__demo-header">
         <h2 class="demo__input-title">Text Input Demo</h2>
         <div class="demo__input-description">
           This component is used to demonstrate the input component and
@@ -110,10 +110,10 @@ const validateInput = (value: string): boolean => {
           clearable
           @update:model-value="handleInputChange"
         />
-        <Button @click="submitInput" class="CC__blue-gray submit-button"
-          >Test Submit/Errors</Button
-        >
       </div>
+      <Button @click="submitInput" class="CC__blue-gray submit-button"
+        >Test Submit</Button
+      >
     </div>
   </div>
   <ToastAlert
@@ -134,26 +134,22 @@ const validateInput = (value: string): boolean => {
 /* Styles ============================================================== */
 <style lang="postcss">
 .demo__input {
-  &-title {
-    padding-top: 0;
-    margin-bottom: 1rem;
-  }
   &-btn-container {
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
     gap: 0.5rem;
     align-items: center;
-    margin-bottom: 1rem;
-    padding: 1rem;
 
+    padding: 1rem;
     border-radius: 0.5rem;
 
     .submit-button {
+      display: flex;
+      flex-wrap: nowrap;
       padding: 0.75rem 1rem;
-      margin-top: 1.75rem;
+      margin-top: 1.5rem;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.37);
-      max-height: 2.5rem;
     }
   }
 }
@@ -161,7 +157,7 @@ const validateInput = (value: string): boolean => {
   margin: 1rem 0;
   display: flex;
   flex-wrap: nowrap;
-  justify-content: space-evenly;
+  gap: 1rem;
   width: 100%;
 }
 @media (max-width: 960px) {

@@ -255,7 +255,7 @@ Template
   <div class="CC__textarea-container">
     <label :for="inputId" :class="{ invalid__input: isInvalid }">
       {{ label }}
-      <span v-if="required" class="req__asterisk"> &lowast; </span>
+      <span v-if="required" class="req__asterisk">*</span>
     </label>
     <slot name="prepend"></slot>
     <textarea
@@ -313,14 +313,17 @@ Template
 <style lang="postcss">
 .CC__textarea {
   &-container {
-    display: grid;
-    grid-template-rows: auto auto auto;
-    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    gap: 0.25rem;
 
     label {
       font-size: 1rem;
-      display: block;
-      width: 100%;
+      display: flex;
+      align-items: left;
+      width: fit-content;
+      gap: 0.25rem;
 
       span {
         &.req__asterisk {
@@ -335,12 +338,13 @@ Template
   }
 
   &-input {
-    padding: 0.5rem !important;
-    font-family: 'Tahoma', sans-serif;
+    padding: 0.5rem;
     font-size: 1rem;
     color: #4a4a4a;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #fff;
     border: 0.0625rem solid #4a4a4a;
-    border-radius: 0.25rem;
+    border-radius: 0.75rem;
     margin: 0;
 
     &[disabled] {

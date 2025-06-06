@@ -94,7 +94,7 @@ const invalidInput = computed(() => {
     </label>
     <div
       class="CC__text-input-wrapper"
-      :class="[`${leadingIcon}-wrapper`, props.error ? invalidInput : 'WIN']"
+      :class="[`${leadingIcon}-wrapper`, props.error ? invalidInput : '']"
     >
       <div
         class="CC__text-input-leading-icon-container"
@@ -149,7 +149,8 @@ const invalidInput = computed(() => {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    width: auto;
+    width: 100%;
+
     .required {
       color: #a41d33;
     }
@@ -157,20 +158,20 @@ const invalidInput = computed(() => {
     .CC__text-input-wrapper {
       display: flex;
       align-items: center;
-      justify-content: space-evenly;
       border: 1px solid #7b7c7e;
       background-color: #fff;
       box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.264);
       border-radius: 0.75rem;
       line-height: 1.5rem;
-      padding: 0 0.75rem;
-      min-width: 18rem;
+      padding: 0 1rem;
+      width: 85%;
       &.invalid__input {
-        border: 2px solid #a41d33;
+        outline: 2px solid #a41d34be;
       }
 
       &:focus-within {
-        border-color: #42a798;
+        outline: 2px solid #4be5ce;
+
         .clear-button {
           background-color: #4fbdad;
         }
@@ -204,6 +205,7 @@ const invalidInput = computed(() => {
       min-height: 2.5rem;
       width: 100%;
       border: none;
+      background-color: #ffffff;
 
       &:focus {
         outline: none;
@@ -211,7 +213,7 @@ const invalidInput = computed(() => {
       &.has-leading-icon {
         border-left: 2px solid #40495b7b;
         padding-left: 0.5rem;
-        margin-left: 0.5rem;
+        margin-left: 0.7rem;
       }
     }
   }

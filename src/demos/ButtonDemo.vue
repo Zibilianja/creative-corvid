@@ -14,11 +14,9 @@ const displayToast = (message: string): void => {
 /* Template ============================================================== */
 <template>
   <div class="CC__demo-container">
-    <div>
-      <header>
-        <h2>Button Demo</h2>
-        <p>Click the buttons below to see a demo of Toast alerts.</p>
-      </header>
+    <div class="CC__demo-header">
+      <h2>Button Demo</h2>
+      <div>Click the buttons below to see a demo of Toast alerts.</div>
     </div>
     <div class="CC__button-demo">
       <Button class="CC__blue-gray" @click="displayToast('announcement')"
@@ -27,7 +25,10 @@ const displayToast = (message: string): void => {
       <Button class="CC__green" @click="displayToast('success')"
         >Submit Button</Button
       >
-      <Button class="CC__red" @click="displayToast('error')"
+      <Button
+        class="CC__red"
+        :leadingIcon="['fas', 'trash-alt']"
+        @click="displayToast('error')"
         >Delete Button</Button
       >
       <Button class="CC__purple" @click="displayToast('info')"

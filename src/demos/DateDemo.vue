@@ -18,7 +18,7 @@ const rules = {
 /* Template ============================================================== */
 <template>
   <div class="CC__demo-container">
-    <div class="demo__panel-header">
+    <div class="CC__demo-header">
       <h2 class="demo-header">Date Input Demo</h2>
       <div class="demo-description">
         This component is used to demonstrate the date input component and

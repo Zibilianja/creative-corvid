@@ -9,7 +9,9 @@ import {
 import {
   faBars,
   faTimes,
+  faSquare,
   faCircleCheck,
+  faSquareCheck,
   faTrashAlt,
   faPenToSquare,
   faBugs,
@@ -39,6 +41,7 @@ import {
   faBullhorn,
   faStickyNote,
   faMagnifyingGlass,
+  faPaperPlane,
 } from '@fortawesome/free-solid-svg-icons';
 import { faShop } from '@fortawesome/free-solid-svg-icons/faShop';
 
@@ -49,7 +52,9 @@ library.add(
   faYoutube,
   faInstagram,
   faTimes,
+  faSquare,
   faCircleCheck,
+  faSquareCheck,
   faTrashAlt,
   faPenToSquare,
   faBugs,
@@ -79,7 +84,8 @@ library.add(
   faTriangleExclamation,
   faBullhorn,
   faStickyNote,
-  faMagnifyingGlass
+  faMagnifyingGlass,
+  faPaperPlane
 );
 
 export default FontAwesomeIcon;

@@ -2,11 +2,23 @@
 Button.vue This is the standard button component. It is a wrapper around the
 native HTML button element.
 ========================================================================== */
-<script setup lang="ts"></script>
+<script setup lang="ts">
+defineProps({
+  leadingIcon: {
+    type: Array as () => string[] | null,
+    default: () => null,
+  },
+});
+</script>
 
 /* Template ============================================================== */
 <template>
   <button class="CC__button">
+    <font-awesome-icon
+      v-if="leadingIcon !== null"
+      :icon="leadingIcon"
+      class="CC__button-icon"
+    />
     <slot />
   </button>
 </template>
@@ -14,7 +26,9 @@ native HTML button element.
 /* Styles ================================================================ */
 <style lang="postcss">
 .CC__button {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
   padding: 1rem;
   border: 0;
   border-radius: 0.5rem;

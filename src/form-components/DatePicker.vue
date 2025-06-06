@@ -189,7 +189,7 @@ const setRequiredCss = (error: boolean) => {
 Template
 ========================================================================== */
 <template>
-  <div class="dps__input-date-select-container">
+  <div class="CC__input-date-select-container">
     <label :for="labelId">
       {{ label }}
       <span v-if="required" class="req__asterisk"> * </span>
@@ -203,11 +203,11 @@ Template
 
     <div
       :id="labelId"
-      class="dps__input-date-select-grid"
+      class="CC__input-date-select-grid"
       :class="[isValidDate ? '' : 'invalid__input']"
       :title="label"
     >
-      <div class="dps-date-select-input month-select-input">
+      <div class="CC-date-select-input month-select-input">
         <select
           v-model="date.month"
           title="Month"
@@ -223,7 +223,7 @@ Template
 
       <span>/</span>
 
-      <div class="dps-date-select-input day-select-input">
+      <div class="CC-date-select-input day-select-input">
         <select
           v-model="date.day"
           title="Day"
@@ -239,7 +239,7 @@ Template
 
       <span>/</span>
 
-      <div class="dps-date-select-input year-select-input">
+      <div class="CC-date-select-input year-select-input">
         <select
           v-model="date.year"
           title="Year"
@@ -253,7 +253,7 @@ Template
         </select>
       </div>
     </div>
-    <div v-show="!isValidDate" class="dps__input-date-select-invalid-date-hint">
+    <div v-show="!isValidDate" class="CC__input-date-select-invalid-date-hint">
       Invalid Date
     </div>
   </div>
@@ -263,7 +263,7 @@ Template
 Styles
 ========================================================================== */
 <style lang="postcss">
-.dps__input-date-select-container {
+.CC__input-date-select-container {
   display: flex;
   flex-direction: column;
   min-width: 20rem;
@@ -284,7 +284,7 @@ Styles
     }
   }
 
-  .dps__input-date-select-invalid-date-hint {
+  .CC__input-date-select-invalid-date-hint {
     color: #ff0000;
     font-style: italic;
     font-size: 0.9rem;
@@ -292,7 +292,7 @@ Styles
   }
 }
 
-.dps__input-date-select-grid {
+.CC__input-date-select-grid {
   display: grid;
   grid-template-columns: 1fr auto 1fr auto 1fr;
   align-items: center;
@@ -314,11 +314,11 @@ Styles
     justify-content: center;
   }
 
-  .dps-date-select-input {
+  .CC-date-select-input {
     position: relative;
   }
 
-  .dps-date-select-input:after {
+  .CC-date-select-input:after {
     content: ' ';
     position: absolute;
     top: 50%;

@@ -44,7 +44,7 @@ const resetButtonShow = computed((): boolean => {
 /* Template ============================================================== */
 <template>
   <div class="CC__demo-container">
-    <div class="demo__panel-header">
+    <div class="CC__demo-header">
       <h2 class="demo-header">Info Panel Demo</h2>
       <div class="demo-description">
         This component is used to display an info panel.

@@ -234,10 +234,10 @@ const updateShowCalendar = () => {
 
 const onClickOutsideCalendar = (event: Event) => {
   const target = event.target as HTMLElement;
-  if (target.closest('.dps__calendar-container')) {
+  if (target.closest('.CC__calendar-container')) {
     return;
   }
-  if (target.closest('.dps__input-date-button')) {
+  if (target.closest('.CC__input-date-button')) {
     return;
   }
   showCalendar.value = false;
@@ -309,20 +309,20 @@ defineExpose({
 
 /* Template ============================================================== */
 <template>
-  <div class="dps__input-date-container">
+  <div class="CC__input-date-container">
     <label :for="inputId" :class="{ invalid__input: isInvalid }">
       {{ label }}
       <span v-if="required" class="req__asterisk"> &lowast; </span>
     </label>
 
-    <div class="dps__input-date-btn-grid">
+    <div class="CC__input-date-btn-grid">
       <input
         :id="inputId"
         v-model="localDate"
         v-bind="$attrs"
         v-maska="'##/##/####'"
         type="text"
-        class="dps__input-date-input"
+        class="CC__input-date-input"
         :class="{ invalid__input: isInvalid }"
         :disabled="props.disabled"
         :placeholder="placeholder"
@@ -334,7 +334,7 @@ defineExpose({
       <Button
         v-show="localDate && !disabled && isClearable"
         type="button"
-        class="dps__input-clear-date-button dps__white"
+        class="CC__input-clear-date-button CC__white"
         title="Clear Date"
         @click="clearDate()"
       >
@@ -355,13 +355,13 @@ defineExpose({
       <Button
         label="Select Date"
         type="button"
-        class="dps__input-date-button dps__blue dps__calendar-btn"
+        class="CC__input-date-button CC__blue CC__calendar-btn"
         :disabled="props.disabled"
         :title="`Select Date`"
         @click="updateShowCalendar"
       >
-        <div class="dps__calendar-icon">
-          <!-- <div class="dps__calendar-top"></div> -->
+        <div class="CC__calendar-icon">
+          <!-- <div class="CC__calendar-top"></div> -->
           <svg
             xmlns="http://www.w3.org/2000/svg"
             height="20"
@@ -379,14 +379,14 @@ defineExpose({
     </div>
 
     <div>
-      <div v-if="showCalendar" class="dps__calendar-container">
-        <div class="dps__calendar-header-and-nav">
-          <button class="dps__calendar-nav" @click="updateCalendarDates(-1)">
+      <div v-if="showCalendar" class="CC__calendar-container">
+        <div class="CC__calendar-header-and-nav">
+          <button class="CC__calendar-nav" @click="updateCalendarDates(-1)">
             <span class="chevron left"></span>
           </button>
-          <div class="dps__calendar-month-year">
+          <div class="CC__calendar-month-year">
             <select
-              class="dps__calendar-header-select"
+              class="CC__calendar-header-select"
               :value="calendar.getActiveMonth()"
               @change="updateCalendarMonth($event)"
             >
@@ -400,7 +400,7 @@ defineExpose({
             </select>
 
             <select
-              class="dps__calendar-header-select"
+              class="CC__calendar-header-select"
               :value="calendar.getActiveYear()"
               @change="updateCalendarYear($event)"
             >
@@ -409,11 +409,11 @@ defineExpose({
               </option>
             </select>
           </div>
-          <button class="dps__calendar-nav" @click="updateCalendarDates(1)">
+          <button class="CC__calendar-nav" @click="updateCalendarDates(1)">
             <span class="chevron right"></span>
           </button>
         </div>
-        <div class="dps__calendar-weekday-names dps__calendar-grid-7col">
+        <div class="CC__calendar-weekday-names CC__calendar-grid-7col">
           <div>S</div>
           <div>M</div>
           <div>T</div>
@@ -422,16 +422,16 @@ defineExpose({
           <div>F</div>
           <div>S</div>
         </div>
-        <div class="dps__calendar-grid-7col">
+        <div class="CC__calendar-grid-7col">
           <button
             v-for="(date, index) in calendar.dates"
             :key="index"
-            class="dps__calendar-modal-btn"
+            class="CC__calendar-modal-btn"
             @click="setDate(date.getFullDateAsString())"
             @keypress.enter="setDate(date.getFullDateAsString())"
           >
             <span
-              class="dps__calendar-date"
+              class="CC__calendar-date"
               :class="{
                 selected: localDate === date.getFullDateAsString(),
                 today:
@@ -450,17 +450,17 @@ defineExpose({
       v-show="showDetails"
       :id="`${inputId}-messages`"
       role="alert"
-      class="dps__input-text-details"
+      class="CC__input-text-details"
       :class="{ invalid__input: isInvalid }"
     >
-      <div class="dps__input-messages">
-        <div v-if="isInvalidDate" class="dps__input-message">Invalid date</div>
+      <div class="CC__input-messages">
+        <div v-if="isInvalidDate" class="CC__input-message">Invalid date</div>
         <template v-else-if="_errorMessages">
-          <div class="dps__input-message">{{ _errorMessages }}</div>
+          <div class="CC__input-message">{{ _errorMessages }}</div>
         </template>
 
         <template v-else>
-          <div class="dps__input-message">
+          <div class="CC__input-message">
             <template v-if="slots.hint">
               <slot name="hint" />
             </template>
@@ -476,7 +476,7 @@ defineExpose({
 
 /* Styles ================================================================ */
 <style lang="postcss">
-.dps__input-date {
+.CC__input-date {
   &-container {
     position: relative;
 
@@ -539,7 +539,7 @@ defineExpose({
       line-height: 1.5;
       border-radius: 0;
 
-      &.dps__calendar-btn {
+      &.CC__calendar-btn {
         padding: 0.375rem;
         border: 0.0625rem solid #4a4a4a;
         border-left: none;
@@ -553,7 +553,7 @@ defineExpose({
         }
       }
 
-      &.dps__input-clear-date-button {
+      &.CC__input-clear-date-button {
         color: #4a4a4a;
         border-left: 0 !important;
         border-top: 0.0625rem solid #4a4a4a;
@@ -571,7 +571,7 @@ defineExpose({
   }
 }
 
-.dps__calendar-container {
+.CC__calendar-container {
   z-index: 999;
   display: flex;
   min-width: 16em;
@@ -585,7 +585,7 @@ defineExpose({
   box-shadow: 2px 2px 4px 1px rgba(10, 10, 10, 0.2);
 }
 
-.dps__calendar-grid-7col {
+.CC__calendar-grid-7col {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   grid-gap: 0.15rem;
@@ -595,21 +595,21 @@ defineExpose({
     font-size: 1rem;
   }
 
-  .dps__calendar-modal-btn {
+  .CC__calendar-modal-btn {
     padding: 0.25rem;
     border: 0;
     background-color: #fff;
   }
 }
 
-.dps__calendar-weekday-names {
+.CC__calendar-weekday-names {
   div {
     margin: 0 0 0.25rem 0;
     font-weight: 600;
   }
 }
 
-.dps__calendar-date {
+.CC__calendar-date {
   background-color: #fff;
   border-radius: 0.5rem;
   box-sizing: border-box;
@@ -636,14 +636,14 @@ defineExpose({
   }
 }
 
-.dps__calendar-header-and-nav {
+.CC__calendar-header-and-nav {
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
   font-size: 1em;
   margin: 0.5rem 0;
 
-  .dps__calendar-nav {
+  .CC__calendar-nav {
     padding: 0.5rem;
     border-radius: 0.5rem;
     border: 0;
@@ -654,14 +654,14 @@ defineExpose({
     }
   }
 
-  .dps__calendar-month-year {
+  .CC__calendar-month-year {
     text-align: center;
     font-size: 1.25em;
     display: grid;
     grid-template-columns: 2fr 1.25fr;
     padding: 0 0.5rem;
 
-    .dps__calendar-header-select {
+    .CC__calendar-header-select {
       font-size: 1.15rem;
     }
   }
@@ -694,13 +694,13 @@ defineExpose({
   }
 }
 
-.dps__input-clear-date-button {
+.CC__input-clear-date-button {
   display: flex;
   align-items: center;
   padding: 0 0.5rem;
 }
 
-.dps__calendar-icon {
+.CC__calendar-icon {
   display: flex;
   padding: 0 0.15rem !important;
 

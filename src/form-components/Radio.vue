@@ -145,9 +145,9 @@ defineExpose({
 
 /* Template ============================================================== */
 <template>
-  <div class="dps__input-radio-container">
+  <div class="CC__input-radio-container">
     <fieldset
-      class="dps__input-radio-fieldset"
+      class="CC__input-radio-fieldset"
       :class="{
         invalid__input: isInvalid,
         column: direction === 'column',
@@ -161,12 +161,12 @@ defineExpose({
       </legend>
 
       <template v-for="(option, index) in options" :key="option[itemValue]">
-        <label class="dps__input-radio-label" :disabled="disabled">
+        <label class="CC__input-radio-label" :disabled="disabled">
           <input
             :id="`${inputId}-${index}`"
             v-bind="$attrs"
             type="radio"
-            class="dps__input-radio-input"
+            class="CC__input-radio-input"
             :disabled="disabled"
             :name="name"
             :value="option[itemValue]"
@@ -182,16 +182,16 @@ defineExpose({
       v-show="showDetails"
       :id="`${inputId}-messages`"
       role="alert"
-      class="dps__input-text-details"
+      class="CC__input-text-details"
       :class="{ invalid__input: isInvalid }"
     >
-      <div class="dps__input-messages">
+      <div class="CC__input-messages">
         <template v-if="_errorMessages">
-          <div class="dps__input-message">{{ _errorMessages }}</div>
+          <div class="CC__input-message">{{ _errorMessages }}</div>
         </template>
 
         <template v-else>
-          <div class="dps__input-message">
+          <div class="CC__input-message">
             <template v-if="slots.hint">
               <slot name="hint" />
             </template>
@@ -207,7 +207,7 @@ defineExpose({
 
 /* Styles ================================================================ */
 <style lang="postcss">
-.dps__input-radio {
+.CC__input-radio {
   &-fieldset {
     border: 1px solid #fff;
     margin: 0;

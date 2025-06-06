@@ -25,15 +25,12 @@ const toggleLogo = () => {
 </script>
 /* Template ============================================================== */
 <template>
-  <button
-    id="creative-corvid__logo-header-theme-toggle"
-    class="CC__logo-header"
-    @click="toggleLogo"
-    aria-label="Toggle Dark Mode"
-  >
-    <div
+  <div id="creative-corvid__logo-header-theme-toggle" class="CC__logo-header">
+    <button
       id="creative-corvid__logo-header"
       class="CC__logo-flip-container"
+      @click="toggleLogo"
+      aria-label="Toggle Theme"
       :class="{ 'is-flipping': isFlipping, 'is-dark-mode': isDarkMode }"
     >
       <img
@@ -46,8 +43,8 @@ const toggleLogo = () => {
         alt="White Raven Logo"
         class="CC__logo-face CC__logo-back CC__white-crow-logo"
       />
-    </div>
-  </button>
+    </button>
+  </div>
 </template>
 /* Styles ================================================================ */
 <style lang="postcss">
@@ -55,11 +52,10 @@ const toggleLogo = () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: fit-content;
-  height: auto;
-  background-color: transparent;
+  width: 100%;
+  padding: 1rem;
   border: none;
-  cursor: pointer;
+
   perspective: 1000px;
   margin: 0 auto;
 }
@@ -67,10 +63,10 @@ const toggleLogo = () => {
 .CC__logo-flip-container {
   width: 13rem;
   height: 13rem;
-  margin-bottom: 1rem;
-  border: 1px solid #5a5a5a;
+  border: 2px solid transparent;
   border-radius: 7rem;
   position: relative;
+  cursor: pointer;
   transform-style: preserve-3d;
   transition: transform 0.6s ease-in-out;
 
@@ -99,7 +95,7 @@ const toggleLogo = () => {
 }
 
 .CC__logo-back {
-  background-color: #000;
+  background-color: #121212;
   transform: rotateY(180deg);
 }
 </style>

@@ -8,16 +8,20 @@ import InputTextDemo from './demos/InputTextDemo.vue';
 import InputTextAreaInputDemo from './demos/TextAreaInputDemo.vue';
 import DateDemo from './demos/DateDemo.vue';
 import { ref } from 'vue';
+import CheckboxRadioDemo from './demos/CheckboxRadioDemo.vue';
 
 const darkMode = ref(false);
 </script>
 /* Template ============================================================== */
 <template>
   <div class="app-container" :class="{ 'dark-mode': darkMode }">
-    <Logo @update:dark-mode-toggle="darkMode = !darkMode" />
+    <div id="app-header">
+      <Logo @update:dark-mode-toggle="darkMode = !darkMode" />
+    </div>
     <h1>Creative Corvid Component and Style Library:</h1>
     <h2>Components Demo</h2>
     <ButtonDemo />
+    <CheckboxRadioDemo />
     <InputTextDemo />
     <InputTextAreaInputDemo />
     <DateDemo />
@@ -27,13 +31,24 @@ const darkMode = ref(false);
 /* Styles ================================================================ */
 <style lang="postcss">
 .app-container {
-  max-width: 1280px;
-  width: 85%;
   border-radius: 1rem;
   margin: 0 auto;
-  padding: 1.5rem;
-  font-family: 'Quicksand', sans-serif;
+  padding: 0 1.5rem;
   text-align: center;
+  transition:
+    background-color 0.6s ease,
+    color 0.6s ease;
+
+  .CC__demo-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    h2 {
+      margin: 0;
+    }
+  }
 
   label {
     font-size: 1.2rem;
@@ -51,6 +66,42 @@ const darkMode = ref(false);
 
     label {
       color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+
+      svg {
+        border: 1px solid transparent;
+        padding: 0.1rem;
+        border-radius: 0.25rem;
+        &.invalid__input {
+          border-color: #ff002b;
+          path {
+            &:hover {
+              fill: #e7c7cc;
+            }
+          }
+        }
+        &:not(.invalid__input) {
+          &:not(.checked) path {
+            fill: #ffffff;
+            &:hover {
+              fill: #d0d4d2;
+            }
+          }
+
+          &.checked {
+            border-color: var(--CC-color-success);
+            path {
+              fill: #d1f9cd;
+
+              &:hover {
+                fill: #c8f5dc;
+              }
+            }
+          }
+        }
+      }
     }
 
     .CC__text-input-hint {
@@ -64,9 +115,7 @@ const darkMode = ref(false);
     }
   }
   &:not(.dark-mode) {
-    animation: themeChange 0.5s ease-in-out;
-
-    background-color: #cacaca;
+    background-color: #fff;
     color: #000000;
 
     .CC__demo-container {
@@ -76,7 +125,45 @@ const darkMode = ref(false);
 
     label {
       color: #333;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+
+      svg {
+        border: 1px solid transparent;
+        padding: 0.1rem;
+        border-radius: 0.25rem;
+
+        &.invalid__input {
+          border-color: #ff002b;
+          path {
+            fill: #ff002b5b;
+            &:hover {
+              fill: #e7c7cc;
+            }
+          }
+        }
+        &:not(.invalid__input) {
+          &:not(.checked) path {
+            fill: var(--CC-color-gray);
+            &:hover {
+              fill: #d0d4d2;
+            }
+          }
+
+          &.checked {
+            path {
+              fill: var(--CC-color-blue);
+
+              &:hover {
+                fill: #c8f5dc;
+              }
+            }
+          }
+        }
+      }
     }
+
     .leading-icon {
       color: #333;
     }
@@ -93,11 +180,10 @@ header {
     background-color: #f3f0f0;
     border-radius: 0.5rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.37);
-    margin-bottom: 1rem;
+    margin: 1rem 0;
   }
   display: flex;
   justify-content: space-evenly;
-  padding: 1rem;
 }
 .loading-button {
   #spinner {

@@ -32,6 +32,10 @@ const props = defineProps({
     type: Array as PropType<Function[]>,
     default: () => [],
   },
+  required: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const emit = defineEmits(['update:modelValue']);
@@ -93,10 +97,7 @@ defineExpose({
 /* Template ============================================================== */
 <template>
   <div class="CC__input-checkbox-container">
-    <div
-      class="CC__input-checkbox-inline"
-      
-    >
+    <div class="CC__input-checkbox-inline">
       <label :for="inputId" class="CC__input-checkbox-label">
         <input
           :id="inputId"
@@ -105,13 +106,13 @@ defineExpose({
           type="checkbox"
           class="CC__input-checkbox-input"
           :checked="value"
-        >
+        />
         <font-awesome-icon
           class="CC__input-checkbox-icon"
           :class="iconStyleClasses"
           :icon="['fas', checkIcon]"
         />
-        </input>
+
         {{ label }}
       </label>
     </div>
@@ -148,10 +149,7 @@ defineExpose({
 
     label {
       cursor: pointer;
-      
     }
-
-    
   }
 
   &-input {

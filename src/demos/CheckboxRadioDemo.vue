@@ -81,7 +81,10 @@ const handleSubmit = () => {
         label="Sample 3 Checkbox"
         :error="checkboxValues.error.error"
       />
-      <Checkbox v-model="checkboxValues.info.value" label="Sample 4 Checkbox" />
+      <Checkbox
+        v-model="checkboxValues.info.value"
+        label="Sample 4 Checkbox"
+      />
     </div>
     <label class="CC__checkbox-label">Please Choose one radio:</label>
     <div class="CC__radio-demo-container">

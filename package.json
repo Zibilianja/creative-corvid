@@ -9,6 +9,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@primeuix/themes": "^1.0.0",
+    "axios": "^1.7.7",
+    "primeicons": "^7.0.0",
+    "primevue": "^4.3.1",
     "@fortawesome/fontawesome-svg-core": "^6.2.1",
     "@fortawesome/free-brands-svg-icons": "^6.2.1",
     "@fortawesome/free-solid-svg-icons": "^6.2.1",
@@ -30,9 +34,11 @@
     "postcss-import": "^16.1.0",
     "postcss-nested": "^6.2.0",
     "prettier": "^3.3.3",
+    "prettier-eslint": "16.4.2",
     "typescript": "~5.8.3",
     "vite": "^6.3.5",
-    "vue-tsc": "2.2.10"
+    "vue-tsc": "2.2.10",
+    "vue-i18n": "^9.14.0"
   },
   "files": [
     "dist/styles.css"
@@ -43,5 +49,8 @@
       "postcss-nested": {},
       "autoprefixer": {}
     }
+  },
+  "engines": {
+    "node": ">=20.0.0"
   }
 }

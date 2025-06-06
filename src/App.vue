@@ -156,7 +156,7 @@ const darkMode = ref(false);
               fill: var(--CC-color-blue);
 
               &:hover {
-                fill: #c8f5dc;
+                fill: #d0d4d2;
               }
             }
           }

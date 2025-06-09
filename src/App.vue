@@ -73,6 +73,17 @@ const darkMode = ref(false);
       align-items: center;
       gap: 0.75rem;
 
+      input[type='radio'] {
+        margin-right: 0;
+        border: 1px solid #fff;
+        cursor: pointer;
+        accent-color: var(--CC-color-focus);
+
+        &[disabled] {
+          cursor: not-allowed;
+        }
+      }
+
       svg {
         border: 1px solid transparent;
         padding: 0.1rem;
@@ -99,7 +110,7 @@ const darkMode = ref(false);
               fill: #d1f9cd;
 
               &:hover {
-                fill: #c8f5dc;
+                fill: #66a481;
               }
             }
           }
@@ -131,35 +142,83 @@ const darkMode = ref(false);
       display: flex;
       align-items: center;
       gap: 0.75rem;
+      user-select: none;
+
+      input[type='radio'],
+      .CC__input-radio-input {
+        cursor: pointer;
+        opacity: 0;
+        position: absolute;
+        margin-left: 10px;
+        width: 1px;
+        height: 1px;
+
+        &[disabled] {
+          cursor: not-allowed;
+        }
+      }
+
+      .CC__input-radio-icon-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid var(--CC-color-gray);
+        border-radius: 50%;
+      }
 
       svg {
-        border: 1px solid transparent;
-        padding: 0.1rem;
-        border-radius: 0.25rem;
+        &.CC__input-radio-icon {
+          font-size: 0.7rem;
 
-        &.invalid__input {
-          border-color: #ff002b;
           path {
-            fill: #ff002b5b;
+            fill: var(--CC-color-gray-light);
+          }
+          &.checked {
+            background-color: var(--CC-color-gray);
+
+            path {
+              &:hover {
+                accent-color: #66a481;
+              }
+            }
+          }
+          &:not(.checked) path {
             &:hover {
-              fill: #e7c7cc;
+              accent-color: #66a481;
             }
           }
         }
-        &:not(.invalid__input) {
-          &:not(.checked) path {
-            fill: var(--CC-color-gray);
-            &:hover {
-              fill: #d0d4d2;
+
+        &.CC__input-checkbox-icon {
+          border-radius: 0.25rem;
+          border: 1px solid var(--CC-color-gray);
+          width: 0.8rem;
+          height: 0.8rem;
+          &.invalid__input {
+            border-color: #ff002b;
+            path {
+              fill: #ff002b5b;
+              &:hover {
+                fill: #e7c7cc;
+              }
             }
           }
-
-          &.checked {
-            path {
-              fill: var(--CC-color-blue);
+          &:not(.invalid__input) {
+            &:not(.checked) path {
+              fill: transparent;
 
               &:hover {
                 fill: #d0d4d2;
+              }
+            }
+
+            &.checked {
+              path {
+                fill: var(--CC-color-blue);
+
+                &:hover {
+                  fill: #91b5c4;
+                }
               }
             }
           }

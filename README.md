@@ -1,10 +1,4 @@
-Here's a cheatsheet for your CSS, organized for quick reference. This covers your global variables, base styles, and an extensive set of utility classes for display, layout, spacing, text, colors, borders, and animations.
-
----
-
 ## CSS Cheatsheet
-
-This cheatsheet provides a quick reference for the global CSS variables and utility classes defined in your project.
 
 ### Global Variables & Base Styles
 
@@ -443,4 +437,4 @@ These are the `@keyframes` definitions you can use with the `animation` CSS prop
 
 ---
 
-I hope this cheatsheet helps you quickly find and apply the styles you need in your project! Let me know if you'd like any other sections or clarifications.
+I hope this cheatsheet helps you utilize our library!

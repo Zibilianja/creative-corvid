@@ -87,7 +87,7 @@ const _errorMessages = computed((): string => {
   }
   const errors = props.rules.map((rule: Function) => rule(props.modelValue));
   const _errors = errors?.filter(
-    (item: boolean | string) => (item as boolean) !== true
+    (item: boolean | string) => (item as boolean) !== true,
   );
 
   if (props.error || _errors.length > 0) {
@@ -118,7 +118,7 @@ watch(
     } else {
       isInvalid.value = false;
     }
-  }
+  },
 );
 
 watch(
@@ -129,7 +129,7 @@ watch(
     } else {
       isInvalid.value = false;
     }
-  }
+  },
 );
 
 onMounted(() => {
@@ -155,13 +155,27 @@ defineExpose({
       }"
       :aria-describedby="`${inputId}-messages`"
     >
-      <legend :for="inputId" :class="{ invalid__input: isInvalid }">
+      <legend
+        :for="inputId"
+        :class="{ invalid__input: isInvalid }"
+      >
         {{ label }}
-        <span v-if="required" class="req__asterisk"> &lowast; </span>
+        <span
+          v-if="required"
+          class="req__asterisk"
+        >
+          &lowast;
+        </span>
       </legend>
 
-      <template v-for="(option, index) in options" :key="option[itemValue]">
-        <label class="CC__input-radio-label" :disabled="disabled">
+      <template
+        v-for="(option, index) in options"
+        :key="option[itemValue]"
+      >
+        <label
+          class="CC__input-radio-label"
+          :disabled="disabled"
+        >
           <input
             :id="`${inputId}-${index}`"
             v-bind="$attrs"
@@ -172,8 +186,17 @@ defineExpose({
             :value="option[itemValue]"
             :checked="modelValue === option[itemValue]"
             @change="$emit('update:modelValue', option[itemValue])"
-          />
+          >
+          <div class="CC__input-radio-icon-container" :class="modelValue === option[itemValue] ? 'checked' : ''">
+          
+          <font-awesome-icon
+          class="CC__input-radio-icon"
+          :class="modelValue === option[itemValue] ? 'checked' : ''"
+          :icon="['fas', modelValue === option[itemValue] ? 'circle-dot' : 'circle']"
+        />
+        </div>
           {{ option[itemTitle] }}
+          </input>
         </label>
       </template>
     </fieldset>
@@ -209,9 +232,10 @@ defineExpose({
 <style lang="postcss">
 .CC__input-radio {
   &-fieldset {
-    border: 1px solid #fff;
+    border: 1px solid var(--CC-color-gray);
     margin: 0;
-    padding: 0;
+    padding: 1rem;
+    
 
     &.invalid__input {
       border-color: #a41d33;
@@ -221,17 +245,17 @@ defineExpose({
     &.column {
       display: flex;
       flex-direction: column;
+      row-gap: 0.25rem;
     }
     &.row {
       display: flex;
       flex-direction: row;
-      column-gap: 0.75rem;
+      column-gap: 1rem;
     }
 
     legend {
       margin-bottom: 0.5rem;
       font-size: 1rem;
-      width: unset !important;
 
       &.invalid__input {
         color: #a41d33;
@@ -247,17 +271,16 @@ defineExpose({
 
   &-label {
     display: flex;
-    align-items: center;
     cursor: pointer;
-    width: fit-content;
-    padding: 0.25rem 0;
+    justify-content: flex-start;
 
     &[disabled='true'] {
       cursor: not-allowed;
     }
 
     input[type='radio'] {
-      margin: 0 0.25rem;
+      margin-right: 0;
+      cursor: pointer;
 
       &[disabled] {
         cursor: not-allowed;

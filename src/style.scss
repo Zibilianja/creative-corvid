@@ -12,7 +12,7 @@
   --CC-color-blue-dark: #002d4c;
   --CC-color-blue-gray: #b0c4d4;
   --CC-color-gray: #b0b0b0;
-  --CC-color-gray-light: #f0f0f0;
+  --CC-color-gray-light: #e6e3e3;
   --CC-color-gray-dark: #7d7d7d;
   --CC-color-gray-darker: #4d4d4d;
   --CC-color-focus: #21d795;
@@ -52,8 +52,52 @@ body {
 
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Quicksand:wght@300..700&display=swap');
 
-// #region - Utility classes
+/* Utility classes for CSS Customization */
+
+// #region - Utility classes - expand for more
+
 // #region - display, position, float, overflow classes
+
+// #region - Size utilities: Width, Height utilities
+// width
+.cc-w-100 {
+  width: 100%;
+}
+.cc-w-75 {
+  width: 75%;
+}
+.cc-w-50 {
+  width: 50%;
+}
+.cc-w-25 {
+  width: 25%;
+}
+.cc-w-auto {
+  width: auto;
+}
+.cc-w-fit-content {
+  width: fit-content;
+}
+// height
+.cc-h-100 {
+  height: 100%;
+}
+.cc-h-75 {
+  height: 75%;
+}
+.cc-h-50 {
+  height: 50%;
+}
+.cc-h-25 {
+  height: 25%;
+}
+.cc-h-auto {
+  height: auto;
+}
+.cc-h-fit-content {
+  height: fit-content;
+}
+// #endregion - Size utilities
 // #region - display
 
 .cc-d-flex {
@@ -185,7 +229,9 @@ body {
 }
 // #endregion - overflow
 // #endregion - display, position, float, overflow classes
+
 // #region - Flexbox and Grid utilities
+
 // #region - Place, align, justify items utilities 
 .cc-place-items-start {
   place-items: start;
@@ -393,8 +439,8 @@ body {
 }
 // #endregion - Gap utilities
 // #endregion - Flexbox and Grid utilities
-// #region - Spacing utilities
 
+// #region - Spacing utilities
 /* Margin utilities */
 
 .cc-m-0 {
@@ -429,6 +475,9 @@ body {
 }
 .cc-m-10 {
   margin: 2.5rem;
+}
+.cc-mb-20 {
+  margin-bottom: 5rem;
 }
 .cc-m-auto {
   margin: auto;
@@ -680,6 +729,9 @@ body {
 .cc-mt-10 {
   margin-top: 2.5rem;
 }
+.cc-mt-20 {
+  margin-top: 5rem;
+}
 .cc-mt-auto {
   margin-top: auto;
 }
@@ -748,6 +800,9 @@ body {
 }
 .cc-mb-10 {
   margin-bottom: 2.5rem;
+}
+.cc-mb-20 {
+  margin-bottom: 5rem;
 }
 .cc-mb-auto {
   margin-bottom: auto;
@@ -1258,7 +1313,9 @@ body {
   padding-right: 2.5rem;
 }
 // #endregion - Spacing utilities
+
 // #region - Text utilities
+
 // #region - Text alignment, font size
 /* Text alignment utilities */
 .cc-text-left {
@@ -1436,8 +1493,11 @@ body {
 .cc-text-gray {
   color: var(--CC-color-gray);
 }
+// #endregion - Text color utilities
 // #endregion - Text utilities
+
 // #region - Border utilities   
+
 .cc-border-0 {
   border: none;
 }
@@ -1508,7 +1568,10 @@ body {
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.37);
 }
 // #endregion - Border utilities
+
 // #region - Animations
+
+
 @keyframes cc-animate-spin {
   0% {
     transform: rotate(0deg);
@@ -1582,4 +1645,5 @@ body {
   }
 }
 // #endregion - Animations
+
 // #endregion - Utility classes

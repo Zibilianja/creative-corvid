@@ -3,8 +3,8 @@ Logo.vue - Modular logo to use wherever needed.
 ========================================================================== */
 <script setup lang="ts">
 import { ref } from 'vue';
-import BlackCrowLogo from '../../public/assets/BlackCrowLogo.svg';
-import WhiteRavenLogo from '../../public/assets/WhiteRavenLogo2.svg';
+import BlackCrowLogo from '@/assets/BlackCrowLogo.svg';
+import WhiteRavenLogo from '@/assets/WhiteRavenLogo2.svg';
 
 const emit = defineEmits(['update:darkModeToggle']);
 
@@ -25,7 +25,10 @@ const toggleLogo = () => {
 </script>
 /* Template ============================================================== */
 <template>
-  <div id="creative-corvid__logo-header-theme-toggle" class="CC__logo-header">
+  <div
+    id="creative-corvid__logo-header-theme-toggle"
+    class="CC__logo-header"
+  >
     <button
       id="creative-corvid__logo-header"
       class="CC__logo-flip-container"

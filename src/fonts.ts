@@ -42,6 +42,8 @@ import {
   faStickyNote,
   faMagnifyingGlass,
   faPaperPlane,
+  faCircleDot,
+  faCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import { faShop } from '@fortawesome/free-solid-svg-icons/faShop';
 
@@ -54,6 +56,8 @@ library.add(
   faTimes,
   faSquare,
   faCircleCheck,
+  faCircleDot,
+  faCircle,
   faSquareCheck,
   faTrashAlt,
   faPenToSquare,
@@ -85,7 +89,7 @@ library.add(
   faBullhorn,
   faStickyNote,
   faMagnifyingGlass,
-  faPaperPlane
+  faPaperPlane,
 );
 
 export default FontAwesomeIcon;

@@ -14,7 +14,7 @@ const props = defineProps({
     default: 'default',
     validator: (value: string) =>
       ['default', 'announcement', 'success', 'info', 'warn', 'error'].includes(
-        value
+        value,
       ),
   },
   timeout: {
@@ -43,7 +43,7 @@ watch(
     if (!newValue) {
       cancelToast();
     }
-  }
+  },
 );
 
 const showToast = () => {
@@ -71,7 +71,10 @@ const cancelToast = () => {
     aria-live="assertive"
     aria-atomic="true"
   >
-    <div class="toast" :class="state">
+    <div
+      class="toast"
+      :class="state"
+    >
       <div class="toast-icon">
         <component :is="ICONS[state]" />
       </div>

@@ -14,7 +14,10 @@ const darkMode = ref(false);
 </script>
 /* Template ============================================================== */
 <template>
-  <div class="app-container" :class="{ 'dark-mode': darkMode }">
+  <div
+    class="app-container"
+    :class="{ 'dark-mode': darkMode }"
+  >
     <div id="app-header">
       <Logo @update:dark-mode-toggle="darkMode = !darkMode" />
     </div>
@@ -188,11 +191,11 @@ header {
 .loading-button {
   #spinner {
     margin-left: 0.5rem;
-    animation: spin 1.75s linear infinite;
+    animation: cc-animate-spin 1.75s linear infinite;
   }
 }
 
-@keyframes spin {
+@keyframes cc-animate-spin {
   0% {
     transform: rotate(0deg);
   }

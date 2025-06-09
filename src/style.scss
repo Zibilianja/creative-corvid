@@ -1423,6 +1423,19 @@ body {
   background-color: #d02216;
 }
 // #endregion - Font style, weight, decoration utilities
+// #region - Text color utilities
+.cc-text-white {
+  color: #fff;
+}
+.cc-text-black {
+  color: #000;
+}
+.cc-text-gray-dark {
+  color: var(--CC-color-gray-dark);
+}
+.cc-text-gray {
+  color: var(--CC-color-gray);
+}
 // #endregion - Text utilities
 // #region - Border utilities   
 .cc-border-0 {
@@ -1491,6 +1504,82 @@ body {
 .cc-border-circle {
   border-radius: 50%; /* Full border radius */
 }
+.cc-box-shadow {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.37);
+}
 // #endregion - Border utilities
 // #region - Animations
+@keyframes cc-animate-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes cc-aimate-showToast {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes cc-animate-hideToast {
+      from {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      to {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+    }
+
+    @keyframes cc-animate-appear {
+    from {
+      opacity: 0;
+      padding: 0;
+      max-height: 0;
+    }
+    to {
+      opacity: 1;
+      padding: 1rem;
+      max-height: 15rem;
+    }
+  }
+
+  @keyframes cc-animate-disappear {
+    from {
+      opacity: 1;
+      max-height: 15rem;
+      padding: 1rem;
+    }
+    to {
+      opacity: 0;
+      max-height: 0;
+      padding: 0;
+    }
+  }
+
+  @keyframes cc-toast-in-out {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  10%,
+  90% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+// #endregion - Animations
 // #endregion - Utility classes

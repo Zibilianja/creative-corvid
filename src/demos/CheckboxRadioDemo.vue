@@ -154,9 +154,12 @@ const handleSubmit = () => {
   margin: 0 0 0.5rem 1rem;
 }
 
-.CC__checkbox-demo-container,
-.CC__radio-demo-container {
+.CC__checkbox-demo-container {
   display: flex;
   justify-content: space-evenly;
+  padding: 1rem 0;
+}
+.CC__radio-demo-container {
+  padding: 1rem 0;
 }
 </style>

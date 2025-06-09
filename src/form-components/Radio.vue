@@ -152,6 +152,7 @@ defineExpose({
         invalid__input: isInvalid,
         column: direction === 'column',
         row: direction === 'row',
+        
       }"
       :aria-describedby="`${inputId}-messages`"
     >
@@ -187,14 +188,12 @@ defineExpose({
             :checked="modelValue === option[itemValue]"
             @change="$emit('update:modelValue', option[itemValue])"
           >
-          <div class="CC__input-radio-icon-container" :class="modelValue === option[itemValue] ? 'checked' : ''">
           
           <font-awesome-icon
           class="CC__input-radio-icon"
           :class="modelValue === option[itemValue] ? 'checked' : ''"
           :icon="['fas', modelValue === option[itemValue] ? 'circle-dot' : 'circle']"
         />
-        </div>
           {{ option[itemTitle] }}
           </input>
         </label>
@@ -233,8 +232,10 @@ defineExpose({
 .CC__input-radio {
   &-fieldset {
     border: 1px solid var(--CC-color-gray);
+    border-radius: 1rem;
     margin: 0;
-    padding: 1rem;
+    padding:1.5rem;
+    width: 100%;
     
 
     &.invalid__input {
@@ -245,12 +246,14 @@ defineExpose({
     &.column {
       display: flex;
       flex-direction: column;
-      row-gap: 0.25rem;
+      row-gap: 1rem;
+      
     }
     &.row {
       display: flex;
       flex-direction: row;
       column-gap: 1rem;
+      justify-content: space-evenly;
     }
 
     legend {
@@ -278,14 +281,8 @@ defineExpose({
       cursor: not-allowed;
     }
 
-    input[type='radio'] {
-      margin-right: 0;
-      cursor: pointer;
-
-      &[disabled] {
-        cursor: not-allowed;
-      }
-    }
+    
   }
 }
+
 </style>

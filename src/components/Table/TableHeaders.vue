@@ -5,7 +5,7 @@
 // <script setup lang="ts">
 // import { useI18n } from 'vue-i18n';
 // import { useRequestStore } from '@/stores';
-// import { Button } from 'dps-component-library';
+// import { Button } from 'cc-component-library';
 
 // const { t } = useI18n();
 // const store = useRequestStore();
@@ -46,7 +46,7 @@
 //   <thead id="transportation-exception-admin__pending-requests-table-thead">
 //     <tr
 //       id="transportation-exception-admin__pending-requests-table-headers-container"
-//       class="dps-p-2"
+//       class="cc-p-2"
 //     >
 //       <th
 //         id="transportation-exception-admin__pending-table-header-student-id"
@@ -54,7 +54,7 @@
 //       >
 //         {{ columnHeaders.studentID }}
 //         <Button
-//           class="transportation-exception-admin__table-sort-btn icon-button dps-bg-transparent dps-ml-2 dps-w-fit-content"
+//           class="transportation-exception-admin__table-sort-btn icon-button cc-bg-transparent cc-ml-2 cc-w-fit-content"
 //           :title="`sort${columnHeaders.studentID}`"
 //           :aria-label="`sort${columnHeaders.studentID}`"
 //           @click="store.sortController('studentID', 'number')"
@@ -71,7 +71,7 @@
 //       >
 //         {{ columnHeaders.studentName }}
 //         <Button
-//           class="transportation-exception-admin__table-sort-btn icon-button dps-bg-transparent dps-ml-2"
+//           class="transportation-exception-admin__table-sort-btn icon-button cc-bg-transparent cc-ml-2"
 //           :title="`sort${columnHeaders.studentName}`"
 //           :aria-label="`sort${columnHeaders.studentName}`"
 //           @click="store.sortController('studentName', 'string')"
@@ -88,7 +88,7 @@
 //       >
 //         {{ columnHeaders.schoolName }}
 //         <Button
-//           class="transportation-exception-admin__table-sort-btn icon-button dps-bg-transparent dps-ml-2"
+//           class="transportation-exception-admin__table-sort-btn icon-button cc-bg-transparent cc-ml-2"
 //           :title="`sort${columnHeaders.schoolName}`"
 //           :aria-label="`sort${columnHeaders.schoolName}`"
 //           @click="store.sortController('school', 'string')"
@@ -105,7 +105,7 @@
 //       >
 //         {{ columnHeaders.applicationDate }}
 //         <Button
-//           class="transportation-exception-admin__table-sort-btn icon-button dps-bg-transparent dps-ml-2"
+//           class="transportation-exception-admin__table-sort-btn icon-button cc-bg-transparent cc-ml-2"
 //           :title="`sort${columnHeaders.applicationDate}`"
 //           :aria-label="`sort${columnHeaders.applicationDate}`"
 //           @click="store.sortController('applicationDate', 'date')"
@@ -122,7 +122,7 @@
 //       >
 //         {{ columnHeaders.assignedRouter }}
 //         <Button
-//           class="transportation-exception-admin__table-sort-btn icon-button dps-bg-transparent dps-ml-2"
+//           class="transportation-exception-admin__table-sort-btn icon-button cc-bg-transparent cc-ml-2"
 //           :title="`sort${columnHeaders.assignedRouter}`"
 //           :aria-label="`sort${columnHeaders.assignedRouter}`"
 //           @click="store.sortController('assignedRouter', 'string')"
@@ -140,7 +140,7 @@
 //         <div>
 //           {{ columnHeaders.daysPending }}
 //           <Button
-//             class="transportation-exception-admin__table-sort-btn icon-button dps-bg-transparent dps-ml-2"
+//             class="transportation-exception-admin__table-sort-btn icon-button cc-bg-transparent cc-ml-2"
 //             :title="`sort${columnHeaders.daysPending}`"
 //             :aria-label="`sort${columnHeaders.daysPending}`"
 //             @click="store.sortController('daysPending', 'number')"

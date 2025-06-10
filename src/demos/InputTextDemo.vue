@@ -23,11 +23,11 @@ const toastValue = ref('default');
 const valueToast = ref(false);
 const inputError = ref(false);
 
-const handleInputChange = (input: any) => {
-  if (validateInput(input.value)) {
-    input.error = false;
+const handleInputChange = (input: string) => {
+  if (validateInput(inputValues.value[input].value)) {
+    inputValues.value[input].error = false;
   } else {
-    input.error = true;
+    inputValues.value[input].error = true;
   }
 };
 
@@ -69,7 +69,7 @@ const validateInput = (value: string): boolean => {
           variations.
         </div>
       </div>
-      <div class="demo__inputs-container">
+      <div class="CC__demo-wrapper">
         <TextInput
           v-model="inputValues.text.value"
           label="Text Field"
@@ -83,7 +83,7 @@ const validateInput = (value: string): boolean => {
           :error="inputValues.text.error"
           @update:focus="inputValues.text.error = false"
           @update:blur=""
-          @update:model-value="handleInputChange"
+          @update:model-value="handleInputChange('text')"
         />
         <TextInput
           v-model="inputValues.search.value"
@@ -111,8 +111,11 @@ const validateInput = (value: string): boolean => {
           @update:model-value="handleInputChange"
         />
       </div>
-      <Button @click="submitInput" class="CC__blue-gray submit-button"
-        >Test Submit</Button
+      <Button
+        class="CC__green cc-mt-4"
+        :leadingIcon="['fas', 'paper-plane']"
+        @click="submitInput"
+        >Submit</Button
       >
     </div>
   </div>
@@ -138,10 +141,7 @@ const validateInput = (value: string): boolean => {
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
-    gap: 0.5rem;
     align-items: center;
-
-    padding: 1rem;
     border-radius: 0.5rem;
 
     .submit-button {
@@ -151,22 +151,6 @@ const validateInput = (value: string): boolean => {
       margin-top: 1.5rem;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.37);
     }
-  }
-}
-.demo__inputs-container {
-  margin: 1rem 0;
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 1rem;
-  width: 100%;
-}
-@media (max-width: 960px) {
-  .demo__inputs-container {
-    flex-direction: column;
-    align-items: left;
-    margin: 1rem 0.5rem;
-    width: auto;
-    padding: 0 0.5rem;
   }
 }
 </style>

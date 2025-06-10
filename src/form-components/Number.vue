@@ -59,7 +59,7 @@ const labelId = GetInputId();
 const val = ref<number | string | null>('');
 const inputLength = props.pattern[0] + props.pattern[1] + 1;
 const inputRef = ref<HTMLInputElement>(
-  document.getElementById(labelId) as HTMLInputElement
+  document.getElementById(labelId) as HTMLInputElement,
 );
 const requiredClass = ref('');
 
@@ -149,10 +149,15 @@ const setRequiredCss = (error: boolean) => {
 Template
 ========================================================================== */
 <template>
-  <div class="dps__input-decimal-container">
+  <div class="cc__input-decimal-container">
     <label :for="labelId">
       {{ label }}
-      <span v-if="required" class="req__asterisk"> * </span>
+      <span
+        v-if="required"
+        class="req__asterisk"
+      >
+        *
+      </span>
       <span
         v-if="required && requiredClass === 'invalid__input'"
         :class="requiredClass"
@@ -163,7 +168,7 @@ Template
     <input
       :id="labelId"
       type="text"
-      class="dps__input-decimal-input"
+      class="cc__input-decimal-input"
       :class="requiredClass"
       :placeholder="placeholder"
       :value="val"
@@ -176,7 +181,10 @@ Template
       @keyup="emitUpdate('keyup', $event)"
       @keypress="emitUpdate('keypress', $event)"
     />
-    <div v-if="helpText" class="dps__input-text-help">
+    <div
+      v-if="helpText"
+      class="cc__input-text-help"
+    >
       {{ helpText }}
     </div>
   </div>
@@ -186,7 +194,7 @@ Template
 Style ==========================================================================
 */
 <style lang="postcss">
-.dps__input-decimal {
+.cc__input-decimal {
   &-container {
     label {
       font-size: 1rem;

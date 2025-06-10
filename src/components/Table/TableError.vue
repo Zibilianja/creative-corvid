@@ -32,6 +32,6 @@ defineProps({
   border-radius: 0.5rem;
   color: #fff;
   font-size: 1.25rem;
-  border: 6px solid var(--dps-color-light-pink);
+  border: 6px solid var(--cc-color-light-pink);
 }
 </style>

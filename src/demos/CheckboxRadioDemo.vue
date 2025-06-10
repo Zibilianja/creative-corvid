@@ -80,33 +80,27 @@ const handleSubmit = () => {
       <h2>Checkbox and Radio Demo</h2>
       <div>Click the inputs below to see styles.</div>
     </div>
-    <label class="CC__checkbox-label"
-      >Please Choose one or more checkbox:</label
-    >
-    <div class="CC__checkbox-demo-container">
+    <label class="CC__demo-label">Please Choose one or more checkbox:</label>
+    <div class="CC__demo-wrapper">
       <Checkbox
         v-model="checkboxValues.announcement.value"
         label="Sample 1 Checkbox"
-        :error="checkboxValues.announcement.error"
-        @click="console.log('whoop')"
       />
       <Checkbox
         v-model="checkboxValues.success.value"
         label="Sample 2 Checkbox"
-        :error="checkboxValues.success.error"
       />
       <Checkbox
         v-model="checkboxValues.error.value"
         label="Sample 3 Checkbox"
-        :error="checkboxValues.error.error"
       />
       <Checkbox
         v-model="checkboxValues.info.value"
         label="Sample 4 Checkbox"
       />
     </div>
-    <label class="CC__checkbox-label cc-my-4">Please select some radios:</label>
-    <div class="CC__radio-demo-container cc-w-100 cc-d-flex cc-justify-evenly">
+    <label class="CC__demo-label cc-my-4">Please select some radios:</label>
+    <div class="CC__demo-wrapper cc-w-100 cc-d-flex cc-justify-evenly">
       <Radio
         v-model="radioSelected.radio1"
         :options="radioData.radio1"
@@ -122,9 +116,7 @@ const handleSubmit = () => {
         name="sample-radio-2"
       />
     </div>
-    <div
-      class="CC__radio-demo-container cc-w-100 cc-d-flex cc-justify-evenly cc-mt-8"
-    >
+    <div class="CC__demo-wrapper cc-w-100 cc-d-flex cc-justify-evenly cc-mt-8">
       <Radio
         v-model="radioSelected.radio3"
         :options="radioData.radio3"
@@ -150,16 +142,13 @@ const handleSubmit = () => {
 </template>
 /* Styles ============================================================== */
 <style lang="postcss">
-.CC__checkbox-label {
-  margin: 0 0 0.5rem 1rem;
+.CC__demo-label {
+  margin: 0 0 1rem 0;
 }
 
-.CC__checkbox-demo-container {
+.CC__demo-wrapper {
   display: flex;
   justify-content: space-evenly;
-  padding: 1rem 0;
-}
-.CC__radio-demo-container {
-  padding: 1rem 0;
+  gap: 1.5rem;
 }
 </style>

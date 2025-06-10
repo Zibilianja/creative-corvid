@@ -10,6 +10,7 @@ const emit = defineEmits(['update:darkModeToggle']);
 
 const isDarkMode = ref(false);
 const isFlipping = ref(false);
+const isHintVisible = ref(false);
 
 const toggleLogo = () => {
   if (isFlipping.value) return; // Prevent multiple clicks during animation
@@ -22,6 +23,15 @@ const toggleLogo = () => {
     emit('update:darkModeToggle', isDarkMode.value);
   }, 300); // Delay to allow the previous animation to finish
 };
+
+const toggleHint = () => {
+  isHintVisible.value = true;
+  if (isHintVisible.value) {
+    setTimeout(() => {
+      isHintVisible.value = false; // Hide hint after a short delay
+    }, 2000); // Adjust the delay as needed
+  }
+};
 </script>
 /* Template ============================================================== */
 <template>
@@ -33,6 +43,7 @@ const toggleLogo = () => {
       id="creative-corvid__logo-header"
       class="CC__logo-flip-container"
       @click="toggleLogo"
+      @mouseover="toggleHint"
       aria-label="Toggle Theme"
       :class="{ 'is-flipping': isFlipping, 'is-dark-mode': isDarkMode }"
     >
@@ -47,20 +58,32 @@ const toggleLogo = () => {
         class="CC__logo-face CC__logo-back CC__white-crow-logo"
       />
     </button>
+    <div
+      v-if="isHintVisible"
+      class="logo-hint"
+    >
+      * Click Crow to toggle Light / Dark Mode *
+    </div>
   </div>
 </template>
 /* Styles ================================================================ */
 <style lang="postcss">
 #creative-corvid__logo-header-theme-toggle {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;
   padding: 1rem;
   border: none;
-
   perspective: 1000px;
   margin: 0 auto;
+  .logo-hint {
+    font-size: 0.875rem;
+    color: var(--CC-color-gray);
+    margin-top: 0.5rem;
+    margin-bottom: -1.6rem;
+  }
 }
 
 .CC__logo-flip-container {
@@ -78,6 +101,9 @@ const toggleLogo = () => {
   }
   &.is-dark-mode {
     transform: rotateY(180deg);
+  }
+  &:hover {
+    border-color: var(--CC-color-focus);
   }
 }
 

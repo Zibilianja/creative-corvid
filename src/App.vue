@@ -11,6 +11,10 @@ import { ref } from 'vue';
 import CheckboxRadioDemo from './demos/CheckboxRadioDemo.vue';
 
 const darkMode = ref(false);
+
+defineExpose({
+  darkMode,
+});
 </script>
 /* Template ============================================================== */
 <template>
@@ -18,23 +22,40 @@ const darkMode = ref(false);
     class="app-container"
     :class="{ 'dark-mode': darkMode }"
   >
-    <div id="app-header">
-      <Logo @update:dark-mode-toggle="darkMode = !darkMode" />
+    <div
+      class="app-body"
+      :class="{ 'dark-mode': darkMode }"
+    >
+      <div id="app-header">
+        <Logo @update:dark-mode-toggle="darkMode = !darkMode" />
+      </div>
+      <h1>Creative Corvid Component and Style Library:</h1>
+      <h2>Components Demo</h2>
+      <ButtonDemo />
+      <CheckboxRadioDemo />
+      <InputTextDemo />
+      <InputTextAreaInputDemo />
+      <DateDemo />
+      <InfoPanelDemo />
     </div>
-    <h1>Creative Corvid Component and Style Library:</h1>
-    <h2>Components Demo</h2>
-    <ButtonDemo />
-    <CheckboxRadioDemo />
-    <InputTextDemo />
-    <InputTextAreaInputDemo />
-    <DateDemo />
-    <InfoPanelDemo />
   </div>
 </template>
 /* Styles ================================================================ */
 <style lang="postcss">
 .app-container {
+  width: 100%;
+
+  &.dark-mode {
+    background-color: var(--CC-color-gray-darker);
+    color: #ffffff;
+  }
+  &:not(.dark-mode) {
+    background-color: var(--CC-color-gray);
+  }
+}
+.app-body {
   border-radius: 1rem;
+  max-width: 1250px;
   margin: 0 auto;
   padding: 0 1.5rem;
   text-align: center;
@@ -53,18 +74,94 @@ const darkMode = ref(false);
     }
   }
 
+  .CC__demo-container {
+    padding: 1.5rem;
+    margin: 2rem 0;
+  }
+
+  .CC__demo-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+
   label {
     font-size: 1.2rem;
     font-weight: 600;
     margin-bottom: 0.25rem;
   }
+
+  /*
+  Dark mode styles
+   */
   &.dark-mode {
-    background-color: #121212;
+    background-color: #1d1d1d;
     color: #ffffff;
 
     .CC__demo-container {
       background-color: #3d3c3c;
       box-shadow: none;
+    }
+    .CC__panel-reset-button {
+      margin-top: 1rem;
+      color: #ffffff;
+      background-color: var(--CC-color-blue);
+      border: none;
+      border-radius: 0.25rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: #66a481;
+      }
+    }
+
+    label {
+      color: #333;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      user-select: none;
+
+      .CC__input-radio-input {
+        margin: 0;
+        opacity: 0;
+        position: absolute;
+        width: 1px;
+        height: 1px;
+
+        &[disabled] {
+          cursor: not-allowed;
+        }
+      }
+      .CC__input-checkbox-icon {
+        height: 1rem;
+        width: 1rem;
+      }
+
+      svg {
+        &.CC__input-radio-icon {
+          font-size: 1rem;
+          border-radius: 50%;
+
+          &.checked {
+            border: 1px inset var(--CC-color-blue-dark);
+            box-shadow: inset 8px 8px var(--CC-color-blue);
+
+            path {
+              fill: var(--CC-color-blue-light);
+            }
+          }
+          &:not(.checked) {
+            border: 1px solid var(--CC-color-gray-darker);
+
+            path {
+              fill: var(--CC-color-gray-light);
+            }
+          }
+        }
+      }
     }
 
     label {
@@ -73,44 +170,35 @@ const darkMode = ref(false);
       align-items: center;
       gap: 0.75rem;
 
-      input[type='radio'] {
-        margin-right: 0;
-        border: 1px solid #fff;
-        cursor: pointer;
-        accent-color: var(--CC-color-focus);
-
-        &[disabled] {
-          cursor: not-allowed;
-        }
-      }
-
       svg {
-        border: 1px solid transparent;
-        padding: 0.1rem;
-        border-radius: 0.25rem;
-        &.invalid__input {
-          border-color: #ff002b;
-          path {
-            &:hover {
-              fill: #e7c7cc;
-            }
-          }
-        }
-        &:not(.invalid__input) {
-          &:not(.checked) path {
-            fill: #ffffff;
-            &:hover {
-              fill: #d0d4d2;
-            }
-          }
-
-          &.checked {
-            border-color: var(--CC-color-success);
+        .CC__input-checkbox-icon {
+          border: 1px solid transparent;
+          padding: 0.1rem;
+          border-radius: 0.25rem;
+          &.invalid__input {
+            border-color: #ff002b;
             path {
-              fill: #d1f9cd;
-
               &:hover {
-                fill: #66a481;
+                fill: #e7c7cc;
+              }
+            }
+          }
+          &:not(.invalid__input) {
+            &:not(.checked) path {
+              fill: #ffffff;
+              &:hover {
+                fill: #d0d4d2;
+              }
+            }
+
+            &.checked {
+              border-color: var(--CC-color-success);
+              path {
+                fill: #d1f9cd;
+
+                &:hover {
+                  fill: #66a481;
+                }
               }
             }
           }
@@ -128,9 +216,35 @@ const darkMode = ref(false);
       color: #333;
     }
   }
+
+  /*
+light mode styles
+*/
+
   &:not(.dark-mode) {
     background-color: #fff;
     color: #000000;
+
+    .cc-clear-button {
+      width: 1.5rem;
+      height: 1.5rem;
+      color: var(--CC-color-gray-dark);
+      background-color: transparent;
+      border: none;
+      border-radius: 50%;
+      padding: 0.24rem;
+      cursor: pointer;
+      &.button-present {
+        margin-left: -2rem;
+        transition:
+          background-color 0.5s ease,
+          color 0.5s ease;
+      }
+      &:hover {
+        background-color: var(--CC-color-gray-dark);
+        color: #fff;
+      }
+    }
 
     .CC__demo-container {
       background-color: #f3f3f3;
@@ -175,10 +289,10 @@ const darkMode = ref(false);
             }
 
             &.checked {
-              border: 1px inset var(--CC-color-gray);
-              background-color: var(--CC-color-gray-darker);
+              border: 1px inset var(--CC-color-blue-dark);
+              background-color: var(--CC-color-blue);
               path {
-                fill: var(--CC-color-gray-light);
+                fill: var(--CC-color-blue-gray-light);
 
                 &:hover {
                   fill: #91b5c4;
@@ -197,21 +311,28 @@ const darkMode = ref(false);
       gap: 0.75rem;
       user-select: none;
 
+      .CC__input-checkbox-icon {
+        height: 1rem;
+        width: 1rem;
+      }
+    }
+    label {
+      color: #333;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      user-select: none;
+
       .CC__input-radio-input {
         margin: 0;
         opacity: 0;
         position: absolute;
-        margin-left: 10px;
         width: 1px;
         height: 1px;
 
         &[disabled] {
           cursor: not-allowed;
         }
-      }
-      .CC__input-checkbox-icon {
-        height: 1rem;
-        width: 1rem;
       }
 
       svg {
@@ -220,14 +341,22 @@ const darkMode = ref(false);
           border-radius: 50%;
 
           &.checked {
-            border: 1px inset var(--CC-color-gray-dark);
-            background-color: var(--CC-color-gray-darker);
+            &.checked {
+              border: 1px inset var(--CC-color-blue-dark);
+              box-shadow: inset 8px 8px var(--CC-color-blue-dark);
+
+              path {
+                fill: var(--CC-color-blue-gray-light);
+              }
+            }
+
             path {
-              fill: var(--CC-color-gray-light);
+              fill: var(--CC-color-gray);
             }
           }
           &:not(.checked) {
             border: 1px solid var(--CC-color-gray-darker);
+
             path {
               fill: var(--CC-color-gray-light);
             }
@@ -238,6 +367,20 @@ const darkMode = ref(false);
 
     .leading-icon {
       color: #333;
+    }
+  }
+
+  @media (max-width: 960px) {
+    .CC__demo-container {
+      .CC__demo-label {
+        width: fit-content;
+        margin: 0 auto 1rem auto;
+      }
+    }
+
+    .CC__demo-wrapper {
+      flex-direction: column;
+      align-items: center;
     }
   }
 }

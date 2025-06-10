@@ -165,7 +165,7 @@ defineExpose({
           v-if="required"
           class="req__asterisk"
         >
-          &lowast;
+          &ast;
         </span>
       </legend>
 
@@ -233,9 +233,8 @@ defineExpose({
   &-fieldset {
     border: 1px solid var(--CC-color-gray);
     border-radius: 1rem;
-    margin: 0;
-    padding:1.5rem;
-    width: 100%;
+    margin: 0 auto;;
+    width: auto;
     
 
     &.invalid__input {

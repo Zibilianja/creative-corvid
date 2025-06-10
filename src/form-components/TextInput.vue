@@ -80,17 +80,25 @@ const leadingIcon = computed(() => {
 });
 
 const invalidInput = computed(() => {
-  return model.value.length === 0
+  return model.value.length === 0 && props.error
     ? 'invalid__input'
     : 'valid__input-after-error';
 });
 </script>
-
+/* Template ================================================== */
 <template>
   <div class="CC__text-input-container">
-    <label v-if="props.label" for="" class="text-input-label">
+    <label
+      v-if="props.label"
+      for=""
+      class="text-input-label"
+    >
       {{ props.label }}
-      <span v-if="props.required" class="required">*</span>
+      <span
+        v-if="props.required"
+        class="required"
+        >*</span
+      >
     </label>
     <div
       class="CC__text-input-wrapper"
@@ -119,13 +127,15 @@ const invalidInput = computed(() => {
         :disabled="disabled"
         @focus="emit('update:focus')"
         @blur="emit('update:blur')"
-      />
+      >
       <CloseButton
         v-if="props.clearable && model"
         class="clear-button"
         :class="model ? 'button-present' : ''"
+        :title="'Clear input'"
         @click="clearInput()"
       />
+      </input>
     </div>
     <template v-if="props.errorMessages.length > 0">
       <div class="CC__input-error-message">{{ props.errorMessages }}</div>
@@ -139,17 +149,19 @@ const invalidInput = computed(() => {
 <style lang="postcss">
 .CC__text-input {
   &-hint {
+    position: relative;
     font-size: 0.875rem;
     color: #41474c;
     margin-top: 0.4rem;
     margin-left: 0.5rem;
+    
   }
   &-container {
-    margin-bottom: 1rem;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     width: 100%;
+    
 
     .required {
       color: #a41d33;
@@ -158,61 +170,70 @@ const invalidInput = computed(() => {
     .CC__text-input-wrapper {
       display: flex;
       align-items: center;
-      border: 1px solid #7b7c7e;
+      border: 1px solid var(--CC-color-gray);
       background-color: #fff;
       box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.264);
       border-radius: 0.75rem;
       line-height: 1.5rem;
-      padding: 0 1rem;
-      width: 85%;
+      width: 100%;
+      margin-top: 0.25rem;
       &.invalid__input {
-        outline: 2px solid #a41d34be;
+        outline: 1px solid var(--CC-color-error);
+        box-shadow: 0 0 4px var(--CC-color-red);
       }
 
       &:focus-within {
-        outline: 2px solid #4be5ce;
+        outline: 1px solid var(--CC-color-focus-luminous);
+        box-shadow: 0 0 3px var(--CC-color-focus-dark);
 
         .clear-button {
-          background-color: #4fbdad;
+          background-color: var(--CC-color-green);
+          color: var(--CC-color-green-dark);
         }
       }
 
       .clear-button {
         width: 1.5rem;
         height: 1.5rem;
-        color: #303e59;
+        color: var(--CC-color-gray-darker);
         background-color: #f2f1f1;
         border: none;
         border-radius: 50%;
-        padding: 0.24rem;
+        margin-right: .75rem;
         cursor: pointer;
         &.button-present {
-          margin-left: -1.5rem;
+          
           transition:
             background-color 0.5s ease,
             color 0.5s ease;
         }
         &:hover {
-          background-color: #637cabac;
+          background-color: var(--CC-color-blue-dark);
           color: #fff;
         }
       }
     }
 
+    .leading-icon {
+      margin-left: 0.75rem;
+    }
+
     .text-input {
       font-size: 1rem;
-      width: 80%;
       min-height: 2.5rem;
+      padding-left: .75rem;
       width: 100%;
+      color: var(--CC-color-gray-darker);
       border: none;
-      background-color: #ffffff;
+      background-color: transparent;
 
       &:focus {
         outline: none;
       }
+      
       &.has-leading-icon {
         border-left: 2px solid #40495b7b;
-        padding-left: 0.5rem;
+        
         margin-left: 0.7rem;
       }
     }

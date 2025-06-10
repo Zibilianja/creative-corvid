@@ -18,11 +18,15 @@ const displayToast = (message: string): void => {
       <h2>Button Demo</h2>
       <div>Click the buttons below to see a demo of Toast alerts.</div>
     </div>
-    <div class="CC__button-demo">
-      <Button class="CC__blue-gray" @click="displayToast('announcement')"
+    <div class="CC__demo-wrapper">
+      <Button
+        class="CC__blue-gray"
+        @click="displayToast('announcement')"
         >Announcement Button</Button
       >
-      <Button class="CC__green" @click="displayToast('success')"
+      <Button
+        class="CC__green"
+        @click="displayToast('success')"
         >Submit Button</Button
       >
       <Button
@@ -31,12 +35,18 @@ const displayToast = (message: string): void => {
         @click="displayToast('error')"
         >Delete Button</Button
       >
-      <Button class="CC__purple" @click="displayToast('info')"
+      <Button
+        class="CC__purple"
+        @click="displayToast('info')"
         >Info Button</Button
       >
       <Button disabled>Disabled Button</Button>
-      <Button class="CC__blue loading-button" disabled
-        >Loading...<font-awesome-icon id="spinner" :icon="['fas', 'spinner']"
+      <Button
+        class="CC__blue loading-button"
+        disabled
+        >Loading...<font-awesome-icon
+          id="spinner"
+          :icon="['fas', 'spinner']"
       /></Button>
     </div>
     <ToastAlert
@@ -51,10 +61,3 @@ const displayToast = (message: string): void => {
     </ToastAlert>
   </div>
 </template>
-/* Styles ============================================================== */
-<style lang="postcss">
-.CC__button-demo {
-  display: flex;
-  justify-content: space-evenly;
-}
-</style>

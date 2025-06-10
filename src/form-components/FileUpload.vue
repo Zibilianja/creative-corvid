@@ -112,7 +112,7 @@ watch(
     } else {
       isInvalid.value = false;
     }
-  }
+  },
 );
 
 watch(
@@ -120,7 +120,7 @@ watch(
   (newValue) => {
     isInvalid.value = newValue;
   },
-  { immediate: true }
+  { immediate: true },
 );
 
 const onDragOver = (e: DragEvent) => {
@@ -189,17 +189,17 @@ defineExpose({
 
 /* Template ============================================================== */
 <template>
-  <div class="dps__input-file-upload-wrapper">
+  <div class="cc__input-file-upload-wrapper">
     <div
-      class="dps__input_file-upload-container"
+      class="cc__input_file-upload-container"
       :class="{ 'is-dragging': isDragging, invalid__input: isInvalid }"
       @dragover.prevent="onDragOver"
       @dragleave.prevent="onDragLeave"
       @drop.prevent="onDrop"
     >
-      <div class="dps__input-file-upload-input-label-container">
+      <div class="cc__input-file-upload-input-label-container">
         <input
-          id="dps__input-file-upload-input"
+          id="cc__input-file-upload-input"
           ref="fileInputRef"
           type="file"
           :multiple="multiple"
@@ -208,12 +208,15 @@ defineExpose({
           @change="onChange()"
         />
         <label
-          for="dps__input-file-upload-label"
+          for="cc__input-file-upload-label"
           tabindex="0"
           @keyup.enter="onLabelClick()"
           @click="onLabelClick()"
         >
-          <div v-if="isDragging" class="dps__input-file-upload-drop-indicator">
+          <div
+            v-if="isDragging"
+            class="cc__input-file-upload-drop-indicator"
+          >
             <div>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -237,7 +240,10 @@ defineExpose({
             <div>Release to drop files here.</div>
           </div>
 
-          <div v-else class="dps__input-file-upload-drop-indicator">
+          <div
+            v-else
+            class="cc__input-file-upload-drop-indicator"
+          >
             <div>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -267,29 +273,35 @@ defineExpose({
 
       <div
         v-if="files.length > 0"
-        class="dps__input-file-upload-files-list-container"
+        class="cc__input-file-upload-files-list-container"
       >
-        <div class="dps__input-file-upload-files-list-file-count">
+        <div class="cc__input-file-upload-files-list-file-count">
           {{ fileCountLabel }}
         </div>
-        <ul class="dps__input-file-upload-files-list">
-          <li v-for="file in files" :key="file.name">
+        <ul class="cc__input-file-upload-files-list">
+          <li
+            v-for="file in files"
+            :key="file.name"
+          >
             <slot :file="file">
-              <div class="dps__input-file-upload-file-details">
+              <div class="cc__input-file-upload-file-details">
                 <div
-                  class="dps__input-file-upload-file-name"
+                  class="cc__input-file-upload-file-name"
                   :title="makeName(file.name)"
                 >
                   {{ makeName(file.name) }}
                 </div>
-                <div class="dps__input-file-upload-file-metadata">
+                <div class="cc__input-file-upload-file-metadata">
                   {{ getExtension(file.name) }} -
                   {{ returnFileSize(file.size) }}
                 </div>
               </div>
 
-              <div class="dps__input-file-upload-file-actions">
-                <button title="Remove file" @click="onRemoveClick(file)">
+              <div class="cc__input-file-upload-file-actions">
+                <button
+                  title="Remove file"
+                  @click="onRemoveClick(file)"
+                >
                   Remove
                 </button>
               </div>
@@ -303,16 +315,16 @@ defineExpose({
       v-show="showDetails"
       :id="`${inputId}-messages`"
       role="alert"
-      class="dps__input-text-details"
+      class="cc__input-text-details"
       :class="{ invalid__input: isInvalid }"
     >
-      <div class="dps__input-messages">
+      <div class="cc__input-messages">
         <template v-if="_errorMessages">
-          <div class="dps__input-message">{{ _errorMessages }}</div>
+          <div class="cc__input-message">{{ _errorMessages }}</div>
         </template>
 
         <template v-else>
-          <div class="dps__input-message">
+          <div class="cc__input-message">
             <template v-if="slots.hint">
               <slot name="hint" />
             </template>
@@ -328,13 +340,13 @@ defineExpose({
 
 /* Styles ================================================================ */
 <style lang="postcss">
-.dps__input-file-upload-wrapper {
+.cc__input-file-upload-wrapper {
   display: flex;
   flex-direction: column;
   width: 100%;
 }
 
-.dps__input_file-upload-container {
+.cc__input_file-upload-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -347,7 +359,7 @@ defineExpose({
   &.is-dragging {
     border-color: #0076bd;
 
-    label[for='dps__input-file-upload-label'] {
+    label[for='cc__input-file-upload-label'] {
       color: #0076bd;
     }
   }
@@ -355,16 +367,16 @@ defineExpose({
   &.invalid__input {
     border-color: #a41d33;
 
-    label[for='dps__input-file-upload-label'] {
+    label[for='cc__input-file-upload-label'] {
       color: #a41d33;
     }
   }
 
-  .dps__input-file-upload-input-label-container {
+  .cc__input-file-upload-input-label-container {
     padding: 0 1rem 0 1rem;
   }
 
-  #dps__input-file-upload-input {
+  #cc__input-file-upload-input {
     opacity: 0;
     position: absolute;
     width: 1px;
@@ -372,14 +384,14 @@ defineExpose({
     visibility: hidden;
   }
 
-  label[for='dps__input-file-upload-label'] {
+  label[for='cc__input-file-upload-label'] {
     cursor: pointer;
     display: block;
     text-align: center;
     width: 100%;
     font-size: 1.35rem;
 
-    .dps__input-file-upload-drop-indicator {
+    .cc__input-file-upload-drop-indicator {
       display: flex;
       align-items: center;
       padding: 1rem;
@@ -396,16 +408,16 @@ defineExpose({
     }
   }
 
-  .dps__input-file-upload-files-list-container {
+  .cc__input-file-upload-files-list-container {
     width: 100%;
     padding-bottom: 1rem;
 
-    .dps__input-file-upload-files-list-file-count {
+    .cc__input-file-upload-files-list-file-count {
       margin-bottom: 0.5rem;
       font-size: 1.1rem;
     }
 
-    .dps__input-file-upload-files-list {
+    .cc__input-file-upload-files-list {
       list-style: none;
       padding: 0;
       margin: 0;
@@ -436,11 +448,11 @@ defineExpose({
         border: 1px solid #4a4a4a;
         border-radius: 0.25rem;
 
-        .dps__input-file-upload-file-details {
+        .cc__input-file-upload-file-details {
           display: grid;
           width: calc(100% - 74px);
 
-          .dps__input-file-upload-file-name {
+          .cc__input-file-upload-file-name {
             overflow: hidden;
             text-overflow: ellipsis;
             font-size: 1.15rem;
@@ -448,12 +460,12 @@ defineExpose({
           }
         }
 
-        .dps__input-file-upload-file-metadata {
+        .cc__input-file-upload-file-metadata {
           font-size: 0.8rem;
           color: var(--color-text-secondary);
         }
 
-        .dps__input-file-upload-file-actions {
+        .cc__input-file-upload-file-actions {
           display: flex;
           align-items: center;
 

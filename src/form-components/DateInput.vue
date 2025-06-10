@@ -21,10 +21,11 @@ import {
 } from 'vue';
 import { GetInputId, months } from '@/utils';
 import { Calendar } from '@/models';
-import { Button } from '@/components';
 import { vMaska } from 'maska/vue';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
+import CloseButton from '@/components/CloseButton.vue';
+import Button from '@/components/Button.vue';
 dayjs.extend(customParseFormat);
 
 const props = defineProps({
@@ -114,7 +115,7 @@ const _errorMessages = computed((): string => {
   }
   const errors = props.rules.map((rule: Function) => rule(localDate.value));
   const _errors = errors?.filter(
-    (item: boolean | string) => (item as boolean) !== true
+    (item: boolean | string) => (item as boolean) !== true,
   );
 
   if ((props.error || isDirty.value) && _errors.length > 0) {
@@ -156,7 +157,7 @@ watch(
     if (newValue.length > 0) {
       isInvalid.value = true;
     }
-  }
+  },
 );
 
 watch(
@@ -164,7 +165,7 @@ watch(
   (newValue) => {
     isInvalid.value = newValue;
   },
-  { immediate: true }
+  { immediate: true },
 );
 
 onMounted(() => {
@@ -199,7 +200,7 @@ const updateCalendarMonth = (event: Event) => {
   calendar.updateActiveMonth(
     calendar.getActiveYear(),
     newMonth,
-    calendar.getActiveDate()
+    calendar.getActiveDate(),
   );
 };
 
@@ -223,7 +224,7 @@ const clearDate = () => {
   calendar.resetActiveDate(
     today.getFullYear(),
     today.getMonth() + 1,
-    today.getDate()
+    today.getDate(),
   );
 };
 
@@ -290,7 +291,7 @@ const onInputChange = (): void => {
       calendar.resetActiveDate(
         today.getFullYear(),
         today.getMonth() + 1,
-        today.getDate()
+        today.getDate(),
       );
       return;
     } else {
@@ -310,12 +311,24 @@ defineExpose({
 /* Template ============================================================== */
 <template>
   <div class="CC__input-date-container">
-    <label :for="inputId" :class="{ invalid__input: isInvalid }">
+    <label
+      :for="inputId"
+      :class="{ invalid__input: isInvalid }"
+    >
       {{ label }}
-      <span v-if="required" class="req__asterisk"> &lowast; </span>
+      <span
+        v-if="required"
+        class="req__asterisk"
+      >
+        &ast;
+      </span>
     </label>
 
-    <div class="CC__input-date-btn-grid">
+    <div
+      class="CC__input-date-btn-grid"
+      :class="{ invalid__input: isInvalid }"
+      @focusin="isInvalid = false"
+    >
       <input
         :id="inputId"
         v-model="localDate"
@@ -331,27 +344,14 @@ defineExpose({
         @blur="onBlurChange"
         @focus="isFocused = true"
       />
-      <Button
+      <CloseButton
         v-show="localDate && !disabled && isClearable"
         type="button"
-        class="CC__input-clear-date-button CC__white"
+        class="cc-clear-button CC__white"
+        :class="[modelValue ? 'button-present' : '']"
         title="Clear Date"
         @click="clearDate()"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          height="16"
-          width="12"
-          viewBox="0 0 384 512"
-        >
-          <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
-          <path
-            d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"
-            fill="currentColor"
-          />
-        </svg>
-      </Button>
-
+      />
       <Button
         label="Select Date"
         type="button"
@@ -379,9 +379,15 @@ defineExpose({
     </div>
 
     <div>
-      <div v-if="showCalendar" class="CC__calendar-container">
+      <div
+        v-if="showCalendar"
+        class="CC__calendar-container"
+      >
         <div class="CC__calendar-header-and-nav">
-          <button class="CC__calendar-nav" @click="updateCalendarDates(-1)">
+          <button
+            class="CC__calendar-nav"
+            @click="updateCalendarDates(-1)"
+          >
             <span class="chevron left"></span>
           </button>
           <div class="CC__calendar-month-year">
@@ -404,12 +410,18 @@ defineExpose({
               :value="calendar.getActiveYear()"
               @change="updateCalendarYear($event)"
             >
-              <option v-for="(year, index) in yearOptions" :key="index">
+              <option
+                v-for="(year, index) in yearOptions"
+                :key="index"
+              >
                 {{ year }}
               </option>
             </select>
           </div>
-          <button class="CC__calendar-nav" @click="updateCalendarDates(1)">
+          <button
+            class="CC__calendar-nav"
+            @click="updateCalendarDates(1)"
+          >
             <span class="chevron right"></span>
           </button>
         </div>
@@ -454,7 +466,12 @@ defineExpose({
       :class="{ invalid__input: isInvalid }"
     >
       <div class="CC__input-messages">
-        <div v-if="isInvalidDate" class="CC__input-message">Invalid date</div>
+        <div
+          v-if="isInvalidDate"
+          class="CC__input-message"
+        >
+          Invalid date
+        </div>
         <template v-else-if="_errorMessages">
           <div class="CC__input-message">{{ _errorMessages }}</div>
         </template>
@@ -482,12 +499,13 @@ defineExpose({
 
     label {
       font-size: 1rem;
-      display: block;
-      width: 100%;
+      display: flex;
+      width: fit-content;
       margin-bottom: 0.5rem;
 
       span {
         &.req__asterisk {
+          margin-left: -0.5rem;
           color: #a41d33;
         }
       }
@@ -505,25 +523,22 @@ defineExpose({
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.5;
-    background-color: #fff;
-    border-right: 0;
-    border: 0.0625rem solid #4a4a4a;
-    border-right: none;
-    border-radius: 0.5rem 0 0 0.5rem;
+    background-color: transparent;
+    border: none;
+    border-radius: 0.75rem;
     box-sizing: border-box;
     color: #4a4a4a;
-    min-height: 48px;
 
     &[disabled] {
       background-color: #f1f1f1;
       color: #4a4a4a;
       cursor: not-allowed;
     }
+    &:focus {
+      outline: none;
+    }
 
     &.invalid__input {
-      border: 1px solid #a41d33;
-      color: #a41d33;
-
       &::placeholder {
         color: #a41d33;
       }
@@ -531,33 +546,34 @@ defineExpose({
   }
 
   &-btn-grid {
-    display: grid;
-    grid-template-columns: 1fr auto auto;
+    display: flex;
+    flex-direction: row;
     align-items: center;
+    border: 1px solid #7b7c7e;
+    background-color: #fff;
+    border-radius: 0.75rem;
+    padding: 0;
+    &.invalid__input {
+      border: 1px solid #a41d33;
+      color: #a41d33;
+    }
+    &:focus-within {
+      outline: 2px solid var(--CC-color-green-light);
+    }
 
     button {
-      line-height: 1.5;
-      border-radius: 0;
-
       &.CC__calendar-btn {
         padding: 0.375rem;
-        border: 0.0625rem solid #4a4a4a;
-        border-left: none;
-        border-radius: 0 0.5rem 0.5rem 0;
-        height: 3rem;
+        border: none;
+        min-height: 2.5rem;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
 
         &[disabled] {
           background-color: #f1f1f1;
           color: #4a4a4a;
           cursor: not-allowed;
         }
-      }
-
-      &.CC__input-clear-date-button {
-        color: #4a4a4a;
-        border-left: 0 !important;
-        border-top: 0.0625rem solid #4a4a4a;
-        border-bottom: 0.0625rem solid #4a4a4a;
       }
     }
   }
@@ -581,7 +597,7 @@ defineExpose({
   right: 0;
   background-color: #fff;
   padding: 0 0.25rem 0.25rem 0.25rem;
-  border-radius: 0.5rem;
+  border-radius: 0.75rem;
   box-shadow: 2px 2px 4px 1px rgba(10, 10, 10, 0.2);
 }
 
@@ -593,6 +609,7 @@ defineExpose({
   div {
     text-align: center;
     font-size: 1rem;
+    background-color: var(--CC-color-gray-light);
   }
 
   .CC__calendar-modal-btn {
@@ -604,34 +621,33 @@ defineExpose({
 
 .CC__calendar-weekday-names {
   div {
-    margin: 0 0 0.25rem 0;
+    margin-bottom: 0.25rem;
     font-weight: 600;
   }
 }
 
 .CC__calendar-date {
-  background-color: #fff;
-  border-radius: 0.5rem;
+  background-color: var(--CC-color-gray-light);
+  color: #4a4a4a;
   box-sizing: border-box;
-  /* padding: 0.25rem; */
   cursor: pointer;
-  /* min-height: 2.25em; */
-  min-height: 1.75rem;
+  border-radius: 0.25rem;
+  min-height: 2rem;
   display: flex;
   place-items: center;
   place-content: center;
 
   &:hover {
-    background-color: #e3e3e3;
+    background-color: var(--CC-color-gray);
   }
 
   &.today {
-    background-color: #005b94;
+    background-color: var(--CC-color-blue-dark);
     color: #fff;
   }
 
   &.selected {
-    background-color: #415e21;
+    background-color: var(--CC-color-success);
     color: #fff;
   }
 }
@@ -702,7 +718,7 @@ defineExpose({
 
 .CC__calendar-icon {
   display: flex;
-  padding: 0 0.15rem !important;
+  padding: 0 0.15rem;
 
   svg {
     pointer-events: none;

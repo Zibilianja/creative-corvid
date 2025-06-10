@@ -91,7 +91,7 @@ const _errorMessages = computed((): string => {
   }
   const errors = props.rules.map((rule: Function) => rule(model.value));
   const _errors = errors?.filter(
-    (item: boolean | string) => (item as boolean) !== true
+    (item: boolean | string) => (item as boolean) !== true,
   );
 
   if ((props.error || isDirty.value) && _errors.length > 0) {
@@ -146,7 +146,7 @@ watch(
   async () => {
     await nextTick();
     resize();
-  }
+  },
 );
 
 watch(
@@ -154,7 +154,7 @@ watch(
   async () => {
     await nextTick();
     resize();
-  }
+  },
 );
 
 watch(
@@ -162,14 +162,14 @@ watch(
   async () => {
     await nextTick();
     resize();
-  }
+  },
 );
 
 watch(
   () => props.autosize,
   (val) => {
     if (val) resize();
-  }
+  },
 );
 
 watch(
@@ -177,7 +177,7 @@ watch(
   (newValue) => {
     isInvalid.value = newValue;
   },
-  { immediate: true }
+  { immediate: true },
 );
 
 watch(
@@ -187,7 +187,7 @@ watch(
       isDirty.value = false;
       isInvalid.value = false;
     }
-  }
+  },
 );
 // #endregion watchers
 
@@ -253,14 +253,21 @@ Template
 ========================================================================== */
 <template>
   <div class="CC__textarea-container">
-    <label :for="inputId" :class="{ invalid__input: isInvalid }">
+    <label
+      :for="inputId"
+      :class="{ invalid__input: isInvalid }"
+    >
       {{ label }}
-      <span v-if="required" class="req__asterisk">*</span>
+      <span
+        v-if="required"
+        class="req__asterisk"
+        >*</span
+      >
     </label>
     <slot name="prepend"></slot>
     <textarea
       :id="inputId"
-      ref="dpsInputTextarea"
+      ref="ccInputTextarea"
       v-model="model"
       v-bind="$attrs"
       class="CC__textarea-input"

@@ -95,7 +95,7 @@ const _errorMessages = computed((): string => {
   }
   const errors = props.rules.map((rule: Function) => rule(model.value));
   const _errors = errors?.filter(
-    (item: boolean | string) => (item as boolean) !== true
+    (item: boolean | string) => (item as boolean) !== true,
   );
 
   if ((props.error || isDirty.value) && _errors.length > 0) {
@@ -126,14 +126,14 @@ watch(
   () => props.error,
   (newValue: boolean): void => {
     isInvalid.value = newValue;
-  }
+  },
 );
 
 watch(
   () => _errorMessages.value,
   (newValue: string): void => {
     isInvalid.value = newValue ? true : false;
-  }
+  },
 );
 
 watch(
@@ -143,7 +143,7 @@ watch(
       isDirty.value = false;
       isInvalid.value = false;
     }
-  }
+  },
 );
 
 onMounted(() => {
@@ -176,17 +176,25 @@ defineExpose({
 
 /* Template ============================================================== */
 <template>
-  <div class="dps__input-select-container">
-    <label :for="inputId" :class="{ invalid__input: isInvalid }">
+  <div class="cc__input-select-container">
+    <label
+      :for="inputId"
+      :class="{ invalid__input: isInvalid }"
+    >
       {{ label }}
-      <span v-if="required" class="req__asterisk"> &lowast; </span>
+      <span
+        v-if="required"
+        class="req__asterisk"
+      >
+        &ast;
+      </span>
     </label>
-    <div class="dps__input-select-input-wrapper">
-      <div class="dps__input-select-input-inner-wrapper">
+    <div class="cc__input-select-input-wrapper">
+      <div class="cc__input-select-input-inner-wrapper">
         <select
           :id="inputId"
           v-model="model"
-          class="dps__input-select-menu"
+          class="cc__input-select-menu"
           v-bind="$attrs"
           :class="{ invalid__input: isInvalid, is__clearable: showClearButton }"
           :aria-describedby="`${inputId}-messages`"
@@ -210,18 +218,24 @@ defineExpose({
             {{ option[itemTitle] }}
           </option>
         </select>
-        <div class="dps__input-select-caret" inert />
+        <div
+          class="cc__input-select-caret"
+          inert
+        />
       </div>
 
       <button
         v-show="showClearButton"
-        class="dps__input-select-clear-btn"
+        class="cc__input-select-clear-btn"
         title="Clear selection"
         type="button"
         @click="onClearSelection()"
       >
         <i aria-hidden="true">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 512 512"
+          >
             <!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
             <path
               d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"
@@ -236,16 +250,16 @@ defineExpose({
       v-show="showDetails"
       :id="`${inputId}-messages`"
       role="alert"
-      class="dps__input-text-details"
+      class="cc__input-text-details"
       :class="{ invalid__input: isInvalid }"
     >
-      <div class="dps__input-messages">
+      <div class="cc__input-messages">
         <template v-if="_errorMessages">
-          <div class="dps__input-message">{{ _errorMessages }}</div>
+          <div class="cc__input-message">{{ _errorMessages }}</div>
         </template>
 
         <template v-else>
-          <div class="dps__input-message">
+          <div class="cc__input-message">
             <template v-if="slots.hint">
               <slot name="hint" />
             </template>
@@ -261,7 +275,7 @@ defineExpose({
 
 /* Styles ================================================================ */
 <style lang="postcss">
-.dps__input-select {
+.cc__input-select {
   &-container {
     width: 100%;
     position: relative;

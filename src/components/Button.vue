@@ -8,12 +8,19 @@ defineProps({
     type: Array as () => string[] | null,
     default: () => null,
   },
+  title: {
+    type: String,
+    default: '',
+  },
 });
 </script>
 
 /* Template ============================================================== */
 <template>
-  <button class="CC__button">
+  <button
+    class="CC__button"
+    :title="title"
+  >
     <font-awesome-icon
       v-if="leadingIcon !== null"
       :icon="leadingIcon"

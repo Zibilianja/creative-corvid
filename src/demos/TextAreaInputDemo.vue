@@ -51,23 +51,6 @@ Template
       :rules="[rules.required, rules.minLength]"
       @update:model-value="onInputUpdate"
     />
-
-    <div class="demo__panel-vmodel">
-      <div class="demo__panel-vmodel-row">
-        <div>Value:</div>
-        <div>{{ information }}</div>
-      </div>
-
-      <div class="demo__panel-vmodel-row">
-        <div>isValid:</div>
-        <div>{{ MyInputTextarea.isValid }}</div>
-      </div>
-
-      <div class="demo__panel-vmodel-row">
-        <div>focused:</div>
-        <div>{{ MyInputTextarea.focused }}</div>
-      </div>
-    </div>
   </div>
 </template>
 <style lang="postcss">

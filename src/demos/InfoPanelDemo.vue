@@ -4,13 +4,14 @@ DemoInfoPanel.vue
 <script setup lang="ts">
 import InfoPanel from '@/components/InfoPanel.vue';
 import Button from '@/components/Button.vue';
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
 const successClosable = ref(true);
 const infoClosable = ref(true);
 const errorClosable = ref(true);
 const warningClosable = ref(true);
 const noteClosable = ref(true);
+const initialRender = ref(true);
 
 const panelOpen = ref({
   success: true,
@@ -33,11 +34,11 @@ const resetPanels = () => {
 };
 
 const resetButtonShow = computed((): boolean => {
-  if (Object.values(panelOpen.value).every((open) => open)) {
-    return false;
-  } else {
-    return Object.values(panelOpen.value).some((open) => !open);
-  }
+  return Object.values(panelOpen.value).some((open) => !open);
+});
+
+onMounted(() => {
+  initialRender.value = false;
 });
 </script>
 
@@ -51,14 +52,19 @@ const resetButtonShow = computed((): boolean => {
       </div>
 
       <Button
-        :class="!resetButtonShow ? 'hidden' : 'shown'"
-        class="CC__gray reset-button"
+        v-if="initialRender"
+        :class="!resetButtonShow && !initialRender ? 'hidden' : 'shown'"
+        class="CC__button CC__panel-reset-button"
+        :title="'Reset All Panels'"
         @click="resetPanels"
         >Reset All Panels</Button
       >
     </div>
 
-    <div class="info-panel" :class="panelOpen.success ? 'shown' : 'hidden'">
+    <div
+      class="info-panel"
+      :class="panelOpen.success ? 'shown' : 'hidden'"
+    >
       <InfoPanel
         type="success"
         :closable="successClosable"
@@ -67,12 +73,18 @@ const resetButtonShow = computed((): boolean => {
         <template #heading> Success </template>
         <template #message> This is a success message. </template>
       </InfoPanel>
-      <Button class="CC__green" @click="successClosable = !successClosable"
+      <Button
+        class="CC__green"
+        :title="'Toggle Success Closable'"
+        @click="successClosable = !successClosable"
         >Toggle Success Closable: {{ successClosable }}</Button
       >
     </div>
 
-    <div class="info-panel" :class="panelOpen.info ? 'shown' : 'hidden'">
+    <div
+      class="info-panel"
+      :class="panelOpen.info ? 'shown' : 'hidden'"
+    >
       <InfoPanel
         type="info"
         :closable="infoClosable"
@@ -81,11 +93,17 @@ const resetButtonShow = computed((): boolean => {
         <template #heading> Info </template>
         <template #message> This is an info message. </template>
       </InfoPanel>
-      <Button class="CC__blue-gray" @click="infoClosable = !infoClosable"
+      <Button
+        class="CC__blue-gray"
+        :title="'Toggle Info Closable'"
+        @click="infoClosable = !infoClosable"
         >Toggle Info Closable: {{ infoClosable }}</Button
       >
     </div>
-    <div class="info-panel" :class="panelOpen.error ? 'shown' : 'hidden'">
+    <div
+      class="info-panel"
+      :class="panelOpen.error ? 'shown' : 'hidden'"
+    >
       <InfoPanel
         type="error"
         :closable="errorClosable"
@@ -94,11 +112,16 @@ const resetButtonShow = computed((): boolean => {
         <template #heading> Error </template>
         <template #message> This is an error message. </template>
       </InfoPanel>
-      <Button class="CC__red" @click="errorClosable = !errorClosable"
+      <Button
+        class="CC__red"
+        @click="errorClosable = !errorClosable"
         >Toggle 'Error' Closable: {{ errorClosable }}</Button
       >
     </div>
-    <div class="info-panel" :class="panelOpen.warning ? 'shown' : 'hidden'">
+    <div
+      class="info-panel"
+      :class="panelOpen.warning ? 'shown' : 'hidden'"
+    >
       <InfoPanel
         type="warning"
         :closable="warningClosable"
@@ -107,11 +130,16 @@ const resetButtonShow = computed((): boolean => {
         <template #heading> Warning </template>
         <template #message> Be warned by this message. </template>
       </InfoPanel>
-      <Button class="CC__orange" @click="warningClosable = !warningClosable"
+      <Button
+        class="CC__orange"
+        @click="warningClosable = !warningClosable"
         >Toggle Warning Closable: {{ warningClosable }}</Button
       >
     </div>
-    <div class="info-panel" :class="panelOpen.note ? 'shown' : 'hidden'">
+    <div
+      class="info-panel"
+      :class="panelOpen.note ? 'shown' : 'hidden'"
+    >
       <InfoPanel
         type="note"
         :closable="noteClosable"
@@ -120,7 +148,9 @@ const resetButtonShow = computed((): boolean => {
         <template #heading> Note </template>
         <template #message> This is a note message. </template>
       </InfoPanel>
-      <Button class="CC__purple" @click="noteClosable = !noteClosable"
+      <Button
+        class="CC__purple"
+        @click="noteClosable = !noteClosable"
         >Toggle Note Closable: {{ noteClosable }}</Button
       >
     </div>
@@ -139,12 +169,10 @@ const resetButtonShow = computed((): boolean => {
   border-radius: 0.5rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.37);
   margin: 1rem 0;
-  .reset-button {
-    margin-top: 1rem;
-    margin-bottom: -1rem;
+  .CC__panel-reset-button {
+    margin: 2rem 0;
   }
   .info-panel {
-    margin-bottom: -1rem;
     padding: 0;
   }
 }

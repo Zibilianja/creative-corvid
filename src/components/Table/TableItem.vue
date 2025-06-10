@@ -31,7 +31,7 @@
 //     >
 //       <td class="transportation-exception-admin__pending-requests-table-cell">
 //         <Button
-//           class="transportation-exception-admin__student-id-button dps__blue transportation-exception-admin__pending-requests-student-id-button"
+//           class="transportation-exception-admin__student-id-button cc__blue transportation-exception-admin__pending-requests-student-id-button"
 //           @click="console.log('button clicked')"
 //         >
 //           {{ Math.random().toString(36).substring(2, 15) }}
@@ -60,7 +60,7 @@
 //   <tbody
 //     v-else
 //     id="transportation-exception-admin__pending-requests-table-error-no-records"
-//     class="dps-position-absolute dps-w-100 dps-d-flex dps-justify-center dps-my-8"
+//     class="cc-position-absolute cc-w-100 cc-d-flex cc-justify-center cc-my-8"
 //   >
 //     <tr>
 //       {{

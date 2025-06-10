@@ -95,8 +95,14 @@ const exportCSV = (event: unknown): void => {
 <template>
   <div class="vue-table-data__app-container">
     <VueTableDataLoader v-if="loading && !error" />
-    <ErrorSummary v-if="error" :error="error" />
-    <div v-if="!loading && !error" class="vue-table-data__table-wrapper">
+    <ErrorSummary
+      v-if="error"
+      :error="error"
+    />
+    <div
+      v-if="!loading && !error"
+      class="vue-table-data__table-wrapper"
+    >
       <DataTable
         ref="dt"
         v-model:filters="filters"
@@ -113,11 +119,11 @@ const exportCSV = (event: unknown): void => {
       >
         <template #header>
           <h2
-            class="dps-vue-table-data-header dps-d-flex dps-items-center dps-col-gap-2 dps-mt-4 dps-mb-6"
+            class="cc-vue-table-data-header cc-d-flex cc-items-center cc-col-gap-2 cc-mt-4 cc-mb-6"
           >
             <i class="pi pi-table" /><span>{{ table.title }}</span>
           </h2>
-          <div class="dps-vue-table-data-keyword-search-container">
+          <div class="cc-vue-table-data-keyword-search-container">
             <InputText
               v-model="filters['global'].value"
               placeholder="Keyword Search"
@@ -126,7 +132,7 @@ const exportCSV = (event: unknown): void => {
             <button
               icon="pi pi-external-link"
               label="Export"
-              class="dps-vue-table-data-export-button"
+              class="cc-vue-table-data-export-button"
               @click="exportCSV($event)"
             >
               <span><i class="pi pi-file-export" /> </span>
@@ -136,7 +142,10 @@ const exportCSV = (event: unknown): void => {
         </template>
         <template #empty>No records found.</template>
 
-        <template v-if="dt" #paginatorstart>
+        <template
+          v-if="dt"
+          #paginatorstart
+        >
           {{ dt.totalRecordsLength }}
           {{
             dt.totalRecordsLength > 1
@@ -148,10 +157,13 @@ const exportCSV = (event: unknown): void => {
         </template>
         <template #paginatorend> &nbsp; </template>
 
-        <Column v-if="table.columns[0].field === 'action'" :exportable="false">
+        <Column
+          v-if="table.columns[0].field === 'action'"
+          :exportable="false"
+        >
           <template #body="{ data }">
             <button
-              class="dps-vue-table-data-action-button p-button-sm"
+              class="cc-vue-table-data-action-button p-button-sm"
               @click="onActionButtonClick(data)"
             >
               Open
@@ -171,7 +183,10 @@ const exportCSV = (event: unknown): void => {
           :header-style="column.headerStyle ? column.headerStyle : ''"
           :exportable="column.exportable"
         >
-          <template v-if="column.field !== 'action'" #body="{ data }">
+          <template
+            v-if="column.field !== 'action'"
+            #body="{ data }"
+          >
             <span v-if="column.filter && column.filter.type === 'date'">
               {{ getDate(data[column.field]) }}
             </span>
@@ -228,7 +243,10 @@ const exportCSV = (event: unknown): void => {
             </MultiSelect>
           </template>
 
-          <template v-if="column.filterable" #filtericon>
+          <template
+            v-if="column.filterable"
+            #filtericon
+          >
             <i
               v-show="!filters[column.field].value"
               class="pi pi-filter"
@@ -241,8 +259,14 @@ const exportCSV = (event: unknown): void => {
             />
           </template>
 
-          <template v-if="column.filterable" #filterclearicon>
-            <i class="pi pi-filter-slash" aria-label="Clear filter" />
+          <template
+            v-if="column.filterable"
+            #filterclearicon
+          >
+            <i
+              class="pi pi-filter-slash"
+              aria-label="Clear filter"
+            />
           </template>
         </Column>
       </DataTable>
@@ -253,14 +277,14 @@ const exportCSV = (event: unknown): void => {
 /* Styles ================================================================ */
 <style lang="postcss">
 .vue-table-data__table-wrapper {
-  border-top: 6px solid var(--dps-color-primary);
-  border-bottom: 10px solid var(--dps-color-primary);
-  border-left: 1px solid var(--dps-color-dark-gray);
-  border-right: 1px solid var(--dps-color-dark-gray);
+  border-top: 6px solid var(--cc-color-primary);
+  border-bottom: 10px solid var(--cc-color-primary);
+  border-left: 1px solid var(--cc-color-dark-gray);
+  border-right: 1px solid var(--cc-color-dark-gray);
   max-width: calc(100vw - 3rem);
 
-  .dps-vue-table-data-header {
-    color: var(--dps-color-dark-orange);
+  .cc-vue-table-data-header {
+    color: var(--cc-color-dark-orange);
 
     i {
       &.pi-table {
@@ -269,7 +293,7 @@ const exportCSV = (event: unknown): void => {
     }
   }
 
-  .dps-vue-table-data-keyword-search-container {
+  .cc-vue-table-data-keyword-search-container {
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -285,15 +309,15 @@ const exportCSV = (event: unknown): void => {
     }
   }
 
-  .dps-vue-table-data-action-button {
-    background-color: var(--dps-color-primary) !important;
+  .cc-vue-table-data-action-button {
+    background-color: var(--cc-color-primary) !important;
     color: #fff !important;
     border: 0;
     border-radius: 0.25rem;
   }
 
-  .dps-vue-table-data-export-button {
-    background-color: var(--dps-color-dark-gray) !important;
+  .cc-vue-table-data-export-button {
+    background-color: var(--cc-color-dark-gray) !important;
     color: #fff !important;
     border: 0;
     border-radius: 0.25rem;

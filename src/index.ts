@@ -1,9 +1,20 @@
-import { type App } from 'vue';
-import Button from '@/components/Button.vue';
+import type { App, Component } from 'vue';
+import * as Components from './components';
+import * as FormComponents from './form-components';
 
-function install(app: App) {
-  app.component('CreativeCorvidButton', Button);
+// 🔧 Install function for plugin usage
+function install(app: App): void {
+  const allComponents = { ...Components, ...FormComponents };
+  // Register all components globally
+  Object.entries(allComponents).forEach(([name, component]) => {
+    app.component(`CC${name}`, component as Component);
+  });
 }
 
+// 🔧 Auto-install if Vue is found globally
 export default { install };
-export * from '@/components';
+
+// 🔧 Export all components and for direct import
+export * from './components';
+export * from './stores';
+export * from './form-components';

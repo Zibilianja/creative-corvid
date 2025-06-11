@@ -8,6 +8,10 @@ defineProps({
     type: Array as () => string[] | null,
     default: () => null,
   },
+  trailingIcon: {
+    type: Array as () => string[] | null,
+    default: () => null,
+  },
   title: {
     type: String,
     default: '',
@@ -27,6 +31,11 @@ defineProps({
       class="CC__button-icon"
     />
     <slot />
+    <font-awesome-icon
+      v-if="trailingIcon !== null"
+      :icon="trailingIcon"
+      class="CC__button-icon"
+    />
   </button>
 </template>
 

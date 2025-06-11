@@ -92,6 +92,20 @@ defineExpose({
     margin-bottom: 0.25rem;
   }
 
+  .CC__panel-reset-button {
+    margin-top: 1rem;
+    color: #ffffff;
+    background-color: var(--CC-color-blue);
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #66a481;
+    }
+  }
+
   /*
   Dark mode styles
    */
@@ -103,22 +117,8 @@ defineExpose({
       background-color: #3d3c3c;
       box-shadow: none;
     }
-    .CC__panel-reset-button {
-      margin-top: 1rem;
-      color: #ffffff;
-      background-color: var(--CC-color-blue);
-      border: none;
-      border-radius: 0.25rem;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-
-      &:hover {
-        background-color: #66a481;
-      }
-    }
 
     label {
-      color: #333;
       display: flex;
       align-items: center;
       gap: 0.75rem;
@@ -171,10 +171,8 @@ defineExpose({
       gap: 0.75rem;
 
       svg {
-        .CC__input-checkbox-icon {
-          border: 1px solid transparent;
-          padding: 0.1rem;
-          border-radius: 0.25rem;
+        &.CC__input-checkbox-icon {
+          border-radius: 2px;
           &.invalid__input {
             border-color: #ff002b;
             path {
@@ -185,19 +183,20 @@ defineExpose({
           }
           &:not(.invalid__input) {
             &:not(.checked) path {
-              fill: #ffffff;
+              fill: var(--CC-color-gray-light);
               &:hover {
                 fill: #d0d4d2;
               }
             }
 
             &.checked {
-              border-color: var(--CC-color-success);
+              background-color: var(--CC-color-green-luminous);
+              border: 1px inset var(--CC-color-green-shadow);
               path {
-                fill: #d1f9cd;
+                fill: var(--CC-color-gray-shadow);
 
                 &:hover {
-                  fill: #66a481;
+                  fill: var(--CC-color-gray);
                 }
               }
             }
@@ -289,13 +288,13 @@ light mode styles
             }
 
             &.checked {
-              border: 1px inset var(--CC-color-blue-dark);
-              background-color: var(--CC-color-blue);
+              border: 1px inset var(--CC-color-green-darker);
+              background-color: var(--CC-color-green-darker);
               path {
-                fill: var(--CC-color-blue-gray-light);
+                fill: var(--CC-color-gray-shadow);
 
                 &:hover {
-                  fill: #91b5c4;
+                  fill: var(--CC-color-gray);
                 }
               }
             }
@@ -341,21 +340,16 @@ light mode styles
           border-radius: 50%;
 
           &.checked {
-            &.checked {
-              border: 1px inset var(--CC-color-blue-dark);
-              box-shadow: inset 8px 8px var(--CC-color-blue-dark);
-
-              path {
-                fill: var(--CC-color-blue-gray-light);
-              }
-            }
-
+            border: 2px inset var(--CC-color-green-dark);
+            background-color: var(--CC-color-focus-darker);
             path {
-              fill: var(--CC-color-gray);
+              fill: var(--CC-color-gray-shadow);
             }
           }
+
           &:not(.checked) {
             border: 1px solid var(--CC-color-gray-darker);
+            margin: 1px;
 
             path {
               fill: var(--CC-color-gray-light);

@@ -1,10 +1,6 @@
 <script setup lang="ts">
 import { ref, watch, type Component } from 'vue';
-import IconCheckmark from './Icons/IconCheckmark.vue';
-import IconInfo from './Icons/IconInfo.vue';
-import IconError from './Icons/IconError.vue';
-import IconWarn from './Icons/IconWarn.vue';
-import IconAnnouncement from './Icons/IconAnnouncement.vue';
+import Icon from './Icon.vue';
 
 const emit = defineEmits(['update:modelValue']);
 
@@ -24,11 +20,12 @@ const props = defineProps({
 });
 
 const ICONS: Record<string, Component> = {
-  success: IconCheckmark,
-  info: IconInfo,
-  error: IconError,
-  warn: IconWarn,
-  announcement: IconAnnouncement,
+  announcement: ['fas', 'bullhorn'],
+  success: ['fas', 'circle-check'],
+  info: ['fas', 'circle-info'],
+  error: ['fas', 'skull-crossbones'],
+  warning: ['fas', 'triangle-exclamation'],
+  note: ['fas', 'sticky-note'],
 };
 
 const model = defineModel<boolean>({ default: false });
@@ -76,7 +73,10 @@ const cancelToast = () => {
       :class="state"
     >
       <div class="toast-icon">
-        <component :is="ICONS[state]" />
+        <component
+          :is="Icon"
+          :icon="ICONS[state]"
+        />
       </div>
       <div class="toast-content">
         <div class="toast-header">

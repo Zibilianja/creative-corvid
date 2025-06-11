@@ -16,9 +16,11 @@
   --CC-color-gray-light: #e6e3e3;
   --CC-color-gray-dark: #7d7d7d;
   --CC-color-gray-darker: #4d4d4d;
+  --CC-color-gray-shadow: #d0d0d0;
   --CC-color-focus: #1fe5e2;
   --CC-color-focus-light: #98f0d6;
   --CC-color-focus-dark: #0f9b9a;
+  --CC-color-focus-darker: #0b7a79;
   --CC-color-focus-luminous: #1fe5e277;
   --CC-color-primary: #024d7c;
   --CC-color-required: #a41d33;
@@ -31,6 +33,7 @@
   --CC-color-green-luminous: #7cdc5077;
   --CC-color-green-light: #d4f0d6;
   --CC-color-green-dark: #4caf50;
+  --CC-color-green-darker: #2c632e;
   --CC-color-red: #d02216;
   --CC-color-red-light: #f7cace;
   --CC-color-red-dark: #d02216;
@@ -1571,7 +1574,13 @@ body {
   border-radius: 50%; /* Full border radius */
 }
 .cc-box-shadow {
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.37);
+      box-shadow: 2px 4px 4px var(--CC-color-gray);
+}
+.cc-box-shadow-error {
+      box-shadow: 0 0 7px var(--CC-color-red);
+}
+.cc-box-shadow-focus {
+      box-shadow: 2px 4px 4px var(--CC-color-focus-luminous);
 }
 // #endregion - Border utilities
 // #region - Outline utilities

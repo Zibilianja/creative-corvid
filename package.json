@@ -9,16 +9,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@primeuix/themes": "^1.0.0",
-    "axios": "^1.7.7",
-    "primeicons": "^7.0.0",
-    "primevue": "^4.3.1",
     "@fortawesome/fontawesome-svg-core": "^6.2.1",
     "@fortawesome/free-brands-svg-icons": "^6.2.1",
     "@fortawesome/free-solid-svg-icons": "^6.2.1",
     "@fortawesome/vue-fontawesome": "^3.0.2",
+    "@primeuix/themes": "^1.0.0",
+    "axios": "^1.7.7",
     "dayjs": "^1.11.13",
     "maska": "^3.1.1",
+    "pinia": "^3.0.3",
+    "primeicons": "^7.0.0",
+    "primevue": "^4.3.1",
     "sass": "^1.89.0",
     "vue": "^3.5.13"
   },
@@ -37,8 +38,8 @@
     "prettier-eslint": "16.4.2",
     "typescript": "~5.8.3",
     "vite": "^6.3.5",
-    "vue-tsc": "2.2.10",
-    "vue-i18n": "^9.14.0"
+    "vue-i18n": "^9.14.0",
+    "vue-tsc": "2.2.10"
   },
   "files": [
     "dist/styles.css"

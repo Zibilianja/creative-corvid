@@ -3,19 +3,17 @@ InfoPanel.vue Describe what this component does.
 ========================================================================== */
 <script setup lang="ts">
 import { useSlots, type Component, type SetupContext } from 'vue';
-import IconCheckmark from '@/components/Icons/IconCheckmark.vue';
-import IconInfo from './Icons/IconInfo.vue';
-import IconError from './Icons/IconError.vue';
-import IconWarn from './Icons/IconWarn.vue';
-import IconNote from './Icons/IconNote.vue';
 import CloseButton from './CloseButton.vue';
+import Icon from './Icon.vue';
 
 defineProps({
   type: {
     type: String,
     required: true,
     validator: (value: string) =>
-      ['info', 'error', 'success', 'warning', 'note'].includes(value),
+      ['info', 'error', 'success', 'warning', 'note', 'announcement'].includes(
+        value,
+      ),
   },
   closable: {
     type: Boolean,
@@ -25,11 +23,12 @@ defineProps({
 const emit = defineEmits(['close']);
 
 const ICONS: Record<string, Component> = {
-  success: IconCheckmark,
-  info: IconInfo,
-  error: IconError,
-  warning: IconWarn,
-  note: IconNote,
+  announcement: ['fas', 'bullhorn'],
+  success: ['fas', 'circle-check'],
+  info: ['fas', 'circle-info'],
+  error: ['fas', 'skull-crossbones'],
+  warning: ['fas', 'triangle-exclamation'],
+  note: ['fas', 'sticky-note'],
 };
 
 const slots: SetupContext['slots'] = useSlots();
@@ -46,8 +45,14 @@ const handleClose = () => {
     class="CC__info-panel-container"
     :class="[type, closable ? 'closable' : '']"
   >
-    <div class="CC__info-panel-icon" :class="type">
-      <component :is="ICONS[type]" />
+    <div
+      class="CC__info-panel-icon"
+      :class="type"
+    >
+      <component
+        :is="Icon"
+        :icon="ICONS[type]"
+      />
     </div>
 
     <div>
@@ -55,11 +60,18 @@ const handleClose = () => {
         <slot name="heading" />
       </div>
 
-      <div v-if="slots.message" class="CC__info-panel-message">
+      <div
+        v-if="slots.message"
+        class="CC__info-panel-message"
+      >
         <slot name="message" />
       </div>
     </div>
-    <CloseButton v-if="closable" class="close-button" @click="handleClose" />
+    <CloseButton
+      v-if="closable"
+      class="close-button"
+      @click="handleClose"
+    />
   </div>
 </template>
 

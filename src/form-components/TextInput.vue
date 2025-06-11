@@ -1,3 +1,7 @@
+/* ==========================================================================
+TextInput.vue - Text Input component.
+ This file is part of the Creative Corvid Component and Style Library.
+========================================================================== */
 <script setup lang="ts">
 import CloseButton from '@/components/CloseButton.vue';
 import { defineProps, defineEmits, computed, type PropType } from 'vue';
@@ -46,8 +50,12 @@ const props = defineProps({
     default: false,
   },
   leadingIcon: {
-    type: Array,
-    default: () => ['', ''],
+    type: Array as () => string[] | null,
+    default: () => null,
+  },
+  trailingIcon: {
+    type: Array as () => string[] | null,
+    default: () => null,
   },
   maxLength: {
     type: Number,
@@ -74,15 +82,33 @@ const props = defineProps({
 const clearInput = () => {
   model.value = '';
 };
-
-const leadingIcon = computed(() => {
-  return !props.leadingIcon.includes('') ? 'has-leading-icon' : '';
+/**
+ * @description - Computed property to determine if leading icon is present and applies the appropriate class.
+ * 
+ * @return {string} - Class name for leading icon.
+ */
+const leadingIcon = computed((): string => {
+  return props.leadingIcon ? 'has-leading-icon' : '';
 });
 
-const invalidInput = computed(() => {
+/**
+ * @description - Computed property to determine if trailing icon is present and applies appropriate class.
+ * 
+ * @return {boolean} - True if the input is disabled, false otherwise.
+ */
+const trailingIcon = computed((): string => {
+  return props.trailingIcon ? 'has-trailing-icon' : '';
+});
+
+/**
+ * @description - Computed property to determine if the input value is valid, and applies the error class.
+ * 
+ * @return {string} - Class name for leading icon.
+ */
+const invalidInput = computed((): string => {
   return model.value.length === 0 && props.error
     ? 'invalid__input'
-    : 'valid__input-after-error';
+    : '';
 });
 </script>
 /* Template ================================================== */
@@ -101,15 +127,16 @@ const invalidInput = computed(() => {
       >
     </label>
     <div
-      class="CC__text-input-wrapper"
-      :class="[`${leadingIcon}-wrapper`, props.error ? invalidInput : '']"
+      class="CC__text-input-wrapper cc-bg-white cc-d-flex cc-align-items-center cc-border cc-border-radius-4 cc-w-100 cc-mt-1 cc-box-shadow"
+      :class="[`${leadingIcon}-wrapper`, props.error ? [invalidInput, 'cc-box-shadow-error'] : '']"
     >
       <div
+      v-if="props.leadingIcon"
         class="CC__text-input-leading-icon-container"
-        v-if="props.leadingIcon.length > 0"
+        
       >
         <font-awesome-icon
-          v-if="props.leadingIcon[0]"
+          v-if="props.leadingIcon"
           class="leading-icon"
           :icon="props.leadingIcon"
         />
@@ -136,6 +163,17 @@ const invalidInput = computed(() => {
         @click="clearInput()"
       />
       </input>
+      <div
+      v-if="props.trailingIcon"
+        class="CC__text-input-trailing-icon-container"
+        
+      >
+        <font-awesome-icon
+          v-if="props.trailingIcon"
+          class="trailing-icon"
+          :icon="props.trailingIcon"
+        />
+      </div>
     </div>
     <template v-if="props.errorMessages.length > 0">
       <div class="CC__input-error-message">{{ props.errorMessages }}</div>
@@ -168,23 +206,37 @@ const invalidInput = computed(() => {
     }
 
     .CC__text-input-wrapper {
-      display: flex;
-      align-items: center;
-      border: 1px solid var(--CC-color-gray);
-      background-color: #fff;
-      box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.264);
-      border-radius: 0.75rem;
       line-height: 1.5rem;
-      width: 100%;
-      margin-top: 0.25rem;
+      .CC__text-input-leading-icon-container {
+        border-right: 2px solid #40495b7b;
+        height: 100%;
+        width: 2.75rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .CC__text-input-trailing-icon-container {
+        border-left: 2px solid #40495b7b;
+        height: 100%;
+        width: 2.75rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      
       &.invalid__input {
         outline: 1px solid var(--CC-color-error);
-        box-shadow: 0 0 4px var(--CC-color-red);
+        
       }
 
       &:focus-within {
         outline: 1px solid var(--CC-color-focus-luminous);
-        box-shadow: 0 0 3px var(--CC-color-focus-dark);
+        .CC__text-input-leading-icon-container {
+          
+          border-radius: .75rem 0 0 .75rem;
+        }
+
+        
 
         .clear-button {
           background-color: var(--CC-color-green);
@@ -196,7 +248,7 @@ const invalidInput = computed(() => {
         width: 1.5rem;
         height: 1.5rem;
         color: var(--CC-color-gray-darker);
-        background-color: #f2f1f1;
+        background-color: var(--CC-color-transparent);
         border: none;
         border-radius: 50%;
         margin-right: .75rem;
@@ -208,14 +260,10 @@ const invalidInput = computed(() => {
             color 0.5s ease;
         }
         &:hover {
-          background-color: var(--CC-color-blue-dark);
+          background-color: var(--CC-color-focus-dark);
           color: #fff;
         }
       }
-    }
-
-    .leading-icon {
-      margin-left: 0.75rem;
     }
 
     .text-input {
@@ -223,19 +271,16 @@ const invalidInput = computed(() => {
       min-height: 2.5rem;
       padding-left: .75rem;
       width: 100%;
+      border-radius: 0 .75rem .75rem 0;
       color: var(--CC-color-gray-darker);
       border: none;
-      background-color: transparent;
+      background-color: var(--CC-color-transparent);
 
       &:focus {
         outline: none;
       }
       
-      &.has-leading-icon {
-        border-left: 2px solid #40495b7b;
-        
-        margin-left: 0.7rem;
-      }
+      
     }
   }
 }

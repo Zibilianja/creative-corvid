@@ -4,7 +4,7 @@ Component and Style Library.
 ========================================================================== */
 <script setup lang="ts">
 import CloseButton from '@/components/CloseButton.vue';
-import { defineProps, defineEmits, computed, type PropType } from 'vue';
+import { defineEmits, computed, type PropType } from 'vue';
 import { vMaska } from 'maska/vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 

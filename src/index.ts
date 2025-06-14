@@ -11,10 +11,14 @@ function install(app: App): void {
   });
 }
 
-// 🔧 Auto-install if Vue is found globally
-export default { install };
+// Name plugin for importing
+const CreativeCorvid = { install };
+
+// Auto-install if Vue is found globally or app.use(CreativeCorvid) is called
+export default CreativeCorvid;
+export { CreativeCorvid };
 
 // 🔧 Export all components and for direct import
 export * from './components';
-export * from './stores';
 export * from './form-components';
+export * from './stores';

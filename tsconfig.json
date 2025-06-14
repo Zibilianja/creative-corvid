@@ -20,9 +20,12 @@
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
+    /* Aliases */
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["src/*"],
+      "~/*": ["demo/src/*"]
     }
   },
-  "include": ["src"]
+  "include": ["src", "demo"]
 }

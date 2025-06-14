@@ -1,14 +1,14 @@
 /* App.vue - Main app file for the Creative Corvid Library demo
 ==========================================================================
 <script lang="ts" setup>
-import ButtonDemo from './demos/ButtonDemo.vue';
-import Logo from './components/Logo.vue';
-import InfoPanelDemo from './demos/InfoPanelDemo.vue';
-import InputTextDemo from './demos/InputTextDemo.vue';
-import InputTextAreaInputDemo from './demos/TextAreaInputDemo.vue';
-import DateDemo from './demos/DateDemo.vue';
+import ButtonDemo from '~/demo-components/ButtonDemo.vue';
+import Logo from '~/demo-components/Logo.vue';
+import InfoPanelDemo from '~/demo-components/InfoPanelDemo.vue';
+import InputTextDemo from '~/demo-components/InputTextDemo.vue';
+import InputTextAreaInputDemo from '~/demo-components/TextAreaInputDemo.vue';
+import DateDemo from '~/demo-components/DateDemo.vue';
 import { ref } from 'vue';
-import CheckboxRadioDemo from './demos/CheckboxRadioDemo.vue';
+import CheckboxRadioDemo from '~/demo-components/CheckboxRadioDemo.vue';
 
 const darkMode = ref(false);
 

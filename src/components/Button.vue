@@ -54,8 +54,8 @@ defineProps({
   text-decoration: none;
   vertical-align: middle;
   user-select: none;
-  transition: all 0.2s ease-in-out;
-  max-height: 3.5rem;
+  transition: all 0.1s ease-in-out;
+  max-height: 3.2rem;
 
   &:hover:not([disabled]) {
     text-decoration: underline;

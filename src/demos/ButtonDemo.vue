@@ -6,8 +6,19 @@ import ToastAlert from '@/components/ToastAlert.vue';
 const toastValue = ref('default');
 const valueToast = ref(false);
 
+const manageToast = (message: string): void => {
+  if (valueToast.value) {
+    valueToast.value = false; // Close the toast
+    setTimeout(() => {
+      displayToast(message); // Trigger the toast again after a short delay
+    }, 100); // Adjust the delay as needed
+  } else {
+    displayToast(message);
+  }
+};
+
 const displayToast = (message: string): void => {
-  valueToast.value = true;
+  valueToast.value = true; // Trigger the toast again
   toastValue.value = message;
 };
 </script>
@@ -21,23 +32,23 @@ const displayToast = (message: string): void => {
     <div class="CC__demo-wrapper">
       <Button
         class="CC__blue-gray"
-        @click="displayToast('announcement')"
+        @click="manageToast('announcement')"
         >Announcement Button</Button
       >
       <Button
         class="CC__green"
-        @click="displayToast('success')"
+        @click="manageToast('success')"
         >Submit Button</Button
       >
       <Button
         class="CC__red"
         :leadingIcon="['fas', 'trash-alt']"
-        @click="displayToast('error')"
+        @click="manageToast('error')"
         >Delete Button</Button
       >
       <Button
         class="CC__purple"
-        @click="displayToast('info')"
+        @click="manageToast('info')"
         >Info Button</Button
       >
       <Button disabled>Disabled Button</Button>

@@ -19,10 +19,13 @@ Template
     aria-label="close-button"
     :title="title"
   >
-    <font-awesome-icon
-      icon="times"
-      class="CC__close-icon"
-    />
+    <slot>
+      <! -- Fallback default slot for custom content, e.g., an icon -->
+      <font-awesome-icon
+        icon="times"
+        class="CC__close-icon"
+      />
+    </slot>
   </button>
 </template>
 <style lang="postcss">

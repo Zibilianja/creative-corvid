@@ -34,10 +34,9 @@ const timeoutId = ref<number | null>(null);
 watch(
   () => model.value,
   (newValue: boolean) => {
-    if (newValue) {
+    if (newValue === true) {
       showToast();
-    }
-    if (!newValue) {
+    } else {
       cancelToast();
     }
   },

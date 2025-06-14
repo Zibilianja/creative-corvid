@@ -9,14 +9,22 @@ const inputValues = ref<InputValuesDemo>({
   text: {
     value: '',
     error: false,
+    errorMessage: '',
   },
-  search: {
+  email: {
     value: '',
     error: false,
+    errorMessage: '',
   },
   formField: {
     value: '',
     error: false,
+    errorMessage: '',
+  },
+  search: {
+    value: '',
+    error: false,
+    errorMessage: '',
   },
 });
 const toastValue = ref('default');
@@ -37,14 +45,18 @@ const submitInput = () => {
     { key: 'text', value: inputValues.value.text.value },
     { key: 'search', value: inputValues.value.search.value },
     { key: 'formField', value: inputValues.value.formField.value },
+    { key: 'email', value: inputValues.value.email.value },
   ];
   valuesArray.forEach((input) => {
-    if (!validateInput(input['value'])) {
+    if (input['key'] === 'email') {
+      emailValidation(input['value']);
+    } else if (!validateInput(input['value'])) {
       inputValues.value[input['key']].error = true;
     } else {
       inputValues.value[input['key']].error = false;
     }
   });
+
   if (valuesArray.some((value) => !value.value.trim())) {
     toastValue.value = 'error';
     valueToast.value = true;
@@ -55,7 +67,24 @@ const submitInput = () => {
 };
 
 const validateInput = (value: string): boolean => {
-  return value.trim() !== '';
+  return !!value.trim();
+};
+
+const emailValidation = (email: string): void => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (emailRegex.test(email)) {
+    inputValues.value.email = {
+      value: email.trim(),
+      error: false,
+      errorMessage: '',
+    };
+  } else {
+    inputValues.value.email = {
+      value: email.trim(),
+      error: true,
+      errorMessage: 'Please enter a valid email address.',
+    };
+  }
 };
 </script>
 /* Template ============================================================== */
@@ -72,7 +101,7 @@ const validateInput = (value: string): boolean => {
       <div class="CC__demo-wrapper">
         <TextInput
           v-model="inputValues.text.value"
-          label="Text Field"
+          label="With Leading Icon"
           type="text"
           inputId="input-text-demo"
           placeholder="Type up..."
@@ -86,19 +115,21 @@ const validateInput = (value: string): boolean => {
           @update:model-value="handleInputChange('text')"
         />
         <TextInput
-          v-model="inputValues.search.value"
-          label="Search Field"
-          type="text"
+          v-model="inputValues.email.value"
+          label="Email Input with hint"
+          type="email"
           inputId="input-text-demo-search"
           placeholder="Type up..."
-          hint="Search for something..."
-          :leadingIcon="['fas', 'magnifying-glass']"
+          hint="Enter your email address"
+          :leadingIcon="['fas', 'at']"
           :maxLength="50"
           clearable
           required
-          :error="inputValues.search.error"
-          @update:focus="inputValues.search.error = false"
-          @update:model-value="handleInputChange('search')"
+          :error="inputValues.email.error"
+          :error-message="inputValues.email.errorMessage"
+          @update:focus="inputValues.email.error = false"
+          @update:blur="emailValidation(inputValues.email.value)"
+          @update:model-value="handleInputChange('email')"
         />
         <TextInput
           v-model="inputValues.formField.value"
@@ -142,16 +173,6 @@ const validateInput = (value: string): boolean => {
           @update:focus="inputValues.search.error = false"
           @update:model-value="handleInputChange('search')"
         />
-        <TextInput
-          v-model="inputValues.formField.value"
-          label="Form Field"
-          type="text"
-          inputId="input-text-demo-form-field"
-          placeholder="Type up..."
-          :maxLength="50"
-          clearable
-          @update:model-value="handleInputChange"
-        />
       </div>
       <Button
         class="CC__green cc-mt-4"
@@ -194,5 +215,8 @@ const validateInput = (value: string): boolean => {
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.37);
     }
   }
+}
+.section-lower {
+  margin-top: 1.5rem;
 }
 </style>

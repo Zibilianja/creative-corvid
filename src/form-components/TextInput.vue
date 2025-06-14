@@ -1,6 +1,6 @@
 /* ==========================================================================
-TextInput.vue - Text Input component.
- This file is part of the Creative Corvid Component and Style Library.
+TextInput.vue - Text Input component. This file is part of the Creative Corvid
+Component and Style Library.
 ========================================================================== */
 <script setup lang="ts">
 import CloseButton from '@/components/CloseButton.vue';
@@ -73,42 +73,26 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-  errorMessages: {
-    type: Array as () => string[],
-    default: () => [],
+  errorMessage: {
+    type: String,
+    default: '',
   },
 });
 
 const clearInput = () => {
   model.value = '';
 };
-/**
- * @description - Computed property to determine if leading icon is present and applies the appropriate class.
- * 
- * @return {string} - Class name for leading icon.
- */
-const leadingIcon = computed((): string => {
-  return props.leadingIcon ? 'has-leading-icon' : '';
-});
-
-/**
- * @description - Computed property to determine if trailing icon is present and applies appropriate class.
- * 
- * @return {boolean} - True if the input is disabled, false otherwise.
- */
-const trailingIcon = computed((): string => {
-  return props.trailingIcon ? 'has-trailing-icon' : '';
-});
 
 /**
  * @description - Computed property to determine if the input value is valid, and applies the error class.
- * 
+ *
  * @return {string} - Class name for leading icon.
  */
 const invalidInput = computed((): string => {
-  return model.value.length === 0 && props.error
-    ? 'invalid__input'
-    : '';
+  if (props.error) {
+    return 'invalid__input';
+  }
+  return '';
 });
 </script>
 /* Template ================================================== */
@@ -117,7 +101,7 @@ const invalidInput = computed((): string => {
     <label
       v-if="props.label"
       for=""
-      class="text-input-label"
+      class="CC__text-input-label"
     >
       {{ props.label }}
       <span
@@ -128,15 +112,17 @@ const invalidInput = computed((): string => {
     </label>
     <div
       class="CC__text-input-wrapper cc-bg-white cc-d-flex cc-align-items-center cc-border cc-border-radius-4 cc-w-100 cc-mt-1 cc-box-shadow"
-      :class="[`${leadingIcon}-wrapper`, props.error ? [invalidInput, 'cc-box-shadow-error'] : '']"
+      :class="[
+        `${leadingIcon}-wrapper`,
+        props.error ? [invalidInput, 'cc-box-shadow-error'] : '',
+      ]"
     >
       <div
-      v-if="props.leadingIcon"
+        v-if="props.leadingIcon"
         class="CC__text-input-leading-icon-container"
-        
       >
         <font-awesome-icon
-          v-if="props.leadingIcon"
+          v-show="props.leadingIcon"
           class="leading-icon"
           :icon="props.leadingIcon"
         />
@@ -148,25 +134,23 @@ const invalidInput = computed((): string => {
         :maxlength="props.maxLength"
         v-maska="props.maska"
         class="text-input"
-        :class="[leadingIcon]"
+        :class="[invalidInput]"
         :type="props.type"
         :placeholder="placeholder"
         :disabled="disabled"
         @focus="emit('update:focus')"
         @blur="emit('update:blur')"
-      >
+      />
       <CloseButton
-        v-if="props.clearable && model"
+        v-show="props.clearable && model"
         class="clear-button"
-        :class="model ? 'button-present' : ''"
         :title="'Clear input'"
         @click="clearInput()"
       />
-      </input>
+
       <div
-      v-if="props.trailingIcon"
+        v-if="props.trailingIcon"
         class="CC__text-input-trailing-icon-container"
-        
       >
         <font-awesome-icon
           v-if="props.trailingIcon"
@@ -175,10 +159,10 @@ const invalidInput = computed((): string => {
         />
       </div>
     </div>
-    <template v-if="props.errorMessages.length > 0">
-      <div class="CC__input-error-message">{{ props.errorMessages }}</div>
+    <template v-if="!!props.errorMessage">
+      <div class="CC__input-error-message">{{ props.errorMessage }}</div>
     </template>
-    <template v-if="props.hint && props.errorMessages.length === 0">
+    <template v-if="props.hint && !props.errorMessage">
       <div class="CC__text-input-hint">Hint: {{ props.hint }}</div>
     </template>
   </div>
@@ -192,25 +176,33 @@ const invalidInput = computed((): string => {
     color: #41474c;
     margin-top: 0.4rem;
     margin-left: 0.5rem;
-    
   }
   &-container {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     width: 100%;
-    
+
+    .CC__input-error-message {
+      position: relative;
+      font-size: 0.875rem;
+      color: var(--CC-color-required);
+      margin-top: 0.4rem;
+      margin-left: 0.5rem;
+    }
 
     .required {
       color: #a41d33;
+      margin-left: -0.5rem;
     }
 
     .CC__text-input-wrapper {
       line-height: 1.5rem;
+
       .CC__text-input-leading-icon-container {
         border-right: 2px solid #40495b7b;
         height: 100%;
-        width: 2.75rem;
+        min-width: 2.7rem;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -218,25 +210,18 @@ const invalidInput = computed((): string => {
       .CC__text-input-trailing-icon-container {
         border-left: 2px solid #40495b7b;
         height: 100%;
-        width: 2.75rem;
+        min-width: 2.7rem;
         display: flex;
         align-items: center;
         justify-content: center;
       }
-      
+
       &.invalid__input {
         outline: 1px solid var(--CC-color-error);
-        
       }
 
       &:focus-within {
         outline: 1px solid var(--CC-color-focus-luminous);
-        .CC__text-input-leading-icon-container {
-          
-          border-radius: .75rem 0 0 .75rem;
-        }
-
-        
 
         .clear-button {
           background-color: var(--CC-color-green);
@@ -245,20 +230,16 @@ const invalidInput = computed((): string => {
       }
 
       .clear-button {
+        position: relative;
+        right: 0.5rem;
         width: 1.5rem;
         height: 1.5rem;
         color: var(--CC-color-gray-darker);
         background-color: var(--CC-color-transparent);
         border: none;
         border-radius: 50%;
-        margin-right: .75rem;
         cursor: pointer;
-        &.button-present {
-          
-          transition:
-            background-color 0.5s ease,
-            color 0.5s ease;
-        }
+
         &:hover {
           background-color: var(--CC-color-focus-dark);
           color: #fff;
@@ -269,9 +250,9 @@ const invalidInput = computed((): string => {
     .text-input {
       font-size: 1rem;
       min-height: 2.5rem;
-      padding-left: .75rem;
+      padding-left: 0.75rem;
       width: 100%;
-      border-radius: 0 .75rem .75rem 0;
+      border-radius: 0 0.75rem 0.75rem 0;
       color: var(--CC-color-gray-darker);
       border: none;
       background-color: var(--CC-color-transparent);
@@ -279,8 +260,6 @@ const invalidInput = computed((): string => {
       &:focus {
         outline: none;
       }
-      
-      
     }
   }
 }

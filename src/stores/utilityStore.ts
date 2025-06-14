@@ -9,10 +9,16 @@ export const useUtilityStore = defineStore('storeName', (): UtilityStore => {
    * @returns {boolean} - Returns true if the input is valid (not empty), otherwise false.
    */
   const validateTextInput = (value: string): boolean => {
-    return value.trim().length > 0;
+    return !!value.trim();
+  };
+
+  const emailValidation = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
   };
 
   return {
     validateTextInput,
+    emailValidation,
   };
 });

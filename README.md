@@ -18,18 +18,57 @@ A customizable and standardized Vue 3 + TypeScript component and style library, 
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Installation
 
-### 📦 Installation
-
-Until it's published to npm, you can install it via a local `.tgz` package:
-
-```bash
-npm install --save ../CreativeCorvidStyleLibrary/creativecorvidstylelibrary-1.0.0.tgz
-```
-
-Or through GitHub:
+### 📦 From GitHub (recommended for now)
 
 ```bash
 npm install git+https://github.com/Zibilianja/creative-corvid.git
 ```
+
+## 🛠 Tech Stack
+
+- Framework: Vue 3 (Composition API)
+
+- Language: TypeScript
+
+- Tooling: Vite, SCSS
+
+- State Management: Pinia
+
+- Icons: Font Awesome
+
+- Testing: Vitest (in progress)
+
+## 📚 Usage & Documentation
+
+### Component usage demos are located in the /demo folder.
+
+- Components use the Cc prefix (e.g., CcButton, CcInput).
+
+- Designed with accessibility (WCAG 2.2), keyboard navigation, and responsive layout in mind.
+
+### Future plans include:
+
+- Dedicated usage documentation
+
+- Storybook or VitePress-powered showcase
+
+- Example integrations with real applications
+
+## 🧪 Roadmap
+
+-  Core UI components (buttons, modals, inputs, etc.)
+
+-  Dark/light theme support with toggle
+
+-  Initial working demo folder
+
+- Plans:  
+    - Pinia utility store for validation and state helpers
+
+    - Unit tests with Vitest
+
+    - Deployment of live documentation site (GitHub Pages or Netlify)
+
+    - Publish to npm for broader usage

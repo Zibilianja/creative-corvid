@@ -3,10 +3,18 @@ import { ref } from 'vue';
 import Button from '@/components/Button.vue';
 import ToastAlert from '@/components/ToastAlert.vue';
 
-const toastValue = ref('default');
+const toastMessage = ref('default');
 const valueToast = ref(false);
 
+const buttonDisabled = ref<Record<string, boolean>>({
+  announcement: false,
+  success: false,
+  error: false,
+  info: false,
+});
+
 const manageToast = (message: string): void => {
+  buttonDisabled.value[message] = true; // Disable the button after click
   if (valueToast.value) {
     valueToast.value = false; // Close the toast
     setTimeout(() => {
@@ -18,8 +26,13 @@ const manageToast = (message: string): void => {
 };
 
 const displayToast = (message: string): void => {
-  valueToast.value = true; // Trigger the toast again
-  toastValue.value = message;
+  valueToast.value = true;
+  toastMessage.value = message;
+};
+
+const handleUpdateToast = (): void => {
+  buttonDisabled.value[toastMessage.value] = false; // Re-enable the button after the toast is closed
+  valueToast.value = false; // Close the toast
 };
 </script>
 /* Template ============================================================== */
@@ -32,22 +45,26 @@ const displayToast = (message: string): void => {
     <div class="CC__demo-wrapper">
       <Button
         class="CC__blue-gray"
+        :disabled="buttonDisabled.announcement"
         @click="manageToast('announcement')"
         >Announcement Button</Button
       >
       <Button
         class="CC__green"
+        :disabled="buttonDisabled.success"
         @click="manageToast('success')"
         >Submit Button</Button
       >
       <Button
         class="CC__red"
         :leadingIcon="['fas', 'trash-alt']"
+        :disabled="buttonDisabled.error"
         @click="manageToast('error')"
         >Delete Button</Button
       >
       <Button
         class="CC__purple"
+        :disabled="buttonDisabled.info"
         @click="manageToast('info')"
         >Info Button</Button
       >
@@ -60,15 +77,16 @@ const displayToast = (message: string): void => {
           :icon="['fas', 'spinner']"
       /></Button>
     </div>
-    <ToastAlert
-      v-model="valueToast"
-      :state="toastValue"
-      @update:modelValue="valueToast = $event"
-    >
-      <template v-slot:title>Toast: {{ toastValue }}</template>
-      <template v-slot:message
-        >This is a toast {{ toastValue }} message.</template
-      >
-    </ToastAlert>
   </div>
+  <ToastAlert
+    v-model="valueToast"
+    :type="toastMessage"
+    :timeout="2000"
+    @update:modelValue="handleUpdateToast"
+  >
+    <template v-slot:title>Toast: {{ toastMessage }}</template>
+    <template v-slot:message
+      >This is a toast {{ toastMessage }} message.</template
+    >
+  </ToastAlert>
 </template>

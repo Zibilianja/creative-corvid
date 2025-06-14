@@ -8,8 +8,10 @@ defineProps({
 });
 </script>
 <template>
-  <font-awesome-icon
-    :icon="icon"
-    class="CC__icon"
-  />
+  <slot>
+    <font-awesome-icon
+      :icon="icon"
+      class="CC__icon"
+    />
+  </slot>
 </template>

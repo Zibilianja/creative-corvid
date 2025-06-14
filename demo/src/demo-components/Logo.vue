@@ -3,8 +3,8 @@ Logo.vue - Modular logo to use wherever needed.
 ========================================================================== */
 <script setup lang="ts">
 import { ref } from 'vue';
-import BlackCrowLogo from '@/assets/BlackCrowLogo.svg';
-import WhiteRavenLogo from '@/assets/WhiteRavenLogo2.svg';
+import BlackCrowLogo from '~/assets/BlackCrowLogo.svg';
+import WhiteRavenLogo from '~/assets/WhiteRavenLogo2.svg';
 
 const emit = defineEmits(['update:darkModeToggle']);
 

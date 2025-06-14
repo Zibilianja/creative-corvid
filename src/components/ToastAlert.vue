@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { ref, watch, type Component } from 'vue';
+import { ref, watch } from 'vue';
 import Icon from './Icon.vue';
 
 const emit = defineEmits(['update:modelValue']);
 
 const props = defineProps({
-  state: {
+  type: {
     type: String,
     default: 'default',
     validator: (value: string) =>
@@ -19,7 +19,7 @@ const props = defineProps({
   },
 });
 
-const ICONS: Record<string, Component> = {
+const ICONS: Record<string, string[]> = {
   announcement: ['fas', 'bullhorn'],
   success: ['fas', 'circle-check'],
   info: ['fas', 'circle-info'],
@@ -43,9 +43,8 @@ watch(
 );
 
 const showToast = () => {
-  // Start a new timeout and store its ID
   timeoutId.value = window.setTimeout(() => {
-    model.value = false;
+    emit('update:modelValue', props.type); // Emit the update to the parent
   }, props.timeout);
 };
 
@@ -53,41 +52,43 @@ const cancelToast = () => {
   if (timeoutId.value !== null) {
     clearTimeout(timeoutId.value); // Cancel the timeout
     timeoutId.value = null; // Reset the timeout ID
-    emit('update:modelValue', false); // Emit the update to the parent
+    emit('update:modelValue', props.type); // Emit the update to the parent
   }
 };
 </script>
 
 /* Template ============================================================== */
 <template>
-  <div
-    v-if="model"
-    class="toast-container"
-    role="alert"
-    aria-live="assertive"
-    aria-atomic="true"
-  >
+  <transition name="toast-fade">
     <div
-      class="toast"
-      :class="state"
+      v-if="model"
+      class="toast-container"
+      role="alert"
+      aria-live="assertive"
+      aria-atomic="true"
     >
-      <div class="toast-icon">
-        <component
-          :is="Icon"
-          :icon="ICONS[state]"
-        />
-      </div>
-      <div class="toast-content">
-        <div class="toast-header">
-          <slot name="title">Toast Alert: {{ state }}</slot>
+      <div
+        class="toast"
+        :class="type"
+      >
+        <div class="toast-icon">
+          <component
+            :is="Icon"
+            :icon="ICONS[type]"
+          />
         </div>
-        <div class="toast-body">
-          <slot name="message">{{ state }}</slot>
-          <slot></slot>
+        <div class="toast-content">
+          <div class="toast-header">
+            <slot name="title">Toast Alert: {{ type }}</slot>
+          </div>
+          <div class="toast-body">
+            <slot name="message">{{ type }}</slot>
+            <slot></slot>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 /* Styles ================================================================ */
@@ -95,18 +96,20 @@ const cancelToast = () => {
 .toast-container {
   position: fixed;
   bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
   z-index: 1000;
-  width: clamp(250px, calc(100vw - 2rem), 500px);
+  width: 100%;
+  display: flex;
+  justify-content: center;
 
   .toast {
+    width: clamp(250px, calc(100vw - 2rem), 500px);
+
     background-color: #333;
     color: #000;
     padding: 1rem;
     border-radius: 0.5rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    animation: CCToastFadeInOut 3s ease-in-out;
     display: grid;
     grid-template-columns: 1.25rem 1fr;
     column-gap: 0.5rem;
@@ -114,7 +117,6 @@ const cancelToast = () => {
     .toast-icon {
       display: flex;
       align-items: flex-start;
-
       font-size: 1.5rem;
     }
 
@@ -193,5 +195,22 @@ const cancelToast = () => {
     opacity: 0;
     transform: translateY(20px);
   }
+}
+
+.toast-fade-enter-active,
+.toast-fade-leave-active {
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s ease;
+}
+.toast-fade-enter-from,
+.toast-fade-leave-to {
+  opacity: 0;
+  transform: translateY(20px);
+}
+.toast-fade-enter-to,
+.toast-fade-leave-from {
+  opacity: 1;
+  transform: translateY(0);
 }
 </style>

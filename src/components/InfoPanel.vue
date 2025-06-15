@@ -1,13 +1,14 @@
 /* ==========================================================================
-InfoPanel.vue Describe what this component does.
+InfoPanel.vue - A Vue component for displaying informational panels for various
+types of info and optional closability.
 ========================================================================== */
 <script setup lang="ts">
-import { useSlots, type Component, type SetupContext } from 'vue';
+import { useSlots, type SetupContext } from 'vue';
 import CloseButton from './CloseButton.vue';
 import Icon from './Icon.vue';
 
 defineProps({
-  type: {
+  panelType: {
     type: String,
     required: true,
     validator: (value: string) =>
@@ -22,7 +23,7 @@ defineProps({
 });
 const emit = defineEmits(['close']);
 
-const ICONS: Record<string, Component> = {
+const ICONS: Record<string, string[]> = {
   announcement: ['fas', 'bullhorn'],
   success: ['fas', 'circle-check'],
   info: ['fas', 'circle-info'],
@@ -32,26 +33,21 @@ const ICONS: Record<string, Component> = {
 };
 
 const slots: SetupContext['slots'] = useSlots();
-
-// Method to handle the close button click
-const handleClose = () => {
-  emit('close');
-};
 </script>
 
 /* Template ============================================================== */
 <template>
   <div
     class="CC__info-panel-container"
-    :class="[type, closable ? 'closable' : '']"
+    :class="[panelType, closable ? 'closable' : '']"
   >
     <div
       class="CC__info-panel-icon"
-      :class="type"
+      :class="panelType"
     >
       <component
         :is="Icon"
-        :icon="ICONS[type]"
+        :icon="ICONS[panelType]"
       />
     </div>
 
@@ -70,7 +66,8 @@ const handleClose = () => {
     <CloseButton
       v-if="closable"
       class="close-button"
-      @click="handleClose"
+      title="Close Panel"
+      @click="emit('close')"
     />
   </div>
 </template>

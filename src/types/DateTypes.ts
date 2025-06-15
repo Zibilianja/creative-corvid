@@ -13,5 +13,10 @@ type Month = {
     value: number;
   };
 };
+type DateType = {
+  day: string;
+  month: string;
+  year: string;
+};
 
-export { type Day, type Month };
+export type { Day, Month, DateType };

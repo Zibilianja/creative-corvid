@@ -4,7 +4,7 @@ DemoInfoPanel.vue
 <script setup lang="ts">
 import InfoPanel from '@/components/InfoPanel.vue';
 import Button from '@/components/Button.vue';
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, ref, reactive } from 'vue';
 
 const successClosable = ref(true);
 const infoClosable = ref(true);
@@ -13,7 +13,7 @@ const warningClosable = ref(true);
 const noteClosable = ref(true);
 const initialRender = ref(true);
 
-const panelOpen = ref({
+const panelOpen = reactive({
   success: true,
   info: true,
   error: true,
@@ -23,18 +23,16 @@ const panelOpen = ref({
 });
 
 const resetPanels = () => {
-  panelOpen.value = {
-    success: true,
-    info: true,
-    error: true,
-    warning: true,
-    note: true,
-    noteWithoutMessage: true,
-  };
+  panelOpen.success = true;
+  panelOpen.info = true;
+  panelOpen.error = true;
+  panelOpen.warning = true;
+  panelOpen.note = true;
+  panelOpen.noteWithoutMessage = true;
 };
 
 const resetButtonShow = computed((): boolean => {
-  return Object.values(panelOpen.value).some((open) => !open);
+  return Object.values(panelOpen).some((open) => !open);
 });
 
 onMounted(() => {
@@ -66,7 +64,7 @@ onMounted(() => {
       :class="panelOpen.success ? 'shown' : 'hidden'"
     >
       <InfoPanel
-        type="success"
+        panel-type="success"
         :closable="successClosable"
         @close="panelOpen.success = false"
       >
@@ -86,7 +84,7 @@ onMounted(() => {
       :class="panelOpen.info ? 'shown' : 'hidden'"
     >
       <InfoPanel
-        type="info"
+        panel-type="info"
         :closable="infoClosable"
         @close="panelOpen.info = false"
       >
@@ -105,7 +103,7 @@ onMounted(() => {
       :class="panelOpen.error ? 'shown' : 'hidden'"
     >
       <InfoPanel
-        type="error"
+        panel-type="error"
         :closable="errorClosable"
         @close="panelOpen.error = false"
       >
@@ -123,7 +121,7 @@ onMounted(() => {
       :class="panelOpen.warning ? 'shown' : 'hidden'"
     >
       <InfoPanel
-        type="warning"
+        panel-type="warning"
         :closable="warningClosable"
         @close="panelOpen.warning = false"
       >
@@ -141,7 +139,7 @@ onMounted(() => {
       :class="panelOpen.note ? 'shown' : 'hidden'"
     >
       <InfoPanel
-        type="note"
+        panel-type="note"
         :closable="noteClosable"
         @close="panelOpen.note = false"
       >
@@ -155,7 +153,7 @@ onMounted(() => {
       >
     </div>
     <div class="info-panel">
-      <InfoPanel type="note">
+      <InfoPanel panel-type="note">
         <template #heading> Note without message </template>
       </InfoPanel>
     </div>

@@ -38,8 +38,8 @@ const rules = {
         label="Date Picker"
         format="MM/DD/YYYY"
         :required="false"
-        :end-year="2050"
-        :future-year="2050"
+        :end-year="2025"
+        :future-year="5"
       />
     </div>
   </div>

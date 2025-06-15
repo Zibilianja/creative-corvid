@@ -1,11 +1,14 @@
 /* ==========================================================================
-InputDateSelect.vue Describe what this component does.
+DateDropdownSelect.vue Describe what this component does.
 ========================================================================== */
 <script setup lang="ts">
 import { computed, onMounted, ref, reactive, watch } from 'vue';
 import { GetInputId } from '@/utils';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
+import type { DateType } from '@/types';
+import { useDateState } from '@/composables';
+
 dayjs.extend(customParseFormat);
 
 const props = defineProps({
@@ -20,117 +23,67 @@ const props = defineProps({
   format: {
     type: String,
     default: 'MM/DD/YYYY',
-    validator: (value: string) => {
-      return ['MM/DD/YYYY', 'YYYY-MM-DD'].includes(value);
-    },
   },
   required: {
     type: Boolean,
     default: false,
   },
-  endYear: {
+  firstYear: {
     type: Number,
     required: true,
   },
-  futureYear: {
+  yearsAvailable: {
     type: Number,
     required: true,
   },
 });
+const {
+  days,
+  determineMonths,
+
+  makeYearsArray,
+  makeDateString,
+  isFullDate,
+  validateFormat,
+  validateDate,
+  formatDate,
+} = useDateState();
+
+const date: DateType = reactive({
+  year: '',
+  month: '',
+  day: '',
+});
+
+const dateErrorMessage = ref('');
+const months = determineMonths(props.format);
+const years = makeYearsArray(props.firstYear, props.yearsAvailable);
 
 const emit = defineEmits(['update:input']);
 
 const labelId = GetInputId();
 const requiredClass = ref('');
-const months = [
-  '01',
-  '02',
-  '03',
-  '04',
-  '05',
-  '06',
-  '07',
-  '08',
-  '09',
-  '10',
-  '11',
-  '12',
-];
-const days = [
-  '01',
-  '02',
-  '03',
-  '04',
-  '05',
-  '06',
-  '07',
-  '08',
-  '09',
-  '10',
-  '11',
-  '12',
-  '13',
-  '14',
-  '15',
-  '16',
-  '17',
-  '18',
-  '19',
-  '20',
-  '21',
-  '22',
-  '23',
-  '24',
-  '25',
-  '26',
-  '27',
-  '28',
-  '29',
-  '30',
-  '31',
-];
-const date = reactive({
-  month: '',
-  day: '',
-  year: '',
-});
 
-const years = computed(() => {
-  const numberOfYears = props.futureYear - props.endYear;
-  const years = [];
-  for (let i = props.futureYear; i >= props.futureYear - numberOfYears; i--) {
-    years.push(i);
-  }
-  return years;
-});
+const dateStr = makeDateString(date);
 
-const isValidDate = computed(() => {
-  if (date.month === '' || date.day === '' || date.year === '') {
-    return true;
-  }
-  const _date = `${date.year}-${date.month}-${date.day}`;
-  return dayjs(_date, 'YYYY-MM-DD', true).isValid();
+const isValidFormat = computed((): boolean => {
+  return validateFormat(props.format);
 });
-
-const isFullDate = computed(() => {
-  return date.month !== '' && date.day !== '' && date.year !== '';
+const isValidDate = computed((): boolean => {
+  return validateDate(dateStr, props.format);
 });
 
 watch(
   date,
-  (newVal) => {
-    if (newVal.month !== '' && newVal.day !== '' && newVal.year !== '') {
-      const _date = `${newVal.year}-${newVal.month}-${newVal.day}`;
-      const formattedDate = dayjs(_date, 'YYYY-MM-DD', true).format(
-        props.format
-      );
-      if (formattedDate === 'Invalid date') {
-        return;
+  (newVal: DateType) => {
+    const dateStrNew = makeDateString(date);
+    if (isFullDate(date)) {
+      if (validateDate(dateStrNew, props.format)) {
+        emit('update:input', formatDate(newVal, props.format));
       }
-      emit('update:input', formattedDate);
     }
   },
-  { deep: true }
+  { deep: true },
 );
 
 onMounted(() => {
@@ -192,7 +145,12 @@ Template
   <div class="CC__input-date-select-container">
     <label :for="labelId">
       {{ label }}
-      <span v-if="required" class="req__asterisk"> * </span>
+      <span
+        v-if="required"
+        class="req__asterisk"
+      >
+        *
+      </span>
       <span
         v-if="required && requiredClass === 'invalid__input'"
         :class="requiredClass"
@@ -214,8 +172,17 @@ Template
           @change="emitUpdate('change')"
           @blur="emitUpdate('blur')"
         >
-          <option selected value="">MM</option>
-          <option v-for="month in months" :key="month" :value="month">
+          <option
+            selected
+            value=""
+          >
+            MM
+          </option>
+          <option
+            v-for="month in months"
+            :key="month"
+            :value="month"
+          >
             {{ month }}
           </option>
         </select>
@@ -230,8 +197,17 @@ Template
           @change="emitUpdate('change')"
           @blur="emitUpdate('blur')"
         >
-          <option selected value="">DD</option>
-          <option v-for="day in days" :key="day" :value="day">
+          <option
+            selected
+            value=""
+          >
+            DD
+          </option>
+          <option
+            v-for="day in days"
+            :key="day"
+            :value="day"
+          >
             {{ day }}
           </option>
         </select>
@@ -246,14 +222,26 @@ Template
           @change="emitUpdate('change')"
           @blur="emitUpdate('blur')"
         >
-          <option selected value="">YYYY</option>
-          <option v-for="year in years" :key="year" :value="year">
+          <option
+            selected
+            value=""
+          >
+            YYYY
+          </option>
+          <option
+            v-for="year in years"
+            :key="year"
+            :value="year"
+          >
             {{ year }}
           </option>
         </select>
       </div>
     </div>
-    <div v-show="!isValidDate" class="CC__input-date-select-invalid-date-hint">
+    <div
+      v-show="!isValidDate"
+      class="CC__input-date-select-invalid-date-hint"
+    >
       Invalid Date
     </div>
   </div>

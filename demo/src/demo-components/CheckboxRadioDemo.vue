@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { reactive } from 'vue';
 import Checkbox from '@/form-components/Checkbox.vue';
 import Radio from '@/form-components/Radio.vue';
 import Button from '@/components/Button.vue';
 
-const checkboxValues = ref({
+const checkboxValues = reactive({
   announcement: {
     value: false,
     error: false,
@@ -54,18 +54,22 @@ const radioData = {
   ],
 };
 
-const radioSelected = ref({ radio1: '', radio2: '', radio3: '', radio4: '' });
+const radioSelected = reactive({
+  radio1: '',
+  radio2: '',
+  radio3: '',
+  radio4: '',
+});
 
 const handleSubmit = () => {
-  checkboxValues.value.announcement.error =
-    !checkboxValues.value.announcement.value;
-  checkboxValues.value.success.error = !checkboxValues.value.success.value;
-  checkboxValues.value.error.error = !checkboxValues.value.error.value;
+  checkboxValues.announcement.error = !checkboxValues.announcement.value;
+  checkboxValues.success.error = !checkboxValues.success.value;
+  checkboxValues.error.error = !checkboxValues.error.value;
 
   if (
-    checkboxValues.value.announcement.error ||
-    checkboxValues.value.success.error ||
-    checkboxValues.value.error.error
+    checkboxValues.announcement.error ||
+    checkboxValues.success.error ||
+    checkboxValues.error.error
   ) {
     alert('Please answer all required sections.');
   } else {

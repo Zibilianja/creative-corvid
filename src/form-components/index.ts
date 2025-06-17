@@ -8,3 +8,4 @@ export * from './TextInput.vue';
 export * from './TextAreaInput.vue';
 export * from './SearchBar.vue';
 export * from './Number.vue';
+export * from './DateSelect';

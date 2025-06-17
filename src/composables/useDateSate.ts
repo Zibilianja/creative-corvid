@@ -1,12 +1,71 @@
-import dayjs from 'dayjs';
 import { type DateType } from '@/types';
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+dayjs.extend(customParseFormat);
 
 export function useDateState() {
   const dateKeys: (keyof DateType)[] = ['year', 'month', 'day'];
+  const daysOfEachMonth: Record<string, number> = {
+    '01': 31, // January
+    '02': 28, // February (not accounting for leap years here)
+    '03': 31, // March
+    '04': 30, // April
+    '05': 31, // May
+    '06': 30, // June
+    '07': 31, // July
+    '08': 31, // August
+    '09': 30, // September
+    '10': 31, // October
+    '11': 30, // November
+    '12': 31, // December
+  };
+  const determineDaysInMonth = (month: string, format: string): number => {
+    const monthFormatLong: boolean =
+      format.includes('MMMM') || format.includes('MMM');
+    if (monthFormatLong) {
+      return findMatchingDays(monthsShort.indexOf(month.slice(0, 3)));
+    }
 
-  const days = Array.from({ length: 31 }, (_, i) =>
-    (i + 1).toString().padStart(2, '0'),
-  );
+    if (format.includes('MM')) {
+      return daysOfEachMonth[month.padStart(2, '0')].toString();
+    }
+    return '31'; // Default to 31 days if format is not recognized
+  };
+  const findMatchingDays = (monthIndex: number): string => {
+    return daysOfEachMonth[
+      (monthIndex + 1).toString().padStart(2, '0')
+    ].toString();
+  };
+
+  const monthsLong = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+
+  const monthsShort = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ];
   const determineMonths = (format: string): string[] => {
     if (
       format.includes('MM') &&
@@ -16,42 +75,16 @@ export function useDateState() {
         (i + 1).toString().padStart(2, '0'),
       );
     } else if (format.includes('MMMM')) {
-      return [
-        'January',
-        'February',
-        'March',
-        'April',
-        'May',
-        'June',
-        'July',
-        'August',
-        'September',
-        'October',
-        'November',
-        'December',
-      ];
+      return monthsLong;
     } else {
-      return [
-        'Jan',
-        'Feb',
-        'Mar',
-        'Apr',
-        'May',
-        'Jun',
-        'Jul',
-        'Aug',
-        'Sep',
-        'Oct',
-        'Nov',
-        'Dec',
-      ];
+      return monthsShort;
     }
   };
   const makeYearsArray = (
     firstYear: number,
     yearsAvailable: number,
   ): string[] => {
-    return Array.from({ length: yearsAvailable }, (_, i) =>
+    return Array.from({ length: yearsAvailable + 1 }, (_, i) =>
       (firstYear + i).toString(),
     );
   };
@@ -84,11 +117,10 @@ export function useDateState() {
    * @description - Validates a date string against a specified format.
    *
    * @param {string} dateStr - The date string to validate.
-   * @param {string} format - The format against which to validate the date string.
    * @returns {boolean} - Returns true if the date string is valid according to the format, otherwise false.
    */
-  const validateDate = (dateStr: string, format: string): boolean => {
-    return dayjs(dateStr, format, true).isValid();
+  const validateDate = (dateStr: string): boolean => {
+    return dayjs(dateStr, 'YYYY-MM-DD', true).isValid();
   };
 
   /**
@@ -100,22 +132,35 @@ export function useDateState() {
    * @throws {Error} - Throws an error if the date is invalid or the format is incorrect.
    * */
   const formatDate = (date: DateType, format: string): string => {
-    const dateStr = `${date.year}-${date.month}-${date.day}`;
-    if (validateDate(dateStr, format)) {
+    const dateStr = makeDateString(date);
+    if (validateDate(dateStr)) {
       return dayjs(dateStr).format(format);
     } else {
-      return '';
+      return 'Invalid Date';
     }
   };
 
+  const getDateParts = (dateStr: string, format: string): DateType | null => {
+    const parsed = dayjs(dateStr, format, true);
+    if (!validateDate(dateStr)) {
+      return null;
+    }
+    return {
+      year: parsed.format('YYYY'),
+      month: parsed.format('MM'),
+      day: parsed.format('DD'),
+    };
+  };
+
   return {
+    determineDaysInMonth,
     determineMonths,
-    days,
     makeYearsArray,
     makeDateString,
     isFullDate,
     validateFormat,
     validateDate,
     formatDate,
+    getDateParts,
   };
 }

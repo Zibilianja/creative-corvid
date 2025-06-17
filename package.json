@@ -42,7 +42,8 @@
     "vue-tsc": "2.2.10"
   },
   "files": [
-    "dist/styles.css"
+    "dist",
+    "styles.scss"
   ],
   "postcss": {
     "plugins": {

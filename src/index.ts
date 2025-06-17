@@ -1,6 +1,7 @@
 import type { App, Component } from 'vue';
-import * as Components from './components';
-import * as FormComponents from './form-components';
+import * as Components from './components'; // Import all components
+import * as FormComponents from './form-components'; // and form components
+import './styles.scss'; // Import global styles
 
 // 🔧 Install function for plugin usage
 function install(app: App): void {

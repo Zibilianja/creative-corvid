@@ -2,24 +2,26 @@
 DateDropdownSelect.vue Describe what this component does.
 ========================================================================== */
 <script setup lang="ts">
-import { computed, onMounted, ref, reactive, watch } from 'vue';
+import { computed, onMounted, ref, reactive, watch, type Component } from 'vue';
 import { GetInputId } from '@/utils';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import type { DateType } from '@/types';
 import { useDateState } from '@/composables';
+import DateSelectShort from './DateSelectShort.vue';
+import DateSelectLong from './DateSelectLong.vue';
 
 dayjs.extend(customParseFormat);
+const model = defineModel({
+  type: String,
+});
 
 const props = defineProps({
   label: {
     type: String,
     default: '',
   },
-  value: {
-    type: String,
-    default: null,
-  },
+
   format: {
     type: String,
     default: 'MM/DD/YYYY',
@@ -46,6 +48,7 @@ const {
   validateFormat,
   validateDate,
   formatDate,
+  getDateParts,
 } = useDateState();
 
 const date: DateType = reactive({
@@ -63,7 +66,7 @@ const isFebruary = computed((): boolean => {
 const days = computed((): string[] => {
   const yearVal =
     leapYearOverride.value && isFebruary.value ? '2024' : date.year;
-  const daysCount = determineDaysInMonth(date.month, yearVal, props.format);
+  const daysCount = determineDaysInMonth(date.month, yearVal);
   return Array.from({ length: daysCount }, (_, i) =>
     (i + 1).toString().padStart(2, '0'),
   );
@@ -81,6 +84,7 @@ const dateStr = makeDateString(date);
 const isValidFormat = computed((): boolean => {
   return validateFormat(props.format);
 });
+
 const isValidDate = computed((): boolean => {
   if (isFullDate(date)) {
     return validateDate(dateStr);
@@ -106,26 +110,21 @@ onMounted(() => {
 });
 
 const setDate = () => {
-  if (props.value === null || props.value === '') {
+  if (!model.value) {
     return;
   }
-  if (props.format === 'MM/DD/YYYY') {
-    const dateArray = props.value.split('/');
-    date.month = dateArray[0];
-    date.day = dateArray[1];
-    date.year = dateArray[2];
-  }
-  if (props.format === 'YYYY-MM-DD') {
-    const dateArray = props.value.split('-');
-    date.month = dateArray[1];
-    date.day = dateArray[2];
-    date.year = dateArray[0];
+  const dateParts = getDateParts(dateStr, props.format);
+  if (dateParts) {
+    date.year = dateParts.year;
+    date.month = dateParts.month;
+    date.day = dateParts.day;
+  } else {
+    dateErrorMessage.value = 'Invalid Date';
   }
 };
 
 const emitDateValue = () => {
-  const _date = `${date.year}-${date.month}-${date.day}`;
-  const formattedDate = dayjs(_date, 'YYYY-MM-DD', true).format(props.format);
+  const formattedDate = formatDate(date, props.format);
   if (formattedDate === 'Invalid date') {
     return;
   }
@@ -133,9 +132,8 @@ const emitDateValue = () => {
 };
 
 const emitUpdate = (emitType: string) => {
-  console.log('update');
   if (props.required) {
-    if (isFullDate(date) === false && emitType === 'blur') {
+    if (!isFullDate(date) && emitType === 'blur') {
       setRequiredCss(true);
       return;
     }
@@ -146,12 +144,32 @@ const emitUpdate = (emitType: string) => {
 
 const setRequiredCss = (error: boolean) => {
   if (error) {
-    console.log(!!error);
     requiredClass.value = 'invalid__input';
   }
   if (!error && props.required) {
     requiredClass.value = 'valid__input';
   }
+};
+
+const shortDateSeparator = computed((): string => {
+  if (props.format.includes('-')) {
+    return '-';
+  } else {
+    return '/';
+  }
+});
+const longOrShortComponent = computed((): Component => {
+  if (props.format.includes('MMMM') || props.format.includes('MMM')) {
+    return DateSelectLong as Component;
+  } else {
+    return DateSelectShort as Component;
+  }
+});
+
+const handleDateChange = (newDate: DateType): void => {
+  date.year = newDate.year;
+  date.month = newDate.month;
+  date.day = newDate.day;
 };
 </script>
 
@@ -176,90 +194,24 @@ Template
       </span>
     </label>
 
-    <div
-      :id="labelId"
-      class="CC__input-date-select-grid"
-      :class="[isValidDate ? '' : 'invalid__input']"
-      :title="label"
-    >
-      <div class="CC-date-select-input month-select-input">
-        <select
-          v-model="date.month"
-          title="Month"
-          @change="emitUpdate('update')"
-          @blur="emitUpdate('blur')"
-        >
-          <option
-            selected
-            value=""
-          >
-            MM
-          </option>
-          <option
-            v-for="month in months"
-            :key="month"
-            :value="month"
-          >
-            {{ month }}
-          </option>
-        </select>
-      </div>
-
-      <span>/</span>
-
-      <div class="CC-date-select-input day-select-input">
-        <select
-          v-model="date.day"
-          title="Day"
-          @change="emitUpdate('change')"
-          @blur="emitUpdate('blur')"
-        >
-          <option
-            selected
-            value=""
-          >
-            DD
-          </option>
-          <option
-            v-for="day in days"
-            :key="day"
-            :value="day"
-          >
-            {{ day }}
-          </option>
-        </select>
-      </div>
-
-      <span>/</span>
-
-      <div class="CC-date-select-input year-select-input">
-        <select
-          v-model="date.year"
-          title="Year"
-          @change="emitUpdate('change')"
-          @blur="emitUpdate('blur')"
-        >
-          <option
-            selected
-            value=""
-          >
-            YYYY
-          </option>
-          <option
-            v-for="year in years"
-            :key="year"
-            :value="year"
-          >
-            {{ year }}
-          </option>
-        </select>
-      </div>
-    </div>
+    <component
+      :is="longOrShortComponent"
+      :label-id="labelId"
+      :date-value="date"
+      :months="months"
+      :days="days"
+      :years="years"
+      :separator="shortDateSeparator"
+      :is-valid-date="isValidDate"
+      @update:dateValue="handleDateChange"
+      @blur="emitUpdate('blur')"
+      @focus="setRequiredCss(false)"
+    />
     <div
       v-show="!isValidDate"
       class="CC__input-date-select-invalid-date-hint"
     >
-      Invalid Date
+      {{ dateErrorMessage }}
     </div>
   </div>
 </template>
@@ -322,36 +274,34 @@ Styles
 
   .CC-date-select-input {
     position: relative;
-  }
-
-  .CC-date-select-input:after {
-    content: ' ';
-    position: absolute;
-    top: 50%;
-    margin-top: 0;
-    right: 0.75rem;
-    width: 0;
-    height: 0;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 5px solid black;
-  }
-
-  select {
-    background-size: 1.5em 1.5em;
-    box-sizing: border-box;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    border: 0;
-    min-height: 36px;
-    font-size: 1rem;
     color: var(--CC-color-gray-darker);
-    background-color: transparent;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
+    select {
+      background-size: 1.5em 1.5em;
+      box-sizing: border-box;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      border: 0;
+      min-height: 36px;
+      font-size: 1rem;
+      background-color: transparent;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+    }
+    &:after {
+      content: ' ';
+      position: absolute;
+      top: 50%;
+      margin-top: 0;
+      right: 0.75rem;
+      width: 0;
+      height: 0;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 5px solid black;
+    }
   }
 }
 </style>

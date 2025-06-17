@@ -4,7 +4,7 @@ part of the Creative Corvid Component and Style Library.
 ========================================================================== */
 <script setup lang="ts">
 import DateInput from '@/form-components/DateInput.vue';
-import DatePicker from '@/form-components/DatePicker.vue';
+import DateDropdownSelect from '@/form-components/DateSelect/DateDropdownSelect.vue';
 import { ref } from 'vue';
 
 const dateValue = ref<string | null>(null);
@@ -33,13 +33,13 @@ const rules = {
         is-clearable
         required
       />
-      <DatePicker
-        :value="datePickerValue"
+      <DateDropdownSelect
+        v-model="datePickerValue"
         label="Date Picker"
-        format="MM/DD/YYYY"
+        format="MMMM DD, YYYY"
         :required="false"
-        :end-year="2025"
-        :future-year="5"
+        :first-year="2000"
+        :years-available="15"
       />
     </div>
   </div>

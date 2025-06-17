@@ -40,7 +40,7 @@ const emit = defineEmits(['update:dateValue', 'blur', 'focus']);
 <template>
   <div
     :id="labelId"
-    class="CC__input-date-select-grid"
+    class="CC__input-date-select-grid CC__input-date-select-long"
     :class="[isValidDate ? '' : 'invalid__input']"
     :title="title"
   >
@@ -69,7 +69,6 @@ const emit = defineEmits(['update:dateValue', 'blur', 'focus']);
         </option>
       </select>
     </div>
-
     <span>{{ ' ' }}</span>
 
     <div class="CC-date-select-input day-select-input">
@@ -97,9 +96,7 @@ const emit = defineEmits(['update:dateValue', 'blur', 'focus']);
         </option>
       </select>
     </div>
-
     <span>{{ ', ' }}</span>
-
     <div class="CC-date-select-input year-select-input">
       <select
         v-model="dateValue.year"
@@ -127,3 +124,4 @@ const emit = defineEmits(['update:dateValue', 'blur', 'focus']);
     </div>
   </div>
 </template>
+<style lang="postcss"></style>

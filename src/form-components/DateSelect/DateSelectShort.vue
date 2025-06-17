@@ -44,7 +44,7 @@ const emit = defineEmits(['update:dateValue', 'focus', 'blur']);
 <template>
   <div
     :id="labelId"
-    class="CC__input-date-select-grid"
+    class="CC__input-date-select-grid CC__input-date-select-short"
     :class="[isValidDate ? '' : 'invalid__input']"
     :title="title"
   >

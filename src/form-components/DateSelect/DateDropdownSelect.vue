@@ -12,6 +12,9 @@ import DateSelectShort from './DateSelectShort.vue';
 import DateSelectLong from './DateSelectLong.vue';
 
 dayjs.extend(customParseFormat);
+
+// #region - Model, props, emits
+// Define the model for the component
 const model = defineModel({
   type: String,
 });
@@ -39,13 +42,17 @@ const props = defineProps({
     required: true,
   },
 });
+
+const emit = defineEmits(['update:input']);
+// #endregion - Model, props, emits
+// #region - Composables, refs and computed properties
+
 const {
   determineDaysInMonth,
   determineMonths,
   makeYearsArray,
   makeDateString,
   isFullDate,
-  validateFormat,
   validateDate,
   formatDate,
   getDateParts,
@@ -56,100 +63,43 @@ const date: DateType = reactive({
   month: '',
   day: '',
 });
-
-const leapYearOverride = ref(false);
 const dateErrorMessage = ref('');
 
-const isFebruary = computed((): boolean => {
-  return ['02', '2', 'Feb', 'February'].includes(date.month);
-});
 const days = computed((): string[] => {
-  const yearVal =
-    leapYearOverride.value && isFebruary.value ? '2024' : date.year;
-  const daysCount = determineDaysInMonth(date.month, yearVal);
-  return Array.from({ length: daysCount }, (_, i) =>
-    (i + 1).toString().padStart(2, '0'),
-  );
+  return determineDaysInMonth(date.month, props.format);
 });
-const months = determineMonths(props.format);
-const years = makeYearsArray(props.firstYear, props.yearsAvailable);
-
-const emit = defineEmits(['update:input']);
-
-const labelId = GetInputId();
-const requiredClass = ref('');
-
-const dateStr = makeDateString(date);
-
-const isValidFormat = computed((): boolean => {
-  return validateFormat(props.format);
+const months = computed((): string[] => {
+  return determineMonths(props.format);
+});
+const years = computed((): string[] => {
+  return makeYearsArray(props.firstYear, props.yearsAvailable);
 });
 
+const isShortFormat = computed((): boolean => {
+  return !props.format.includes('MMM');
+});
+const dateStr = computed((): string => {
+  return makeDateString(date, isShortFormat.value);
+});
 const isValidDate = computed((): boolean => {
   if (isFullDate(date)) {
-    return validateDate(dateStr);
+    return validateDate(dateStr.value, isShortFormat.value);
   }
   return true;
 });
+const labelId = GetInputId();
 
-watch(
-  date,
-  (newVal: DateType) => {
-    const dateStrNew = makeDateString(date);
-    if (isFullDate(date)) {
-      if (validateDate(dateStrNew)) {
-        emit('update:input', formatDate(newVal, props.format));
-      }
-    }
-  },
-  { deep: true },
-);
-
-onMounted(() => {
-  setDate();
-});
-
-const setDate = () => {
-  if (!model.value) {
-    return;
+const errorClass = computed((): string => {
+  const valid = validateDate(dateStr.value, isShortFormat.value);
+  if (!valid) {
+    return 'invalid__input';
   }
-  const dateParts = getDateParts(dateStr, props.format);
-  if (dateParts) {
-    date.year = dateParts.year;
-    date.month = dateParts.month;
-    date.day = dateParts.day;
+  if (valid && props.required) {
+    return 'valid__input';
   } else {
-    dateErrorMessage.value = 'Invalid Date';
+    return '';
   }
-};
-
-const emitDateValue = () => {
-  const formattedDate = formatDate(date, props.format);
-  if (formattedDate === 'Invalid date') {
-    return;
-  }
-  emit('update:input', formattedDate);
-};
-
-const emitUpdate = (emitType: string) => {
-  if (props.required) {
-    if (!isFullDate(date) && emitType === 'blur') {
-      setRequiredCss(true);
-      return;
-    }
-  }
-  setRequiredCss(false);
-  emitDateValue();
-};
-
-const setRequiredCss = (error: boolean) => {
-  if (error) {
-    requiredClass.value = 'invalid__input';
-  }
-  if (!error && props.required) {
-    requiredClass.value = 'valid__input';
-  }
-};
+});
 
 const shortDateSeparator = computed((): string => {
   if (props.format.includes('-')) {
@@ -165,12 +115,68 @@ const longOrShortComponent = computed((): Component => {
     return DateSelectShort as Component;
   }
 });
+// #endregion - Composables, refs and computed properties
+// #region - Watchers, methods and lifecycle hooks
+watch(
+  date,
+  (newVal: DateType) => {
+    const dateStrNew = makeDateString(date, isShortFormat.value);
+    if (isFullDate(date)) {
+      if (validateDate(dateStrNew, isShortFormat.value)) {
+        emit('update:input', formatDate(newVal, props.format));
+      }
+    }
+  },
+  { deep: true },
+);
+
+onMounted(() => {
+  setDate();
+});
+
+const setDate = () => {
+  if (!model.value) {
+    return;
+  }
+  const dateParts = getDateParts(dateStr.value, props.format);
+  if (dateParts) {
+    date.year = dateParts.year;
+    date.month = dateParts.month;
+    date.day = dateParts.day;
+  } else {
+    dateErrorMessage.value = 'Invalid Date';
+  }
+};
+
+const emitDateValue = () => {
+  const formattedDate = formatDate(date, props.format);
+  if (formattedDate === 'Invalid date') {
+    return;
+  }
+  emit('update:input', formattedDate);
+  console.log(formattedDate);
+};
+
+const emitUpdate = (emitType: string) => {
+  if (props.required) {
+    if (!isFullDate(date) && emitType === 'blur') {
+      return;
+    }
+  }
+  emitDateValue();
+};
 
 const handleDateChange = (newDate: DateType): void => {
   date.year = newDate.year;
   date.month = newDate.month;
   date.day = newDate.day;
+  if (!isValidDate.value) {
+    dateErrorMessage.value = 'Invalid Date';
+  } else {
+    dateErrorMessage.value = '';
+  }
 };
+// #endregion - Watchers, methods and lifecycle hooks
 </script>
 
 /* ==========================================================================
@@ -187,8 +193,8 @@ Template
         *
       </span>
       <span
-        v-if="required && requiredClass === 'invalid__input'"
-        :class="requiredClass"
+        v-if="required && errorClass"
+        :class="errorClass"
       >
         Required
       </span>
@@ -205,7 +211,6 @@ Template
       :is-valid-date="isValidDate"
       @update:dateValue="handleDateChange"
       @blur="emitUpdate('blur')"
-      @focus="setRequiredCss(false)"
     />
     <div
       v-show="!isValidDate"
@@ -223,7 +228,9 @@ Styles
 .CC__input-date-select-container {
   display: flex;
   flex-direction: column;
-  min-width: 20rem;
+  width: fit-content;
+  min-width: 12rem;
+  padding: 0.5rem 2rem;
 
   label {
     font-size: 1rem;
@@ -246,23 +253,29 @@ Styles
     font-style: italic;
     font-size: 0.9rem;
     margin-top: 0.25rem;
+    margin-bottom: -1.35rem;
   }
 }
 
 .CC__input-date-select-grid {
   display: grid;
-  grid-template-columns: 1fr auto 1fr auto 1fr;
+  grid-template-columns: 1fr auto 0.75fr auto 1fr;
   align-items: center;
   justify-content: center;
-  border: 1px solid #ccc;
+  border: 1px solid var(--CC-color-gray-dark);
   border-radius: 0.75em;
-  padding: 0.25rem;
-  column-gap: 0.75rem;
-  background-color: #fff;
+  column-gap: 0.25rem;
+  padding: 0.5rem 1rem;
+  background-color: var(--CC-color-gray-light);
   color: var(--CC-color-gray-darker);
 
+  &:focus-within {
+    background-color: var(--CC-color-gray-lightest);
+    outline: 2px solid var(--CC-color-blue-luminous);
+  }
+
   &.invalid__input {
-    border: 1px solid #ff0000;
+    outline: 2px solid var(--CC-color-red-dark);
     color: #ff0000;
   }
 
@@ -274,34 +287,37 @@ Styles
 
   .CC-date-select-input {
     position: relative;
-    color: var(--CC-color-gray-darker);
+    display: flex;
+    flex-wrap: nowrap;
+
     select {
-      background-size: 1.5em 1.5em;
       box-sizing: border-box;
       width: 100%;
       height: 100%;
       display: flex;
       align-items: center;
-      border: 0;
-      min-height: 36px;
+      border-radius: 0.5rem;
+      border: 1px solid var(--CC-color-gray);
+      min-height: 1.7rem;
       font-size: 1rem;
-      background-color: transparent;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;
+      background-color: var(--CC-color-white);
+
+      color: var(--CC-color-gray-darker);
+      padding: 0.25rem 0.5rem;
+      &:focus {
+        outline: 2px solid var(--CC-color-blue-luminous);
+      }
     }
-    &:after {
-      content: ' ';
-      position: absolute;
-      top: 50%;
-      margin-top: 0;
-      right: 0.75rem;
-      width: 0;
-      height: 0;
-      border-left: 5px solid transparent;
-      border-right: 5px solid transparent;
-      border-top: 5px solid black;
-    }
+  }
+  &.CC__input-date-select-long {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+  .CC__input-date-select-short {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.5rem;
   }
 }
 </style>

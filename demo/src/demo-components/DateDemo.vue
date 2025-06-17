@@ -33,10 +33,34 @@ const rules = {
         is-clearable
         required
       />
+      <DateInput
+        v-model="dateValue"
+        label="Date Input"
+        is-clearable
+        required
+      />
+    </div>
+    <div class="CC__demo-wrapper">
       <DateDropdownSelect
         v-model="datePickerValue"
-        label="Date Picker"
+        label="Date Select Long"
         format="MMMM DD, YYYY"
+        :required="false"
+        :first-year="2000"
+        :years-available="15"
+      />
+      <DateDropdownSelect
+        v-model="datePickerValue"
+        label="Date Select Short"
+        format="MM/DD/YYYY"
+        :required="false"
+        :first-year="2000"
+        :years-available="15"
+      />
+      <DateDropdownSelect
+        v-model="datePickerValue"
+        label="Date Select Mid"
+        format="MMM DD, YYYY"
         :required="false"
         :first-year="2000"
         :years-available="15"

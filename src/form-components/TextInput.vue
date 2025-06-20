@@ -13,7 +13,12 @@ const model = defineModel({
   default: '',
 });
 
-const emit = defineEmits(['update:focus', 'update:blur', 'update:modelValue']);
+const emit = defineEmits([
+  'update:focus',
+  'update:blur',
+  'update:modelValue',
+  'click:trailingIcon',
+]);
 
 const props = defineProps({
   label: {
@@ -57,6 +62,14 @@ const props = defineProps({
     type: Array as () => string[] | null,
     default: () => null,
   },
+  iconButton: {
+    type: Boolean,
+    default: false,
+  },
+  buttonDisabled: {
+    type: Boolean,
+    default: false,
+  },
   maxLength: {
     type: Number,
     default: 100,
@@ -94,6 +107,13 @@ const invalidInput = computed((): string => {
   }
   return '';
 });
+
+const buttonIconLoading = computed((): string => {
+  if (props.buttonDisabled) {
+    return 'loading-spinner';
+  }
+  return '';
+});
 </script>
 /* Template ================================================== */
 <template>
@@ -111,10 +131,10 @@ const invalidInput = computed((): string => {
       >
     </label>
     <div
-      class="CC__text-input-wrapper cc-bg-white cc-d-flex cc-align-items-center cc-border cc-border-radius-4 cc-w-100 cc-mt-1 cc-box-shadow"
+      class="CC__text-input-wrapper cc-bg-white cc-d-flex cc-align-items-center cc-border cc-border-radius-4 cc-w-100 cc-mt-1"
       :class="[
         `${leadingIcon}-wrapper`,
-        props.error ? [invalidInput, 'cc-box-shadow-error'] : '',
+        props.error ? [invalidInput, 'CC__box-shadow-error'] : '',
       ]"
     >
       <div
@@ -138,12 +158,14 @@ const invalidInput = computed((): string => {
         :type="props.type"
         :placeholder="placeholder"
         :disabled="disabled"
+        autocomplete="off"
         @focus="emit('update:focus')"
         @blur="emit('update:blur')"
       />
       <CloseButton
         v-show="props.clearable && model"
         class="clear-button"
+        :disabled="props.buttonDisabled"
         :title="'Clear input'"
         @click="clearInput()"
       />
@@ -151,19 +173,33 @@ const invalidInput = computed((): string => {
       <div
         v-if="props.trailingIcon"
         class="CC__text-input-trailing-icon-container"
+        :class="[props.buttonDisabled ? 'button-disabled' : '']"
+        tabindex="0"
+        :role="props.iconButton ? 'button' : ''"
+        @click="
+          props.iconButton && !buttonDisabled ? emit('click:trailingIcon') : ''
+        "
       >
         <font-awesome-icon
-          v-if="props.trailingIcon"
-          class="trailing-icon"
-          :icon="props.trailingIcon"
+          :class="
+            props.iconButton
+              ? 'trailing-icon-button'
+              : 'trailing-icon-no-button'
+          "
+          :icon="buttonIconLoading ? ['fas', 'spinner'] : props.trailingIcon"
         />
       </div>
     </div>
-    <template v-if="!!props.errorMessage">
-      <div class="CC__input-error-message">{{ props.errorMessage }}</div>
+    <template v-if="!!props.error && props.errorMessage">
+      <div
+        id="CC__input-error-message"
+        class="CC__input-error-message cc-mt-3"
+      >
+        {{ props.errorMessage }}
+      </div>
     </template>
-    <template v-if="props.hint && !props.errorMessage">
-      <div class="CC__text-input-hint">Hint: {{ props.hint }}</div>
+    <template v-if="props.hint && !props.error">
+      <div class="CC__text-input-hint cc-mt-3">Hint: {{ props.hint }}</div>
     </template>
   </div>
 </template>
@@ -174,7 +210,7 @@ const invalidInput = computed((): string => {
     position: relative;
     font-size: 0.875rem;
     color: #41474c;
-    margin-top: 0.4rem;
+
     margin-left: 0.5rem;
   }
   &-container {
@@ -186,8 +222,7 @@ const invalidInput = computed((): string => {
     .CC__input-error-message {
       position: relative;
       font-size: 0.875rem;
-      color: var(--CC-color-required);
-      margin-top: 0.4rem;
+
       margin-left: 0.5rem;
     }
 
@@ -197,7 +232,8 @@ const invalidInput = computed((): string => {
     }
 
     .CC__text-input-wrapper {
-      line-height: 1.5rem;
+      line-height: normal;
+      align-items: center;
 
       .CC__text-input-leading-icon-container {
         border-right: 2px solid #40495b7b;
@@ -208,20 +244,32 @@ const invalidInput = computed((): string => {
         justify-content: center;
       }
       .CC__text-input-trailing-icon-container {
-        border-left: 2px solid #40495b7b;
-        height: 100%;
-        min-width: 2.7rem;
+        border-left: 2px solid var(--CC-color-gray);
         display: flex;
         align-items: center;
         justify-content: center;
-      }
+        border-radius: 0 0.75rem 0.75rem 0;
+        min-width: 2.7rem;
+        height: 100%;
 
-      &.invalid__input {
-        outline: 1px solid var(--CC-color-error);
+        &.trailing-icon-no-button {
+          font-size: 1rem;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border: none;
+          outline: none;
+        }
       }
 
       &:focus-within {
-        outline: 1px solid var(--CC-color-focus-luminous);
+        &.invalid__input {
+          outline: 1px solid var(--CC-color-error);
+        }
+        &:not(.invalid__input) {
+          outline: 2px solid var(--CC-color-focus-luminous);
+        }
 
         .clear-button {
           background-color: var(--CC-color-green);
@@ -250,7 +298,7 @@ const invalidInput = computed((): string => {
     .text-input {
       font-size: 1rem;
       min-height: 2.5rem;
-      padding-left: 0.75rem;
+      text-indent: 0.75rem;
       width: 100%;
       border-radius: 0 0.75rem 0.75rem 0;
       color: var(--CC-color-gray-darker);

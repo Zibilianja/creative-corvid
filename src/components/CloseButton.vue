@@ -17,6 +17,7 @@ Template
   <button
     class="CC__close-button"
     aria-label="close-button"
+    type="button"
     :title="title"
   >
     <slot>

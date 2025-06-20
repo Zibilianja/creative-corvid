@@ -40,10 +40,13 @@ const rules = {
         required
       />
     </div>
+    <div class="CC__demo-header">
+      <h2 class="demo-header">Date Select</h2>
+    </div>
     <div class="CC__demo-wrapper">
       <DateDropdownSelect
         v-model="datePickerValue"
-        label="Date Select Long"
+        label="Long Format"
         format="MMMM DD, YYYY"
         :required="false"
         :first-year="2000"
@@ -51,7 +54,7 @@ const rules = {
       />
       <DateDropdownSelect
         v-model="datePickerValue"
-        label="Date Select Short"
+        label="Short Format"
         format="MM/DD/YYYY"
         :required="false"
         :first-year="2000"
@@ -59,12 +62,17 @@ const rules = {
       />
       <DateDropdownSelect
         v-model="datePickerValue"
-        label="Date Select Mid"
+        label="Mid Format"
         format="MMM DD, YYYY"
-        :required="false"
+        :required="true"
         :first-year="2000"
         :years-available="15"
       />
     </div>
   </div>
 </template>
+<style lang="postcss">
+.CC__demo-wrapper {
+  margin: 1rem 0;
+}
+</style>

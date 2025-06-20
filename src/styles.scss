@@ -3,45 +3,144 @@
   line-height: 1.25;
   font-weight: 400;
   color-scheme: light dark;
+
+  /* === Light theme default variables === */
+  --CC-color-bg: #ffffff;
+  --CC-color-text: #26282d;
+  --CC-color-required: #a41d33;
+
+  ::selection {
+    background-color: var(--CC-color-primary);
+    color: var(--CC-color-white);
+  }
   
   // #region - global variables - font, color
-  --CC-font-family: 'Roboto', sans-serif;
-  --CC-color-transparent: transparent;
-  --CC-color-blue: #024d7c;
-  --CC-color-blue-light: #eef7fe;
-  --CC-color-blue-dark: #002d4c;
+--CC-font-family: 'Roboto', sans-serif;
+
+  /* === Font Sizes === */
+  --CC-font-size-xxs: 0.625rem; /* 10px */
+  --CC-font-size-xs: 0.75rem; /* 12px */
+  --CC-font-size-sm: 0.875rem; /* 14px */
+  --CC-font-size-md: 1rem; /* 16px */
+  --CC-font-size-lg: 1.125rem; /* 18px */
+  --CC-font-size-xl: 1.25rem; /* 20px */
+  --CC-font-size-xxl: 1.5rem; /* 24px */
+  --CC-font-size-xxxl: 2rem; /* 32px */
+
+/* === Core Theme Colors === */
+  --CC-color-primary: #024d7c;
+  --CC-color-primary-light: #75abd3;
+  --CC-color-primary-dark: #002d4c;
+  --CC-color-primary-luminous: #024d7c89;
   --CC-color-blue-luminous: #024d7c77;
-  --CC-color-blue-gray: #b0c4d4;
-  --CC-color-blue-gray-light: #e0e8f0;
-  --CC-color-gray: #b0b0b0;
-  --CC-color-gray-lightest: #f5f5f5;
-  --CC-color-gray-light: #e6e3e3;
-  --CC-color-gray-dark: #7d7d7d;
-  --CC-color-gray-darker: #4d4d4d;
-  --CC-color-gray-shadow: #d0d0d0;
+
+  /* === Core Theme Accents === */
+  --CC-color-secondary: #9d6dd4;
+  --CC-color-secondary-light: #d4c2f0;
+  --CC-color-secondary-dark: #6a4b9a;
+  --CC-color-secondary-darker: #4b3a6a;
+  --CC-color-secondary-luminous: #9e58ed77;
+
+  --CC-color-tertiary: #f0a500;
+  --CC-color-tertiary-light: #f9d18c;
+  --CC-color-tertiary-dark: #c87f00;
+  --CC-color-tertiary-luminous: #f0a50077;
+
+  --CC-color-quaternary: #a41d33;
+  --CC-color-quaternary-light: #b54e60;
+  --CC-color-quaternary-dark: #741324;
+  --CC-color-quaternary-luminous: #a41d337c;
+
+  --CC-color-green: #4caf50;
+  --CC-color-green-light: #d4f0d6;
+  --CC-color-green-dark: #2c632e;
+  --CC-color-green-darker: #1b4220;
+  --CC-color-green-darkest: #17301c;
+  --CC-color-green-luminous: #7cdc5077;
+  --CC-color-green-gray: #768e76;
+  
+
+  /* === Core Theme Utility === */
+  --CC-color-transparent: transparent;
+
+  /* === Focus Colors === */
   --CC-color-focus: #1fe5e2;
-  --CC-color-focus-light: #98f0d6;
+  --CC-color-focus-light: #98f0d6da;
   --CC-color-focus-dark: #0f9b9a;
   --CC-color-focus-darker: #0b7a79;
   --CC-color-focus-luminous: #1fe5e277;
-  --CC-color-primary: #024d7c;
-  --CC-color-required: #a41d33;
-  --CC-color-success: #4caf50;
-  --CC-color-warning: #ff9800;
-  --CC-color-error: #a41d347c;
-  --CC-color-text: #26282d;
+
+  /* === Grayscale === */
+  --CC-color-white: #ffffff;
+  --CC-color-off-white: #f9fafb;
+  --CC-color-black: #000000;
+
+  --CC-color-gray-lightest: #f5f5f5;
+  --CC-color-gray-lighter: #e6e3e3;
+  --CC-color-gray-light: #d0d0d0;
+  --CC-color-gray: #b0b0b0;
+  --CC-color-gray-dark: #7d7d7d;
+  --CC-color-gray-darker: #4d4d4d;
+  --CC-color-gray-darkest: #3c3939;
+
+  /* === Blue-Gray Accents === */
+  --CC-color-blue-gray: #b0c4d4;
+  --CC-color-blue-gray-light: #e0e8f0;
+  --CC-color-blue-gray-dark: #9ba7c0;
+  --CC-color-blue-gray-luminous: #b0c4d477;
+  --CC-color-blue-gray-darker: #3b475e;
+  
+
+  /* === Text Colors === */
+  --CC-color-text: var(--CC-color-gray-darker);
   --CC-color-text-light: #f0f0f0;
-  --CC-color-text-green: #4caf50;
+  --CC-color-text-muted: var(--CC-color-gray);
+  --CC-color-text-dark: var(--CC-color-gray-darkest);
+  --CC-color-text-green: var(--CC-color-success);
+  --CC-color-text-blue: var(--CC-color-primary);
+  --CC-color-text-secondary: var(--CC-color-secondary);
+  --CC-color-text-tertiary: var(--CC-color-tertiary);
+  --CC-color-text-quaternary: var(--CC-color-quaternary);
+  --CC-color-text-hint: var(--CC-color-gray-luminous);
+  --CC-color-text-error: var(--CC-color-error);
+
+  /* === Feedback Colors === */
+  --CC-color-success: #4caf50;
+  --CC-color-success-light: #8eeb95;
+  --CC-color-success-dark: #2c632e;
+  --CC-color-success-darker: #1b4220;
+  --CC-color-success-luminous: #7cdc5077;
+
+  --CC-color-warning: #ff9800;
+
+  --CC-color-error: #a41d33;
+  --CC-color-error-light: #f4949c;
+  --CC-color-error-dark: #d02216;
+  --CC-color-error-luminous: #a41d347c;
+
+  /* === Required Indicator === */
+  --CC-color-required: #a41d33;
+  --CC-color-required-light: #ee2132;
+
+  
+  
+  /* === Accent Colors === */
   --CC-color-green-luminous: #7cdc5077;
   --CC-color-green-light: #d4f0d6;
   --CC-color-green-dark: #4caf50;
   --CC-color-green-darker: #2c632e;
   --CC-color-red: #d02216;
-  --CC-color-red-light: #f7cace;
+  --CC-color-red-light: #f6a1a8;
   --CC-color-red-dark: #d02216;
-  --CC-color-white: #ffffff;
-  --CC-color-off-white: #e8e9e7;
-  --CC-color-black: #000000;
+ 
+  /* === Dark theme overrides === */
+  [data-theme='dark'] {
+  --CC-color-bg: #4d4d4d;
+  --CC-color-text: #f0f0f0;
+  --CC-color-required: #ee2132;
+  // Add overrides for dark theme
+
+}
 
   
   // #endregion - global variables
@@ -1716,3 +1815,20 @@ body {
 // #endregion - Animations
 
 // #endregion - Utility classes
+// #endregion - Utility classes
+
+// #region - Global theme style classes
+.dark-mode {
+    background-color: var(--CC-color-gray-darker);
+    color: var(--CC-color-text-light);
+  }
+  .light-mode {
+    background-color: var(--CC-color-gray);
+    color: var(--CC-color-text-dark);
+  }
+  .cc-label {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: .3rem;
+  }
+  // #endregion - Global theme style classes

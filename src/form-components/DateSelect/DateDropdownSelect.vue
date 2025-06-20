@@ -41,6 +41,10 @@ const props = defineProps({
     type: Number,
     required: true,
   },
+  error: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const emit = defineEmits(['update:input']);
@@ -90,15 +94,17 @@ const isValidDate = computed((): boolean => {
 const labelId = GetInputId();
 
 const errorClass = computed((): string => {
-  const valid = validateDate(dateStr.value, isShortFormat.value);
-  if (!valid) {
+  if (isFullDate(date) && !isValidDate.value) {
     return 'invalid__input';
   }
-  if (valid && props.required) {
-    return 'valid__input';
-  } else {
-    return '';
+  return '';
+});
+
+const requiredClass = computed((): string => {
+  if (props.required && !isFullDate(date) && props.error) {
+    return 'required__input';
   }
+  return '';
 });
 
 const shortDateSeparator = computed((): string => {
@@ -193,7 +199,7 @@ Template
         *
       </span>
       <span
-        v-if="required && errorClass"
+        v-if="required && requiredClass"
         :class="errorClass"
       >
         Required
@@ -229,27 +235,22 @@ Styles
   display: flex;
   flex-direction: column;
   width: fit-content;
-  min-width: 12rem;
-  padding: 0.5rem 2rem;
+  min-width: 5rem;
 
   label {
-    font-size: 1rem;
-    display: block;
-    width: 100%;
-    margin-bottom: 0.5rem;
-
     span {
       &.invalid__input {
-        color: #ff0000;
+        font-size: 0.9rem;
+        color: var(--CC-color-required);
       }
       &.req__asterisk {
-        color: #ff0000;
+        color: var(--CC-color-required);
       }
     }
   }
 
   .CC__input-date-select-invalid-date-hint {
-    color: #ff0000;
+    color: var(--CC-color-required);
     font-style: italic;
     font-size: 0.9rem;
     margin-top: 0.25rem;
@@ -258,20 +259,22 @@ Styles
 }
 
 .CC__input-date-select-grid {
-  display: grid;
-  grid-template-columns: 1fr auto 0.75fr auto 1fr;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: 100%;
+  justify-content: flex-start;
   align-items: center;
-  justify-content: center;
   border: 1px solid var(--CC-color-gray-dark);
   border-radius: 0.75em;
   column-gap: 0.25rem;
-  padding: 0.5rem 1rem;
-  background-color: var(--CC-color-gray-light);
+  padding: 0.5rem;
+  background-color: var(--CC-color-white);
   color: var(--CC-color-gray-darker);
 
   &:focus-within {
     background-color: var(--CC-color-gray-lightest);
-    outline: 2px solid var(--CC-color-blue-luminous);
+    outline: 2px solid var(--CC-color-green-light);
   }
 
   &.invalid__input {
@@ -301,11 +304,11 @@ Styles
       min-height: 1.7rem;
       font-size: 1rem;
       background-color: var(--CC-color-white);
-
       color: var(--CC-color-gray-darker);
       padding: 0.25rem 0.5rem;
+
       &:focus {
-        outline: 2px solid var(--CC-color-blue-luminous);
+        outline: 2px solid var(--CC-color-green-light);
       }
     }
   }

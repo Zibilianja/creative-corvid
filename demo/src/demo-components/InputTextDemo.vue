@@ -3,25 +3,29 @@ import { ref } from 'vue';
 import TextInput from '@/form-components/TextInput.vue';
 import ToastAlert from '@/components/ToastAlert.vue';
 import Button from '@/components/Button.vue';
-import type { InputValuesDemo } from '@/types';
 
-const inputValues = ref<InputValuesDemo>({
-  text: {
+const inputValues = ref<Record<string, any>>({
+  sample1: {
     value: '',
     error: false,
   },
-  search: {
+  sample2: {
     value: '',
     error: false,
   },
-  formField: {
+  sample3: {
+    value: '',
+    error: false,
+  },
+  sample4: {
     value: '',
     error: false,
   },
 });
-const toastValue = ref('default');
-const valueToast = ref(false);
+const toastType = ref('default');
+const displayToast = ref(false);
 const inputError = ref(false);
+const submitLoading = ref(false);
 
 const handleInputChange = (input: string) => {
   if (validateInput(inputValues.value[input].value)) {
@@ -34,9 +38,10 @@ const handleInputChange = (input: string) => {
 const submitInput = () => {
   inputError.value = false;
   const valuesArray = [
-    { key: 'text', value: inputValues.value.text.value },
-    { key: 'search', value: inputValues.value.search.value },
-    { key: 'formField', value: inputValues.value.formField.value },
+    { key: 'sample1', value: inputValues.value.sample1.value },
+
+    { key: 'sample3', value: inputValues.value.sample3.value },
+    { key: 'sample4', value: inputValues.value.sample4.value },
   ];
   valuesArray.forEach((input) => {
     if (!validateInput(input['value'])) {
@@ -46,16 +51,33 @@ const submitInput = () => {
     }
   });
   if (valuesArray.some((value) => !value.value.trim())) {
-    toastValue.value = 'error';
-    valueToast.value = true;
+    manageToast('error');
   } else {
-    toastValue.value = 'success';
-    valueToast.value = true;
+    manageToast('success');
   }
 };
 
 const validateInput = (value: string): boolean => {
   return value.trim() !== '';
+};
+
+const manageToast = (message: string): void => {
+  submitLoading.value = true; // Disable the button while showing the toast
+  if (displayToast.value) {
+    displayToast.value = false; // Close the toast
+    setTimeout(() => {
+      displayToast.value = true;
+      toastType.value = message; // Trigger the toast again after a short delay
+    }, 100); // Adjust the delay as needed
+  } else {
+    displayToast.value = true;
+    toastType.value = message;
+  }
+};
+
+const handleUpdateToast = (): void => {
+  submitLoading.value = false; // Re-enable the button after the toast is closed
+  displayToast.value = false; // Close the toast
 };
 </script>
 /* Template ============================================================== */
@@ -69,9 +91,9 @@ const validateInput = (value: string): boolean => {
           variations.
         </div>
       </div>
-      <div class="CC__demo-wrapper">
+      <div class="CC__demo-wrapper text-inputs">
         <TextInput
-          v-model="inputValues.text.value"
+          v-model="inputValues.sample1.value"
           label="Text Field"
           type="text"
           inputId="input-text-demo"
@@ -80,96 +102,74 @@ const validateInput = (value: string): boolean => {
           :maxLength="50"
           clearable
           required
-          :error="inputValues.text.error"
-          @update:focus="inputValues.text.error = false"
+          :error="inputValues.sample1.error"
+          @update:focus="inputValues.sample1.error = false"
           @update:blur=""
-          @update:model-value="handleInputChange('text')"
+          @update:model-value="handleInputChange('sample1')"
         />
+
         <TextInput
-          v-model="inputValues.search.value"
-          label="Search Field"
-          type="text"
-          inputId="input-text-demo-search"
-          placeholder="Type up..."
-          hint="Search for something..."
-          :leadingIcon="['fas', 'magnifying-glass']"
-          :maxLength="50"
-          clearable
-          required
-          :error="inputValues.search.error"
-          @update:focus="inputValues.search.error = false"
-          @update:model-value="handleInputChange('search')"
-        />
-        <TextInput
-          v-model="inputValues.formField.value"
+          v-model="inputValues.sample2.value"
           label="Form Field"
           type="text"
           inputId="input-text-demo-form-field"
           placeholder="Type up..."
           :maxLength="50"
           clearable
-          @update:model-value="handleInputChange"
+          @update:model-value="handleInputChange('sample2')"
         />
       </div>
-      <div class="CC__demo-wrapper section-lower">
+      <div class="CC__demo-wrapper section-lower text-inputs">
         <TextInput
-          v-model="inputValues.text.value"
+          v-model="inputValues.sample3.value"
           label="With Trailing Icon"
           type="text"
           inputId="input-text-demo"
           placeholder="Type up..."
-          :trailing-icon="['fas', 'pen-to-square']"
+          :trailing-icon="['fas', 'magnifying-glass']"
           :maxLength="50"
           clearable
           required
-          :error="inputValues.text.error"
-          @update:focus="inputValues.text.error = false"
+          :error="inputValues.sample3.error"
+          @update:focus="inputValues.sample3.error = false"
           @update:blur=""
-          @update:model-value="handleInputChange('text')"
+          @update:model-value="handleInputChange('sample3')"
         />
         <TextInput
-          v-model="inputValues.search.value"
-          label="Search Field"
+          v-model="inputValues.sample4.value"
+          label="With Trailing Icon"
           type="text"
-          inputId="input-text-demo-search"
+          inputId="input-text-demo"
           placeholder="Type up..."
-          hint="Search for something..."
-          :leadingIcon="['fas', 'magnifying-glass']"
+          :trailing-icon="['fas', 'skull-crossbones']"
           :maxLength="50"
           clearable
           required
-          :error="inputValues.search.error"
-          @update:focus="inputValues.search.error = false"
-          @update:model-value="handleInputChange('search')"
-        />
-        <TextInput
-          v-model="inputValues.formField.value"
-          label="Form Field"
-          type="text"
-          inputId="input-text-demo-form-field"
-          placeholder="Type up..."
-          :maxLength="50"
-          clearable
-          @update:model-value="handleInputChange"
+          :error="inputValues.sample4.error"
+          @update:focus="inputValues.sample4.error = false"
+          @update:blur=""
+          @update:model-value="handleInputChange('sample4')"
         />
       </div>
       <Button
         class="CC__green cc-mt-4"
         :leadingIcon="['fas', 'paper-plane']"
+        :loading-icon="submitLoading"
+        :disabled="submitLoading"
         @click="submitInput"
         >Submit</Button
       >
     </div>
   </div>
   <ToastAlert
-    v-model="valueToast"
-    :state="toastValue"
-    @update:modelValue="valueToast = $event"
+    v-model="displayToast"
+    :type="toastType"
+    @update:modelValue="handleUpdateToast"
   >
-    <template #title>Toast: {{ toastValue }}</template>
+    <template #title>Toast: {{ toastType }}</template>
     <template #message>
       {{
-        toastValue === 'success'
+        toastType === 'success'
           ? 'Input submitted successfully!'
           : 'Please fill all required fields.'
       }}
@@ -192,6 +192,14 @@ const validateInput = (value: string): boolean => {
       padding: 0.75rem 1rem;
       margin-top: 1.5rem;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.37);
+    }
+  }
+}
+
+.text-inputs {
+  svg {
+    path {
+      fill: var(--CC-color-gray-darker);
     }
   }
 }

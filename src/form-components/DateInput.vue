@@ -2,13 +2,11 @@
 DateInput.vue This is the standard button component for Denver Public Schools
 custom applications.
 ========================================================================== */
-<script lang="ts">
-export default {
-  inheritAttrs: false,
-};
-</script>
-
 <script setup lang="ts">
+defineOptions({
+  inheritAttrs: false,
+});
+
 import {
   computed,
   onMounted,

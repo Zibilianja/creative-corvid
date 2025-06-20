@@ -6,11 +6,21 @@ import Logo from '~/demo-components/Logo.vue';
 import InfoPanelDemo from '~/demo-components/InfoPanelDemo.vue';
 import InputTextDemo from '~/demo-components/InputTextDemo.vue';
 import InputTextAreaInputDemo from '~/demo-components/TextAreaInputDemo.vue';
+import SearchBarDemo from '~/demo-components/SearchBarDemo.vue';
 import DateDemo from '~/demo-components/DateDemo.vue';
-import { ref } from 'vue';
+import { ref, type Component } from 'vue';
 import CheckboxRadioDemo from '~/demo-components/CheckboxRadioDemo.vue';
 
 const darkMode = ref(false);
+
+const componentOrder: Component[] = [
+  ButtonDemo,
+  CheckboxRadioDemo,
+  InputTextDemo,
+  InputTextAreaInputDemo,
+  DateDemo,
+  InfoPanelDemo,
+];
 
 defineExpose({
   darkMode,
@@ -20,23 +30,23 @@ defineExpose({
 <template>
   <div
     class="app-container"
-    :class="{ 'dark-mode': darkMode }"
+    :class="darkMode ? 'dark-mode' : 'light-mode'"
   >
     <div
       class="app-body"
-      :class="{ 'dark-mode': darkMode }"
+      :class="darkMode ? 'dark-mode' : 'light-mode'"
     >
       <div id="app-header">
         <Logo @update:dark-mode-toggle="darkMode = !darkMode" />
       </div>
       <h1>Creative Corvid Component and Style Library:</h1>
       <h2>Components Demo</h2>
-      <ButtonDemo />
-      <CheckboxRadioDemo />
-      <InputTextDemo />
-      <InputTextAreaInputDemo />
-      <DateDemo />
-      <InfoPanelDemo />
+      <SearchBarDemo />
+      <component
+        v-for="(component, index) in componentOrder"
+        :key="index"
+        :is="component"
+      />
     </div>
   </div>
 </template>
@@ -95,7 +105,7 @@ defineExpose({
   .CC__panel-reset-button {
     margin-top: 1rem;
     color: #ffffff;
-    background-color: var(--CC-color-blue);
+    background-color: var(--CC-color-primary);
     border: none;
     border-radius: 0.25rem;
     cursor: pointer;
@@ -116,6 +126,15 @@ defineExpose({
     .CC__demo-container {
       background-color: #3d3c3c;
       box-shadow: none;
+    }
+
+    .CC__input-error-message {
+      color: var(--CC-color-required-light);
+    }
+
+    .CC__box-shadow-error {
+      outline: 1px solid var(--CC-color-required-light);
+      box-shadow: 0 0 7px var(--CC-color-red-light);
     }
 
     label {
@@ -146,11 +165,11 @@ defineExpose({
           border-radius: 50%;
 
           &.checked {
-            border: 2px inset var(--CC-color-blue-dark);
-            box-shadow: inset 8px 8px var(--CC-color-black);
+            border: 2px inset var(--CC-color-green-dark);
+            box-shadow: inset 8px 8px var(--CC-color-green-darker);
 
             path {
-              fill: var(--CC-color-gray-shadow);
+              fill: var(--CC-color-gray-light);
             }
           }
           &:not(.checked) {
@@ -193,9 +212,9 @@ defineExpose({
 
             &.checked {
               background-color: var(--CC-color-black);
-              border: 2px inset var(--CC-color-blue-dark);
+              border: 2px inset var(--CC-color-green-dark);
               path {
-                fill: var(--CC-color-gray-shadow);
+                fill: var(--CC-color-gray-light);
 
                 &:hover {
                   fill: var(--CC-color-gray);
@@ -252,6 +271,18 @@ light mode styles
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.37);
     }
 
+    .CC__text-input-wrapper {
+      box-shadow: 4px 4px 7px var(--CC-color-gray-light);
+    }
+
+    .CC__input-error-message {
+      color: var(--CC-color-required);
+    }
+
+    .CC__box-shadow-error {
+      box-shadow: 0 0 7px var(--CC-color-red);
+    }
+
     label {
       color: #333;
       display: flex;
@@ -290,10 +321,11 @@ light mode styles
             }
 
             &.checked {
-              border: 2px inset var(--CC-color-green-darker);
-              background-color: var(--CC-color-green-darker);
+              border: 2px inset var(--CC-color-green-dark);
+              background-color: var(--CC-color-black);
+              margin-right: -2px;
               path {
-                fill: var(--CC-color-gray-shadow);
+                fill: var(--CC-color-gray-light);
 
                 &:hover {
                   fill: var(--CC-color-gray);
@@ -345,7 +377,7 @@ light mode styles
             border: 2px inset var(--CC-color-green-dark);
             background-color: var(--CC-color-focus-darker);
             path {
-              fill: var(--CC-color-gray-shadow);
+              fill: var(--CC-color-gray-light);
             }
           }
 

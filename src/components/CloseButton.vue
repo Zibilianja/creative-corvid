@@ -20,8 +20,8 @@ Template
     type="button"
     :title="title"
   >
-    <slot>
-      <! -- Fallback default slot for custom content, e.g., an icon -->
+    <slot name="close-icon">
+      <!-- Fallback default slot for custom content, e.g., an icon -->
       <font-awesome-icon
         icon="times"
         class="CC__close-icon"
@@ -41,10 +41,10 @@ Template
   }
 
   &[disabled] {
-    cursor: not-allowed !important;
-    color: #a1a1a1;
-    background-color: #dddada;
-    border: 1px solid #bababa;
+    cursor: not-allowed;
+    color: var(--CC-color-gray-dark);
+    background-color: var(--CC-color-gray-light);
+    border: 1px solid var(--CC-color-gray);
   }
 }
 </style>

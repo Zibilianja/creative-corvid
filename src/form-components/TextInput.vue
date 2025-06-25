@@ -272,8 +272,8 @@ const buttonIconLoading = computed((): string => {
         }
 
         .clear-button {
-          background-color: var(--CC-color-green);
-          color: var(--CC-color-green-dark);
+          background-color: var(--CC-color-blue-gray);
+          color: var(--CC-color-white);
         }
       }
 
@@ -283,14 +283,14 @@ const buttonIconLoading = computed((): string => {
         width: 1.5rem;
         height: 1.5rem;
         color: var(--CC-color-gray-darker);
-        background-color: var(--CC-color-transparent);
+        background-color: var(--CC-color-semi-transparent);
         border: none;
         border-radius: 50%;
         cursor: pointer;
 
         &:hover {
-          background-color: var(--CC-color-focus-dark);
-          color: #fff;
+          background-color: var(--CC-color-blue-green-luminous);
+          color: var(--CC-color-gray-dark);
         }
       }
     }

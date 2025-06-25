@@ -1,6 +1,10 @@
 /* ==========================================================================
 Button.vue This is the standard button component. It is a wrapper around the
-native HTML button element.
+native HTML button element. Pass down any normal button attributes and they will
+be applied to the button element. Supports leading and trailing icons. Supports
+loading state, automatically adjusting the icon to a spinner when loading is
+true. Supports different style variants: blue-gray, green, red, gray, navy,
+purple, orange, white. Type will default to button if not specified.
 ========================================================================== */
 
 <script setup lang="ts">
@@ -44,6 +48,7 @@ defineProps({
   <button
     class="CC__button"
     :class="`CC__${styleVariant}`"
+    :type="($attrs.type as 'button' | 'submit' | 'reset') || 'button'"
     v-bind="$attrs"
   >
     <slot name="leading-icon">

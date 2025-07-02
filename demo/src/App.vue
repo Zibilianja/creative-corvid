@@ -1,4 +1,4 @@
-/* App.vue - Main app file for the Creative Corvid Library demo
+/* App.vue - Main app file for the Creative Corvid Library
 ==========================================================================
 <script lang="ts" setup>
 import ButtonDemo from '~/demo-components/ButtonDemo.vue';

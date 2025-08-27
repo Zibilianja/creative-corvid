@@ -190,6 +190,13 @@ const setRequiredCss = (error: boolean) => {
     requiredClass.value = 'valid__input';
   }
 };
+
+const setErrorCssSelections = (value: string): string => {
+  if (requiredClass.value === 'invalid__input' && !value) {
+    return 'error-select';
+  }
+  return '';
+};
 </script>
 
 /* ==========================================================================
@@ -199,6 +206,7 @@ Template
   <div
     class="CC__input-date-select-container"
     @focusout="focusOutEvent"
+    @focusin="requiredClass = ''"
   >
     <label :for="labelId">
       {{ label }}
@@ -224,6 +232,7 @@ Template
     >
       <div
         class="CC-date-select-input month-select-input"
+        :class="setErrorCssSelections(date.month)"
         @mousedown="openSelect('month', $event)"
       >
         <select
@@ -255,17 +264,21 @@ Template
 
       <div
         class="CC-date-select-input day-select-input"
-        :class="!date.month ? 'disabled' : ''"
+        :class="[
+          !date.month ? 'disabled' : '',
+          setErrorCssSelections(date.day),
+        ]"
         @mousedown="openSelect('day', $event)"
       >
         <select
           v-model="date.day"
-          title="Day"
+          :title="!date.month ? 'Select Month First' : 'Day'"
           :disabled="!date.month"
           @change="emitUpdate('change')"
         >
           <option
             selected
+            disabled
             value=""
           >
             DD
@@ -288,6 +301,7 @@ Template
 
       <div
         class="CC-date-select-input year-select-input"
+        :class="setErrorCssSelections(date.year)"
         @mousedown="openSelect('year', $event)"
       >
         <select
@@ -297,6 +311,7 @@ Template
         >
           <option
             selected
+            disabled
             value=""
           >
             YYYY
@@ -331,7 +346,7 @@ Styles
 .CC__input-date-select-container {
   display: flex;
   flex-direction: column;
-  min-width: 20rem;
+  width: auto;
 
   label {
     font-size: 1rem;
@@ -341,16 +356,19 @@ Styles
 
     span {
       &.invalid__input {
-        color: #ff0000;
+        font-size: 0.75rem;
+        margin-bottom: 0.5rem;
+        margin-left: -0.5rem;
+        color: var(--CC-color-required-light);
       }
       &.req__asterisk {
-        color: #ff0000;
+        color: var(--CC-color-required-light);
       }
     }
   }
 
   .CC__input-date-select-invalid-date-hint {
-    color: #ff0000;
+    color: var(--CC-color-required-light);
     font-style: italic;
     font-size: 0.9rem;
     margin-top: 0.25rem;
@@ -358,20 +376,21 @@ Styles
 }
 
 .CC__input-date-select-grid {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr auto 1fr;
+  max-width: 100%;
+  background-color: var(--CC-color-white);
+  color-scheme: light;
+  padding: 0.25rem 0.5rem;
+  display: flex;
   align-items: center;
-  justify-content: center;
-  border: 1px solid #ccc;
-  border-radius: 0.25em;
-  padding: 5px;
+  border: 1px solid var(--CC-color-gray-dark);
+  border-radius: 0.5em;
+
   column-gap: 0.75rem;
-  background-color: #fff;
   color: black;
 
   &.invalid__input {
-    border: 1px solid #ff0000;
-    color: #ff0000;
+    border: 1px solid var(--CC-color-required-light);
+    color: var(--CC-color-required-light);
   }
 
   span {
@@ -383,16 +402,20 @@ Styles
 
   .CC-date-select-input {
     position: relative;
-    margin: 0 0.5rem;
-    display: grid;
-    grid-template-columns: 1fr auto;
+
+    width: fit-content;
+
+    display: flex;
+    flex-wrap: nowrap;
+
     align-items: center;
     color: var(--CC-color-gray-darker);
     &.disabled {
       color: var(--CC-color-gray);
     }
     .select-drop-down-caret {
-      margin-left: -0.75rem;
+      font-size: 0.75rem;
+      margin-left: -0.7rem;
       pointer-events: none;
     }
   }
@@ -401,28 +424,42 @@ Styles
     &.disabled {
       color: var(--CC-color-gray);
     }
-    color: var(--CC-color-focus-darker);
+    color: var(--CC-color-focus-dark);
+  }
+
+  .CC-date-select-input {
+    &.error-select {
+      color: var(--CC-color-required);
+    }
   }
 
   select {
-    box-sizing: border-box;
     display: flex;
     align-items: center;
-    border: 0;
-    min-height: 36px;
-    font-size: 1rem;
-    margin: 0 -0.25rem;
-    padding: 0.15rem 0.5rem;
-    color: var(--CC-color-gray-darkest);
+    border: none;
+    border-radius: 3px;
     background-color: transparent;
+    min-height: 2rem;
+    font-size: 0.95rem;
+    padding-left: 0.25rem;
+    padding-right: 1rem;
+    color: var(--CC-color-gray-darkest);
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
+    &:focus-visible {
+      outline: 2px solid var(--CC-color-focus-darker);
+      border-radius: 3px;
+      background-color: var(--CC-color-gray-lightest);
+    }
     &:not(:disabled) {
       cursor: pointer;
     }
     &:disabled {
       cursor: not-allowed;
+    }
+    option {
+      color: var(--CC-color-gray-darker);
     }
   }
 }

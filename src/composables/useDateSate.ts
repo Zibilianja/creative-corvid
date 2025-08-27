@@ -4,9 +4,6 @@ import { type DateType } from '@/types';
 export function useDateState() {
   const dateKeys: (keyof DateType)[] = ['year', 'month', 'day'];
 
-  const days = Array.from({ length: 31 }, (_, i) =>
-    (i + 1).toString().padStart(2, '0'),
-  );
   const determineMonths = (format: string): string[] => {
     if (
       format.includes('MM') &&
@@ -47,6 +44,14 @@ export function useDateState() {
       ];
     }
   };
+
+  const days = (month: string, year: string): string[] => {
+    const daysInMonth = dayjs(`${year}-${month}`).daysInMonth();
+    return Array.from({ length: daysInMonth }, (_, i) =>
+      (i + 1).toString().padStart(2, '0'),
+    );
+  };
+
   const makeYearsArray = (
     firstYear: number,
     yearsAvailable: number,

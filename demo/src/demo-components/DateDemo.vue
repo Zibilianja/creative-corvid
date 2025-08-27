@@ -4,17 +4,17 @@ part of the Creative Corvid Component and Style Library.
 ========================================================================== */
 <script setup lang="ts">
 import DateInput from '@/form-components/DateInput.vue';
-import DatePicker from '@/form-components/DatePicker.vue';
 import { ref } from 'vue';
+import DateDropdownSelect from '@/form-components/DateDropdownSelect.vue';
 
 const dateValue = ref<string | null>(null);
 const datePickerValue = ref<string | undefined>('');
 
-const rules = {
-  required: (value: string) => !!value || 'Date is required.',
-  validDate: (value: string) =>
-    (value && !isNaN(Date.parse(value))) || 'Please enter a valid date.',
-};
+// const rules = {
+//   required: (value: string) => !!value || 'Date is required.',
+//   validDate: (value: string) =>
+//     (value && !isNaN(Date.parse(value))) || 'Please enter a valid date.',
+// };
 </script>
 /* Template ============================================================== */
 <template>
@@ -33,13 +33,13 @@ const rules = {
         is-clearable
         required
       />
-      <DatePicker
+      <DateDropdownSelect
         :value="datePickerValue"
         label="Date Picker"
         format="MM/DD/YYYY"
-        :required="false"
-        :end-year="2025"
-        :future-year="5"
+        :required="true"
+        :first-year="2025"
+        :years-available="5"
       />
     </div>
   </div>

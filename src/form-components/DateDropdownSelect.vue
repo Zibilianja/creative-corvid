@@ -40,7 +40,6 @@ const props = defineProps({
 const {
   days,
   determineMonths,
-
   makeYearsArray,
   makeDateString,
   isFullDate,
@@ -55,7 +54,7 @@ const date: DateType = reactive({
   day: '',
 });
 
-const dateErrorMessage = ref('');
+const dateError = ref(false);
 const months = determineMonths(props.format);
 const years = makeYearsArray(props.firstYear, props.yearsAvailable);
 
@@ -64,13 +63,22 @@ const emit = defineEmits(['update:input']);
 const labelId = GetInputId();
 const requiredClass = ref('');
 
-const dateStr = makeDateString(date);
+const daysInMonth = computed(() => {
+  if (date.year) {
+    return days(date.month, date.year);
+  }
+  return days(date.month, '1999');
+});
+
+const dateStr = computed((): string => {
+  return dayjs(makeDateString(date), 'YYYY-MM-DD', true).format(props.format);
+});
 
 const isValidFormat = computed((): boolean => {
   return validateFormat(props.format);
 });
 const isValidDate = computed((): boolean => {
-  return validateDate(dateStr, props.format);
+  return validateDate(dateStr.value, props.format);
 });
 
 watch(
@@ -89,6 +97,25 @@ watch(
 onMounted(() => {
   setDate();
 });
+
+const monthElement = ref<HTMLSelectElement | null>(null);
+const dayElement = ref<HTMLSelectElement | null>(null);
+const yearElement = ref<HTMLSelectElement | null>(null);
+
+const openSelect = (element: 'month' | 'day' | 'year', e: MouseEvent) => {
+  const selectElement = {
+    month: monthElement.value,
+    day: dayElement.value,
+    year: yearElement.value,
+  }[element];
+  if (!selectElement || selectElement.disabled) {
+    return;
+  }
+  if (e.target instanceof HTMLSelectElement) return;
+  e.preventDefault();
+  selectElement.focus();
+  selectElement.click();
+};
 
 const setDate = () => {
   if (props.value === null || props.value === '') {
@@ -117,22 +144,49 @@ const emitDateValue = () => {
   emit('update:input', formattedDate);
 };
 
+/**
+ * @description - Emits the updated date value when the input changes if the date is full and valid
+ *
+ * @param emitType
+ */
 const emitUpdate = (emitType: string) => {
-  if (props.required) {
-    if (isFullDate.value === false && emitType === 'blur') {
-      setRequiredCss(true);
-      return;
-    }
+  if (
+    props.required === true &&
+    isFullDate(date) == false &&
+    emitType === 'blur'
+  ) {
+    setRequiredCss(true);
+    return;
   }
   setRequiredCss(false);
   emitDateValue();
 };
 
+/**
+ *  @description - Handles the focus out event for the date input group
+ *
+ * @param e - The focus event
+ */
+const focusOutEvent = (e: FocusEvent) => {
+  const dateInputGroup = e.currentTarget as HTMLElement;
+  const nextFocusTarget = e.relatedTarget as Node | null;
+  if (!nextFocusTarget || !dateInputGroup.contains(nextFocusTarget)) {
+    emitUpdate('blur');
+  }
+};
+
+/**
+ * @description - Sets the required CSS class based on the error state
+ *
+ * @param error - Indicates whether the input is in an error state
+ */
 const setRequiredCss = (error: boolean) => {
   if (error) {
+    dateError.value = true;
     requiredClass.value = 'invalid__input';
   }
   if (!error && props.required) {
+    dateError.value = false;
     requiredClass.value = 'valid__input';
   }
 };
@@ -142,7 +196,10 @@ const setRequiredCss = (error: boolean) => {
 Template
 ========================================================================== */
 <template>
-  <div class="CC__input-date-select-container">
+  <div
+    class="CC__input-date-select-container"
+    @focusout="focusOutEvent"
+  >
     <label :for="labelId">
       {{ label }}
       <span
@@ -162,19 +219,21 @@ Template
     <div
       :id="labelId"
       class="CC__input-date-select-grid"
-      :class="[isValidDate ? '' : 'invalid__input']"
+      :class="[requiredClass]"
       :title="label"
     >
-      <div class="CC-date-select-input month-select-input">
+      <div
+        class="CC-date-select-input month-select-input"
+        @mousedown="openSelect('month', $event)"
+      >
         <select
           v-model="date.month"
           title="Month"
           @change="emitUpdate('change')"
-          @blur="emitUpdate('blur')"
         >
           <option
-            selected
             value=""
+            disabled
           >
             MM
           </option>
@@ -186,16 +245,24 @@ Template
             {{ month }}
           </option>
         </select>
+        <font-awesome-icon
+          :icon="['fas', 'caret-down']"
+          class="select-drop-down-caret"
+        />
       </div>
 
       <span>/</span>
 
-      <div class="CC-date-select-input day-select-input">
+      <div
+        class="CC-date-select-input day-select-input"
+        :class="!date.month ? 'disabled' : ''"
+        @mousedown="openSelect('day', $event)"
+      >
         <select
           v-model="date.day"
           title="Day"
+          :disabled="!date.month"
           @change="emitUpdate('change')"
-          @blur="emitUpdate('blur')"
         >
           <option
             selected
@@ -204,23 +271,29 @@ Template
             DD
           </option>
           <option
-            v-for="day in days"
+            v-for="day in daysInMonth"
             :key="day"
             :value="day"
           >
             {{ day }}
           </option>
         </select>
+        <font-awesome-icon
+          :icon="['fas', 'caret-down']"
+          class="select-drop-down-caret"
+        />
       </div>
 
       <span>/</span>
 
-      <div class="CC-date-select-input year-select-input">
+      <div
+        class="CC-date-select-input year-select-input"
+        @mousedown="openSelect('year', $event)"
+      >
         <select
           v-model="date.year"
           title="Year"
           @change="emitUpdate('change')"
-          @blur="emitUpdate('blur')"
         >
           <option
             selected
@@ -236,10 +309,14 @@ Template
             {{ year }}
           </option>
         </select>
+        <font-awesome-icon
+          :icon="['fas', 'caret-down']"
+          class="select-drop-down-caret"
+        />
       </div>
     </div>
     <div
-      v-show="!isValidDate"
+      v-show="props.required && isFullDate(date) && !isValidDate"
       class="CC__input-date-select-invalid-date-hint"
     >
       Invalid Date
@@ -290,6 +367,7 @@ Styles
   padding: 5px;
   column-gap: 0.75rem;
   background-color: #fff;
+  color: black;
 
   &.invalid__input {
     border: 1px solid #ff0000;
@@ -300,40 +378,52 @@ Styles
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: default;
   }
 
   .CC-date-select-input {
     position: relative;
+    margin: 0 0.5rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    color: var(--CC-color-gray-darker);
+    &.disabled {
+      color: var(--CC-color-gray);
+    }
+    .select-drop-down-caret {
+      margin-left: -0.75rem;
+      pointer-events: none;
+    }
   }
 
-  .CC-date-select-input:after {
-    content: ' ';
-    position: absolute;
-    top: 50%;
-    margin-top: 0;
-    right: 0.75rem;
-    width: 0;
-    height: 0;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 5px solid black;
+  .CC-date-select-input:hover {
+    &.disabled {
+      color: var(--CC-color-gray);
+    }
+    color: var(--CC-color-focus-darker);
   }
 
   select {
-    background-size: 1.5em 1.5em;
     box-sizing: border-box;
-    width: 100%;
-    height: 100%;
     display: flex;
     align-items: center;
     border: 0;
     min-height: 36px;
     font-size: 1rem;
-
+    margin: 0 -0.25rem;
+    padding: 0.15rem 0.5rem;
+    color: var(--CC-color-gray-darkest);
     background-color: transparent;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
+    &:not(:disabled) {
+      cursor: pointer;
+    }
+    &:disabled {
+      cursor: not-allowed;
+    }
   }
 }
 </style>

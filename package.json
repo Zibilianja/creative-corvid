@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A component and style library for building creative applications with Vue 3",
   "type": "module",
-  "license": "MIT",
+  "license": "Prosperity-3.0.0",
   "author": "Jonathan Fuller",
   "main": "./dist/creative-corvid-library.umd.js",
   "module": "./dist/creative-corvid-library.es.js",

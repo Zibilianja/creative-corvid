@@ -6,6 +6,11 @@ A customizable and standardized Vue 3 + TypeScript component and style library, 
 
 ---
 
+## License
+
+- Licensed under the Prosperity Public License 3.0.0 for non-commercial use.
+- Contact for commercial use: `j.fuller.e@gmail.com`.
+
 ## ✨ Features
 
 - 🔘 **Accessible, responsive UI components**, including:
@@ -25,6 +30,7 @@ A customizable and standardized Vue 3 + TypeScript component and style library, 
 ```bash
 npm install git+https://github.com/Zibilianja/creative-corvid.git
 ```
+
 ## Demo Application
 
 - If you would like to see the current demo application, clone down this repo and start with `npm run dev`
@@ -45,13 +51,13 @@ npm install git+https://github.com/Zibilianja/creative-corvid.git
 
 ## 📚 Usage & Documentation
 
-### Component usage demos are located in the /demo folder.
+### Component usage demos are located in the /demo folder
 
 - Components use the Cc prefix (e.g., CcButton, CcInput).
 
 - Designed with accessibility (WCAG 2.2), keyboard navigation, and responsive layout in mind.
 
-### Future plans include:
+### Future plans include
 
 - Dedicated usage documentation
 
@@ -61,17 +67,10 @@ npm install git+https://github.com/Zibilianja/creative-corvid.git
 
 ## 🧪 Roadmap
 
--  Core UI components (buttons, modals, inputs, etc.)
+- Core UI components (buttons, modals, inputs, etc.)
 
--  Dark/light theme support with toggle
+- Dark/light theme support with toggle
 
--  Initial working demo folder
+- Initial working demo folder
 
-- Plans:  
-    - Pinia utility store for validation and state helpers
-
-    - Unit tests with Vitest
-
-    - Deployment of live documentation site (GitHub Pages or Netlify)
-
-    - Publish to npm for broader usage
+## For documentation on using utility classes and scss/css, read docs/CSS_CHEATSHEET.md

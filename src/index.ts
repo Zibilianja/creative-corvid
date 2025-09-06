@@ -25,7 +25,7 @@ import CCNumberInput from '@/form-components/Number.vue';
 import CCFileUpload from '@/form-components/FileUpload.vue';
 
 /** Import base styles */
-import '@/styles.scss';
+import '@/style.scss';
 
 /** Global plugin registry */
 const components = {
@@ -48,7 +48,7 @@ const components = {
 };
 
 /** Plugin install function */
-export const CreativeCorvidLibraryPlugin: Plugin = {
+const CreativeCorvidLibraryPlugin: Plugin = {
   install(app: App) {
     Object.entries(components).forEach(([name, component]) => {
       app.component(name, component as Component);

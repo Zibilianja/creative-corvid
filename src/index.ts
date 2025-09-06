@@ -13,16 +13,16 @@ import CCModal from '@/components/Modal.vue';
 import CCToastAlert from '@/components/ToastAlert.vue';
 
 /** Import form components */
-import CCCheckbox from '@/form-components/form/Checkbox.vue';
-import CCDateInput from '@/form-components/form/DateInput.vue';
-import CCDateDropdown from '@/form-components/form/DateDropdownSelect.vue';
-import CCRadio from '@/form-components/form/Radio.vue';
-import CCSelect from '@/form-components/form/Select.vue';
-import CCTextArea from '@/form-components/form/TextAreaInput.vue';
-import CCTextInput from '@/form-components/form/TextInput.vue';
-import CCSearchBar from '@/form-components/form/SearchBar.vue';
-import CCNumberInput from '@/form-components/form/Number.vue';
-import CCFileUpload from '@/form-components/form/FileUpload.vue';
+import CCCheckbox from '@/form-components/Checkbox.vue';
+import CCDateInput from '@/form-components/DateInput.vue';
+import CCDateDropdown from '@/form-components/DateDropdownSelect.vue';
+import CCRadio from '@/form-components/Radio.vue';
+import CCSelect from '@/form-components/Select.vue';
+import CCTextArea from '@/form-components/TextAreaInput.vue';
+import CCTextInput from '@/form-components/TextInput.vue';
+import CCSearchBar from '@/form-components/SearchBar.vue';
+import CCNumberInput from '@/form-components/Number.vue';
+import CCFileUpload from '@/form-components/FileUpload.vue';
 
 /** Import base styles */
 import '@/styles.scss';

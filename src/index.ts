@@ -1,24 +1,59 @@
-import type { App, Component } from 'vue';
-import * as Components from './components';
-import * as FormComponents from './form-components';
+/* ==========================================================================
+    Creative Corvid - A Vue 3 component library for building creative applications
+    - Exports for default use of components, styles and composables
+    ========================================================================== */
+import type { App, Plugin, Component } from 'vue';
 
-// 🔧 Install function for plugin usage
-function install(app: App): void {
-  const allComponents = { ...Components, ...FormComponents };
-  // Register all components globally
-  Object.entries(allComponents).forEach(([name, component]) => {
-    app.component(`CC${name}`, component as Component);
-  });
-}
+/** Import for components */
+import CCButton from '@/components/Button.vue';
+import CCIcon from '@/components/Icon.vue';
+import CCInfoPanel from '@/components/InfoPanel.vue';
+import CCLogo from '@/components/Logo.vue';
+import CCModal from '@/components/Modal.vue';
+import CCToastAlert from '@/components/ToastAlert.vue';
 
-// Name plugin for importing
-const CreativeCorvid = { install };
+/** Import form components */
+import CCCheckbox from '@/form-components/form/Checkbox.vue';
+import CCDateInput from '@/form-components/form/DateInput.vue';
+import CCDateDropdown from '@/form-components/form/DateDropdownSelect.vue';
+import CCRadio from '@/form-components/form/Radio.vue';
+import CCSelect from '@/form-components/form/Select.vue';
+import CCTextArea from '@/form-components/form/TextAreaInput.vue';
+import CCTextInput from '@/form-components/form/TextInput.vue';
+import CCSearchBar from '@/form-components/form/SearchBar.vue';
+import CCNumberInput from '@/form-components/form/Number.vue';
+import CCFileUpload from '@/form-components/form/FileUpload.vue';
 
-// Auto-install if Vue is found globally or app.use(CreativeCorvid) is called
-export default CreativeCorvid;
-export { CreativeCorvid };
+/** Import base styles */
+import '@/styles.scss';
 
-// 🔧 Export all components and for direct import
-export * from './components';
-export * from './form-components';
-export * from './stores';
+/** Global plugin registry */
+const components = {
+  CCButton,
+  CCIcon,
+  CCInfoPanel,
+  CCLogo,
+  CCModal,
+  CCToastAlert,
+  CCCheckbox,
+  CCDateInput,
+  CCDateDropdown,
+  CCRadio,
+  CCSelect,
+  CCTextArea,
+  CCTextInput,
+  CCSearchBar,
+  CCNumberInput,
+  CCFileUpload,
+};
+
+/** Plugin install function */
+export const CreativeCorvidLibraryPlugin: Plugin = {
+  install(app: App) {
+    Object.entries(components).forEach(([name, component]) => {
+      app.component(name, component as Component);
+    });
+  },
+};
+
+export default CreativeCorvidLibraryPlugin;

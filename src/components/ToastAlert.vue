@@ -92,7 +92,7 @@ const cancelToast = () => {
 </template>
 
 /* Styles ================================================================ */
-<style lang="postcss">
+<style lang="scss">
 .toast-container {
   position: fixed;
   bottom: 20px;

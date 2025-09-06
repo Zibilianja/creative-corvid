@@ -145,7 +145,7 @@ const handleSubmit = () => {
   </div>
 </template>
 /* Styles ============================================================== */
-<style lang="postcss">
+<style lang="scss">
 .CC__demo-label {
   margin: 0 0 1rem 0;
 }

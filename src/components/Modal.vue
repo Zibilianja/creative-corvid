@@ -5,4 +5,4 @@ VueComponentName.vue -This is the description of the Component.
 /* Template ============================================================== */
 <template></template>
 /* Styles ================================================================ */
-<style lang="postcss"></style>
+<style lang="scss"></style>

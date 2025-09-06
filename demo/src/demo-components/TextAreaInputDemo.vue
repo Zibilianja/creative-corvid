@@ -7,14 +7,6 @@ import TextAreaInput from '@/form-components/TextAreaInput.vue';
 
 const information = ref(null);
 
-const MyInputTextarea = ref<{
-  focused: boolean;
-  isValid: boolean;
-}>({
-  focused: false,
-  isValid: false,
-});
-
 const rules = {
   required: (value: string) => !!value || 'Additional information is required.',
   minLength: (value: string) =>
@@ -53,7 +45,7 @@ Template
     />
   </div>
 </template>
-<style lang="postcss">
+<style lang="scss">
 .CC__demo-container {
   align-items: center;
   padding: 1rem;

@@ -73,7 +73,7 @@ const slots: SetupContext['slots'] = useSlots();
 </template>
 
 /* Styles ================================================================ */
-<style lang="postcss">
+<style lang="scss">
 .CC__info-panel {
   &-container {
     .close-button {

@@ -9,14 +9,17 @@ const inputValues = ref<InputValuesDemo>({
   text: {
     value: '',
     error: false,
+    errorMessage: 'This field is required.',
   },
   search: {
     value: '',
     error: false,
+    errorMessage: 'This field is required.',
   },
   formField: {
     value: '',
     error: false,
+    errorMessage: 'This field is required.',
   },
 });
 const toastValue = ref('default');
@@ -177,7 +180,7 @@ const validateInput = (value: string): boolean => {
   </ToastAlert>
 </template>
 /* Styles ============================================================== */
-<style lang="postcss">
+<style lang="scss">
 .demo__input {
   &-btn-container {
     display: flex;

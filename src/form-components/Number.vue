@@ -1,6 +1,5 @@
 /* ==========================================================================
-InputDecimal.vue This component is a reusable input that allows users to enter
-decimal values.
+InputDecimal.vue - A decimal input component with validation and formatting
 ========================================================================== */
 <script lang="ts" setup>
 import { onMounted, ref, watchEffect } from 'vue';
@@ -19,12 +18,11 @@ const props = defineProps({
   pattern: {
     type: Array<number>,
     required: true,
-    // default: () => [1, 2],
   },
   placeholder: {
     type: String,
     required: false,
-    default: 'Enter decimal value',
+    default: 'Enter value',
   },
   required: {
     type: Boolean,
@@ -193,7 +191,7 @@ Template
 /* ==========================================================================
 Style ==========================================================================
 */
-<style lang="postcss">
+<style lang="scss">
 .cc__input-decimal {
   &-container {
     label {

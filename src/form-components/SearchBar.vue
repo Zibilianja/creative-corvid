@@ -47,4 +47,4 @@ const validateInput = (value: string): boolean => {
   </div>
 </template>
 /* Styles ================================================================ */
-<style lang="postcss"></style>
+<style lang="scss"></style>

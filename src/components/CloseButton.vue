@@ -28,7 +28,7 @@ Template
     </slot>
   </button>
 </template>
-<style lang="postcss">
+<style lang="scss">
 .CC__close-button {
   cursor: pointer;
   &:hover:not([disabled]) {

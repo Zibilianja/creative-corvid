@@ -317,7 +317,7 @@ Template
 </template>
 
 /* Styles ================================================================ */
-<style lang="postcss">
+<style lang="scss">
 .CC__textarea {
   &-container {
     display: flex;

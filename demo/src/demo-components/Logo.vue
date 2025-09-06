@@ -67,7 +67,7 @@ const toggleHint = () => {
   </div>
 </template>
 /* Styles ================================================================ */
-<style lang="postcss">
+<style lang="scss">
 #creative-corvid__logo-header-theme-toggle {
   display: flex;
   flex-direction: column;

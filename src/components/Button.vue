@@ -40,7 +40,7 @@ defineProps({
 </template>
 
 /* Styles ================================================================ */
-<style lang="postcss">
+<style lang="scss">
 .CC__button {
   display: inline-flex;
   align-items: center;

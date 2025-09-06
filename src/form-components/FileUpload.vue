@@ -339,7 +339,7 @@ defineExpose({
 </template>
 
 /* Styles ================================================================ */
-<style lang="postcss">
+<style lang="scss">
 .cc__input-file-upload-wrapper {
   display: flex;
   flex-direction: column;

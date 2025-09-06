@@ -41,7 +41,7 @@ defineExpose({
   </div>
 </template>
 /* Styles ================================================================ */
-<style lang="postcss">
+<style lang="scss">
 .app-container {
   width: 100%;
 

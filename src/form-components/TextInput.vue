@@ -168,7 +168,7 @@ const invalidInput = computed((): string => {
   </div>
 </template>
 /* Style ============================================================== */
-<style lang="postcss">
+<style lang="scss">
 .CC__text-input {
   &-hint {
     position: relative;

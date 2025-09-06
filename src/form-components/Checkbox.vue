@@ -68,7 +68,7 @@ const _errorMessages = computed((): string => {
   }
   const errors = props.rules.map((rule: Function) => rule(value.value));
   const _errors = errors?.filter(
-    (item: boolean | string) => (item as boolean) !== true
+    (item: boolean | string) => (item as boolean) !== true,
   );
 
   if (props.error || _errors.length > 0) {
@@ -86,7 +86,7 @@ watch(
   (newValue) => {
     isInvalid.value = newValue;
   },
-  { immediate: true }
+  { immediate: true },
 );
 
 defineExpose({
@@ -98,7 +98,10 @@ defineExpose({
 <template>
   <div class="CC__input-checkbox-container">
     <div class="CC__input-checkbox-inline">
-      <label :for="inputId" class="CC__input-checkbox-label">
+      <label
+        :for="inputId"
+        class="CC__input-checkbox-label"
+      >
         <input
           :id="inputId"
           v-model="value"
@@ -132,7 +135,7 @@ defineExpose({
 </template>
 
 /* Styles ================================================================ */
-<style lang="postcss">
+<style lang="scss">
 .CC__input-checkbox {
   &-container {
     display: inline-block;

@@ -492,7 +492,7 @@ defineExpose({
 </template>
 
 /* Styles ================================================================ */
-<style lang="postcss">
+<style lang="scss">
 .CC__input-date {
   &-container {
     position: relative;

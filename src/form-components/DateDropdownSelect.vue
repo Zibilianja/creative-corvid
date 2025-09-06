@@ -43,7 +43,6 @@ const {
   makeYearsArray,
   makeDateString,
   isFullDate,
-  validateFormat,
   validateDate,
   formatDate,
 } = useDateState();
@@ -74,9 +73,6 @@ const dateStr = computed((): string => {
   return dayjs(makeDateString(date), 'YYYY-MM-DD', true).format(props.format);
 });
 
-const isValidFormat = computed((): boolean => {
-  return validateFormat(props.format);
-});
 const isValidDate = computed((): boolean => {
   return validateDate(dateStr.value, props.format);
 });
@@ -342,7 +338,7 @@ Template
 /* ==========================================================================
 Styles
 ========================================================================== */
-<style lang="postcss">
+<style lang="scss">
 .CC__input-date-select-container {
   display: flex;
   flex-direction: column;

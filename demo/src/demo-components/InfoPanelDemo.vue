@@ -159,7 +159,7 @@ onMounted(() => {
     </div>
   </div>
 </template>
-<style lang="postcss">
+<style lang="scss">
 .demo__panel-container {
   align-items: center;
   padding: 1rem;

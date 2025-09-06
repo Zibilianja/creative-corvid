@@ -228,7 +228,7 @@ defineExpose({
 </template>
 
 /* Styles ================================================================ */
-<style lang="postcss">
+<style lang="scss">
 .CC__input-radio {
   &-fieldset {
     border: 1px solid var(--CC-color-gray);

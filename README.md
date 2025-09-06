@@ -25,10 +25,8 @@ A customizable and standardized Vue 3 + TypeScript component and style library, 
 
 ## 🚀 Installation
 
-### 📦 From GitHub (recommended for now)
-
 ```bash
-npm install git+https://github.com/Zibilianja/creative-corvid.git
+npm install creativecorvidstylelibrary
 ```
 
 ## Demo Application

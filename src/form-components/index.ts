@@ -1,5 +1,5 @@
 export * from './Checkbox.vue';
-export * from './DatePicker.vue';
+export * from './DateDropdownSelect.vue';
 export * from './DateInput.vue';
 export * from './Radio.vue';
 export * from './Select.vue';

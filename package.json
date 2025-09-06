@@ -11,8 +11,7 @@
   "exports": {
     ".": {
       "import": "./dist/creative-corvid-library.es.js",
-      "require": "./dist/creative-corvid-library.umd.js",
-      "types": "./dist/types/index.d.ts"
+      "require": "./dist/creative-corvid-library.umd.js"
     }
   },
   "files": [

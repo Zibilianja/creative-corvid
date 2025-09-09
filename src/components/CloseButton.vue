@@ -18,6 +18,7 @@ Template
     class="CC__close-button"
     aria-label="close-button"
     :title="title"
+    type="button"
   >
     <slot>
       <! -- Fallback default slot for custom content, e.g., an icon -->

@@ -107,7 +107,7 @@ defineProps({
 
   &.CC__navy:not([disabled]) {
     background-color: #024d7c;
-    color: #000000;
+    color: #fff;
     &:hover {
       background-color: #013e64;
     }

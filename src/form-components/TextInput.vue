@@ -144,8 +144,9 @@ const invalidInput = computed((): string => {
       <CloseButton
         v-show="props.clearable && model"
         class="clear-button"
+        type="button"
         :title="'Clear input'"
-        @click="clearInput()"
+        @click.stop.prevent="clearInput()"
       />
 
       <div

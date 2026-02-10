@@ -282,6 +282,7 @@ light mode styles
             &:not(.checked) {
               path {
                 fill: var(--CC-color-gray-light);
+                border: 2px inset transparent;
 
                 &:hover {
                   fill: #d0d4d2;
@@ -290,8 +291,8 @@ light mode styles
             }
 
             &.checked {
-              border: 2px inset var(--CC-color-green-darker);
-              background-color: var(--CC-color-green-darker);
+              border: 2px inset var(--CC-color-green-dark);
+              background-color: var(--CC-color-focus-darker);
               path {
                 fill: var(--CC-color-gray-shadow);
 

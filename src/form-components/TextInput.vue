@@ -164,7 +164,7 @@ const invalidInput = computed((): string => {
       <div class="CC__input-error-message">{{ props.errorMessage }}</div>
     </template>
     <template v-if="props.hint && !props.errorMessage">
-      <div class="CC__text-input-hint">Hint: {{ props.hint }}</div>
+      <div class="CC__text-input-hint">{{ props.hint }}</div>
     </template>
   </div>
 </template>

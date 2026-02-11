@@ -115,7 +115,7 @@ const invalidInput = computed((): string => {
   <div class="CC__text-input-container">
     <label
       v-if="props.label"
-      for=""
+      :for="props.inputId"
       class="CC__text-input-label"
     >
       {{ props.label }}

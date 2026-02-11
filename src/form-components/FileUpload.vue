@@ -190,9 +190,9 @@ defineExpose({
 /* Template ============================================================== */
 <template>
   <div class="cc__input-file-upload-component-wrapper">
-    <h3 class="cc__input-file-upload-label cc-text-left">
+    <div class="cc__input-file-upload-label cc-text-left">
       {{ props.label }}
-    </h3>
+    </div>
     <div class="cc__input-file-upload-wrapper">
       <div
         class="cc__input_file-upload-container"

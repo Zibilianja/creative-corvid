@@ -32,12 +32,17 @@ Template
 <style lang="scss">
 .CC__close-button {
   cursor: pointer;
+  border-radius: 50%;
   &:hover:not([disabled]) {
     text-decoration: underline;
   }
 
   &:not([disabled]) {
     cursor: pointer;
+  }
+
+  .CC__close-icon {
+    margin-bottom: 1px;
   }
 
   &[disabled] {

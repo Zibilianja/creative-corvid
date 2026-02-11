@@ -45,6 +45,7 @@ import {
   faCircleDot,
   faCircle,
   faAt,
+  faEye,
 } from '@fortawesome/free-solid-svg-icons';
 import { faShop } from '@fortawesome/free-solid-svg-icons/faShop';
 
@@ -92,6 +93,7 @@ library.add(
   faMagnifyingGlass,
   faPaperPlane,
   faAt,
+  faEye,
 );
 
 export default FontAwesomeIcon;

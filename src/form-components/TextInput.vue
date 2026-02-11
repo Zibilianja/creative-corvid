@@ -4,9 +4,10 @@ Component and Style Library.
 ========================================================================== */
 <script setup lang="ts">
 import CloseButton from '@/components/CloseButton.vue';
-import { defineEmits, computed, type PropType } from 'vue';
+import { defineEmits, computed, type PropType, ref } from 'vue';
 import { vMaska } from 'maska/vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { faEye } from '@fortawesome/free-solid-svg-icons';
 
 const model = defineModel({
   type: [String] as PropType<string>,
@@ -79,6 +80,17 @@ const props = defineProps({
   },
 });
 
+const showHidePasswordIcon = ref(false);
+const passwordType = ref('password');
+
+const passwordInput = computed(() => {
+  return props.type === 'password';
+});
+
+const togglePasswordHide = () => {
+  passwordType.value = passwordType.value === 'password' ? 'text' : 'password';
+};
+
 const clearInput = () => {
   model.value = '';
 };
@@ -135,12 +147,26 @@ const invalidInput = computed((): string => {
         v-maska="props.maska"
         class="text-input"
         :class="[invalidInput]"
-        :type="props.type"
+        :type="passwordInput ? passwordType : props.type"
         :placeholder="placeholder"
         :disabled="disabled"
         @focus="emit('update:focus')"
         @blur="emit('update:blur')"
       />
+      <button
+        v-if="passwordInput"
+        class="password-toggle-button"
+        type="button"
+        @click="togglePasswordHide"
+      >
+        <font-awesome-icon
+          :icon="faEye"
+          class="show-hide-password cc-mr-1"
+          :class="{
+            'show-hide-password-active': passwordType === 'text',
+          }"
+        />
+      </button>
       <CloseButton
         v-show="props.clearable && model"
         class="clear-button"
@@ -225,25 +251,60 @@ const invalidInput = computed((): string => {
         outline: 1px solid var(--CC-color-focus-luminous);
 
         .clear-button {
-          background-color: var(--CC-color-green);
-          color: var(--CC-color-green-dark);
+          color: var(--CC-color-gray-darker);
+        }
+      }
+
+      .password-toggle-button {
+        background-color: transparent;
+        border: none;
+        outline: none;
+        .show-hide-password {
+          color: var(--CC-color-gray);
+          font-size: 1rem;
+          cursor: pointer;
+          border-radius: 50%;
+          padding: 0.25rem 0.25rem;
+        }
+        :hover {
+          &.show-hide-password {
+            color: var(--CC-color-white);
+            background-color: var(--CC-color-focus-dark);
+            font-size: 1rem;
+            cursor: pointer;
+          }
+        }
+
+        .show-hide-password-active {
+          color: var(--CC-color-focus-dark);
+          background-color: var(--CC-color-gray-light);
         }
       }
 
       .clear-button {
         position: relative;
+        display: flex;
+        align-items: center;
         right: 0.5rem;
         width: 1.5rem;
         height: 1.5rem;
         color: var(--CC-color-gray-darker);
         background-color: var(--CC-color-transparent);
         border: none;
-        border-radius: 50%;
+        border-radius: 40%;
         cursor: pointer;
 
         &:hover {
           background-color: var(--CC-color-focus-dark);
           color: #fff;
+        }
+        .CC__close-button {
+          &:hover {
+            color: var(--CC-color-white);
+          }
+          .CC__close-icon {
+            color: var(--CC-color-gray-darker);
+          }
         }
       }
     }

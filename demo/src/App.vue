@@ -227,14 +227,6 @@ light mode styles
     color: #000000;
 
     .cc-clear-button {
-      width: 1.5rem;
-      height: 1.5rem;
-      color: var(--CC-color-gray-dark);
-      background-color: transparent;
-      border: none;
-      border-radius: 50%;
-      padding: 0.24rem;
-      cursor: pointer;
       &.button-present {
         margin-left: -2rem;
         transition:

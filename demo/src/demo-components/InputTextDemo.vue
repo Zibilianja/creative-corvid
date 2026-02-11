@@ -21,6 +21,11 @@ const inputValues = ref<InputValuesDemo>({
     error: false,
     errorMessage: 'This field is required.',
   },
+  password: {
+    value: '',
+    error: false,
+    errorMessage: 'This field is required.',
+  },
 });
 const toastValue = ref('default');
 const valueToast = ref(false);
@@ -104,9 +109,9 @@ const validateInput = (value: string): boolean => {
           @update:model-value="handleInputChange('search')"
         />
         <TextInput
-          v-model="inputValues.formField.value"
+          v-model="inputValues.password.value"
           label="Form Field"
-          type="text"
+          type="password"
           inputId="input-text-demo-form-field"
           placeholder="Type up..."
           :maxLength="50"

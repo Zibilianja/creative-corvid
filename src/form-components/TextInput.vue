@@ -80,7 +80,6 @@ const props = defineProps({
   },
 });
 
-const showHidePasswordIcon = ref(false);
 const passwordType = ref('password');
 
 const passwordInput = computed(() => {

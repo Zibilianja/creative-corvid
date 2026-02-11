@@ -88,6 +88,8 @@ const validateInput = (value: string): boolean => {
           :maxLength="50"
           clearable
           required
+          auto-complete="on"
+          hint="Example hint... field has auto-complete turned on"
           :error="inputValues.text.error"
           @update:focus="inputValues.text.error = false"
           @update:blur=""
@@ -174,7 +176,7 @@ const validateInput = (value: string): boolean => {
     :state="toastValue"
     @update:modelValue="valueToast = $event"
   >
-    <template #title>Toast: {{ toastValue }}</template>
+    <template #title> {{ toastValue }}</template>
     <template #message>
       {{
         toastValue === 'success'
@@ -193,6 +195,7 @@ const validateInput = (value: string): boolean => {
     flex-direction: column;
     align-items: center;
     border-radius: 0.5rem;
+    row-gap: 1rem;
 
     .submit-button {
       display: flex;

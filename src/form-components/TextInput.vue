@@ -4,7 +4,7 @@ Component and Style Library.
 ========================================================================== */
 <script setup lang="ts">
 import CloseButton from '@/components/CloseButton.vue';
-import { defineEmits, computed, type PropType, ref } from 'vue';
+import { computed, type PropType, ref } from 'vue';
 import { vMaska } from 'maska/vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faEye } from '@fortawesome/free-solid-svg-icons';
@@ -49,6 +49,10 @@ const props = defineProps({
   required: {
     type: Boolean,
     default: false,
+  },
+  autoComplete: {
+    type: String,
+    default: 'off',
   },
   leadingIcon: {
     type: Array as () => string[] | null,
@@ -149,6 +153,7 @@ const invalidInput = computed((): string => {
         :type="passwordInput ? passwordType : props.type"
         :placeholder="placeholder"
         :disabled="disabled"
+        :autocomplete="props.autoComplete"
         @focus="emit('update:focus')"
         @blur="emit('update:blur')"
       />

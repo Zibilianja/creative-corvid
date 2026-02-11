@@ -4,11 +4,19 @@ FileUpload.vue Describe what this component does.
 <script setup lang="ts">
 import { computed, ref, useSlots, watch, type PropType } from 'vue';
 import { GetInputId } from '@/utils';
+import {
+  faFileArrowDown,
+  faFileArrowUp,
+} from '@fortawesome/free-solid-svg-icons';
 
 const props = defineProps({
   modelValue: {
-    type: [File, Array],
+    type: Array as PropType<File[]>,
     default: () => [],
+  },
+  label: {
+    type: String,
+    default: '',
   },
   accept: {
     type: String,
@@ -143,18 +151,14 @@ const onDrop = (e: DragEvent) => {
 };
 
 const onChange = () => {
-  if (fileInputRef.value) {
-    if (fileInputRef.value.files) {
-      if (props.multiple) {
-        files.value = [...files.value, ...Array.from(fileInputRef.value.files)];
-      } else {
-        files.value = [fileInputRef.value.files[0]];
-      }
-    }
-    fileInputRef.value.value = ''; // clear the input
-  }
-};
+  const input = fileInputRef.value;
+  if (!input?.files) return;
 
+  const picked = Array.from(input.files);
+  files.value = props.multiple ? [...files.value, ...picked] : [picked[0]];
+
+  input.value = '';
+};
 const returnFileSize = (number: number) => {
   if (number < 1e3) {
     return `${number} bytes`;
@@ -174,10 +178,6 @@ const makeName = (name: string): string => {
   return name.substring(0, name.lastIndexOf('.'));
 };
 
-const onLabelClick = () => {
-  fileInputRef.value!.click();
-};
-
 const onRemoveClick = (file: File) => {
   files.value = files.value.filter((f) => f !== file);
 };
@@ -189,6 +189,12 @@ defineExpose({
 
 /* Template ============================================================== */
 <template>
+  <label
+    :for="`${inputId}-file`"
+    tabindex="0"
+  >
+    {{ props.label }}
+  </label>
   <div class="cc__input-file-upload-wrapper">
     <div
       class="cc__input_file-upload-container"
@@ -199,43 +205,28 @@ defineExpose({
     >
       <div class="cc__input-file-upload-input-label-container">
         <input
-          id="cc__input-file-upload-input"
+          :id="`${inputId}-file`"
+          class="cc__input-file-upload-input"
           ref="fileInputRef"
           type="file"
           :multiple="multiple"
           :accept="accept"
           aria-label="Upload file"
-          @change="onChange()"
+          @change="onChange"
         />
         <label
-          for="cc__input-file-upload-label"
-          tabindex="0"
-          @keyup.enter="onLabelClick()"
-          @click="onLabelClick()"
+          :for="`${inputId}-file`"
+          tabindex="1"
         >
           <div
             v-if="isDragging"
             class="cc__input-file-upload-drop-indicator"
           >
-            <div>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 384 512"
-                width="40"
-                height="40"
-                focusable="false"
-                aria-hidden="true"
-              >
-                <!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
-                <path
-                  d="M64 0C28.7 0 0 28.7 0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0
-                  64-28.7 64-64l0-288-128 0c-17.7 0-32-14.3-32-32L224 0 64 0zM256 0l0
-                  128 128 0L256 0zM216 232l0 102.1 31-31c9.4-9.4 24.6-9.4 33.9 0s9.4
-                  24.6 0 33.9l-72 72c-9.4 9.4-24.6 9.4-33.9 0l-72-72c-9.4-9.4-9.4-24.6
-                  0-33.9s24.6-9.4 33.9 0l31 31L168 232c0-13.3 10.7-24 24-24s24 10.7 24 24z"
-                  fill="currentColor"
-                />
-              </svg>
+            <div class="cc-p-4">
+              <font-awesome-icon
+                class="cc__file-icon"
+                :icon="faFileArrowDown"
+              />
             </div>
             <div>Release to drop files here.</div>
           </div>
@@ -244,27 +235,13 @@ defineExpose({
             v-else
             class="cc__input-file-upload-drop-indicator"
           >
-            <div>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 384 512"
-                width="40"
-                height="40"
-                focusable="false"
-                aria-hidden="true"
-              >
-                <!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
-                <path
-                  d="M64 0C28.7 0 0 28.7 0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3
-                  0 64-28.7 64-64l0-288-128 0c-17.7 0-32-14.3-32-32L224 0 64 0zM256
-                  0l0 128 128 0L256 0zM216 408c0 13.3-10.7 24-24 24s-24-10.7-24-24l0-102.1-31
-                  31c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l72-72c9.4-9.4 24.6-9.4 33.9
-                  0l72 72c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-31-31L216 408z"
-                  fill="currentColor"
-                />
-              </svg>
+            <div class="cc-p-4">
+              <font-awesome-icon
+                class="cc__file-icon"
+                :icon="faFileArrowUp"
+              />
             </div>
-            <div>
+            <div class="cc__input-file-upload-text">
               Drop {{ filesContext }} here or <u>Click here</u> to upload.
             </div>
           </div>
@@ -344,6 +321,11 @@ defineExpose({
   display: flex;
   flex-direction: column;
   width: 100%;
+
+  .cc__file-icon {
+    font-size: 2rem;
+    color: var(--CC-color-gray-darker);
+  }
 }
 
 .cc__input_file-upload-container {
@@ -352,40 +334,37 @@ defineExpose({
   justify-content: center;
   align-items: center;
   height: 100%;
-  border: 3px dashed #4a4a4a;
-  border-radius: 0.25rem;
-  padding: 0 1rem;
+  border: 3px dashed var(--CC-color-gray);
+  border-radius: 1rem;
+  padding: 1rem 1rem;
 
   &.is-dragging {
     border-color: #0076bd;
-
-    label[for='cc__input-file-upload-label'] {
-      color: #0076bd;
-    }
   }
 
   &.invalid__input {
     border-color: #a41d33;
 
-    label[for='cc__input-file-upload-label'] {
+    .cc__input-file-upload-label {
       color: #a41d33;
     }
   }
 
   .cc__input-file-upload-input-label-container {
     padding: 0 1rem 0 1rem;
+    :hover {
+      cursor: pointer;
+    }
   }
 
-  #cc__input-file-upload-input {
+  .cc__input-file-upload-input {
     opacity: 0;
     position: absolute;
     width: 1px;
     height: 1px;
-    visibility: hidden;
   }
 
-  label[for='cc__input-file-upload-label'] {
-    cursor: pointer;
+  .cc__input-file-upload-label {
     display: block;
     text-align: center;
     width: 100%;

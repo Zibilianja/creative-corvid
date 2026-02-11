@@ -7,6 +7,7 @@ import InfoPanelDemo from '~/demo-components/InfoPanelDemo.vue';
 import InputTextDemo from '~/demo-components/InputTextDemo.vue';
 import InputTextAreaInputDemo from '~/demo-components/TextAreaInputDemo.vue';
 import DateDemo from '~/demo-components/DateDemo.vue';
+import FileUploadDemo from '~/demo-components/FileUploadDemo.vue';
 import { ref } from 'vue';
 import CheckboxRadioDemo from '~/demo-components/CheckboxRadioDemo.vue';
 
@@ -36,6 +37,7 @@ defineExpose({
       <InputTextDemo />
       <InputTextAreaInputDemo />
       <DateDemo />
+      <FileUploadDemo />
       <InfoPanelDemo />
     </div>
   </div>

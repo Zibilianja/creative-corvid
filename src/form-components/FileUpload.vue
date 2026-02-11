@@ -189,127 +189,129 @@ defineExpose({
 
 /* Template ============================================================== */
 <template>
-  <label
-    :for="`${inputId}-file`"
-    tabindex="0"
-  >
-    {{ props.label }}
-  </label>
-  <div class="cc__input-file-upload-wrapper">
-    <div
-      class="cc__input_file-upload-container"
-      :class="{ 'is-dragging': isDragging, invalid__input: isInvalid }"
-      @dragover.prevent="onDragOver"
-      @dragleave.prevent="onDragLeave"
-      @drop.prevent="onDrop"
+  <div>
+    <label
+      :for="`${inputId}-file`"
+      tabindex="0"
     >
-      <div class="cc__input-file-upload-input-label-container">
-        <input
-          :id="`${inputId}-file`"
-          class="cc__input-file-upload-input"
-          ref="fileInputRef"
-          type="file"
-          :multiple="multiple"
-          :accept="accept"
-          aria-label="Upload file"
-          @change="onChange"
-        />
-        <label
-          :for="`${inputId}-file`"
-          tabindex="1"
-        >
-          <div
-            v-if="isDragging"
-            class="cc__input-file-upload-drop-indicator"
+      {{ props.label }}
+    </label>
+    <div class="cc__input-file-upload-wrapper">
+      <div
+        class="cc__input_file-upload-container"
+        :class="{ 'is-dragging': isDragging, invalid__input: isInvalid }"
+        @dragover.prevent="onDragOver"
+        @dragleave.prevent="onDragLeave"
+        @drop.prevent="onDrop"
+      >
+        <div class="cc__input-file-upload-input-label-container">
+          <input
+            :id="`${inputId}-file`"
+            class="cc__input-file-upload-input"
+            ref="fileInputRef"
+            type="file"
+            :multiple="multiple"
+            :accept="accept"
+            aria-label="Upload file"
+            @change="onChange"
+          />
+          <label
+            :for="`${inputId}-file`"
+            tabindex="1"
           >
-            <div class="cc-p-4">
-              <font-awesome-icon
-                class="cc__file-icon"
-                :icon="faFileArrowDown"
-              />
+            <div
+              v-if="isDragging"
+              class="cc__input-file-upload-drop-indicator"
+            >
+              <div class="cc-p-4">
+                <font-awesome-icon
+                  class="cc__file-icon"
+                  :icon="faFileArrowDown"
+                />
+              </div>
+              <div>Release to drop files here.</div>
             </div>
-            <div>Release to drop files here.</div>
-          </div>
 
-          <div
-            v-else
-            class="cc__input-file-upload-drop-indicator"
-          >
-            <div class="cc-p-4">
-              <font-awesome-icon
-                class="cc__file-icon"
-                :icon="faFileArrowUp"
-              />
+            <div
+              v-else
+              class="cc__input-file-upload-drop-indicator"
+            >
+              <div class="cc-p-4">
+                <font-awesome-icon
+                  class="cc__file-icon"
+                  :icon="faFileArrowUp"
+                />
+              </div>
+              <div class="cc__input-file-upload-text">
+                Drop {{ filesContext }} here or <u>Click here</u> to upload.
+              </div>
             </div>
-            <div class="cc__input-file-upload-text">
-              Drop {{ filesContext }} here or <u>Click here</u> to upload.
-            </div>
+          </label>
+        </div>
+
+        <div
+          v-if="files.length > 0"
+          class="cc__input-file-upload-files-list-container"
+        >
+          <div class="cc__input-file-upload-files-list-file-count">
+            {{ fileCountLabel }}
           </div>
-        </label>
+          <ul class="cc__input-file-upload-files-list">
+            <li
+              v-for="file in files"
+              :key="file.name"
+            >
+              <slot :file="file">
+                <div class="cc__input-file-upload-file-details">
+                  <div
+                    class="cc__input-file-upload-file-name"
+                    :title="makeName(file.name)"
+                  >
+                    {{ makeName(file.name) }}
+                  </div>
+                  <div class="cc__input-file-upload-file-metadata">
+                    {{ getExtension(file.name) }} -
+                    {{ returnFileSize(file.size) }}
+                  </div>
+                </div>
+
+                <div class="cc__input-file-upload-file-actions">
+                  <button
+                    title="Remove file"
+                    @click="onRemoveClick(file)"
+                  >
+                    Remove
+                  </button>
+                </div>
+              </slot>
+            </li>
+          </ul>
+        </div>
       </div>
 
       <div
-        v-if="files.length > 0"
-        class="cc__input-file-upload-files-list-container"
+        v-show="showDetails"
+        :id="`${inputId}-messages`"
+        role="alert"
+        class="cc__input-text-details"
+        :class="{ invalid__input: isInvalid }"
       >
-        <div class="cc__input-file-upload-files-list-file-count">
-          {{ fileCountLabel }}
+        <div class="cc__input-messages">
+          <template v-if="_errorMessages">
+            <div class="cc__input-message">{{ _errorMessages }}</div>
+          </template>
+
+          <template v-else>
+            <div class="cc__input-message">
+              <template v-if="slots.hint">
+                <slot name="hint" />
+              </template>
+              <template v-if="hint">
+                {{ hint }}
+              </template>
+            </div>
+          </template>
         </div>
-        <ul class="cc__input-file-upload-files-list">
-          <li
-            v-for="file in files"
-            :key="file.name"
-          >
-            <slot :file="file">
-              <div class="cc__input-file-upload-file-details">
-                <div
-                  class="cc__input-file-upload-file-name"
-                  :title="makeName(file.name)"
-                >
-                  {{ makeName(file.name) }}
-                </div>
-                <div class="cc__input-file-upload-file-metadata">
-                  {{ getExtension(file.name) }} -
-                  {{ returnFileSize(file.size) }}
-                </div>
-              </div>
-
-              <div class="cc__input-file-upload-file-actions">
-                <button
-                  title="Remove file"
-                  @click="onRemoveClick(file)"
-                >
-                  Remove
-                </button>
-              </div>
-            </slot>
-          </li>
-        </ul>
-      </div>
-    </div>
-
-    <div
-      v-show="showDetails"
-      :id="`${inputId}-messages`"
-      role="alert"
-      class="cc__input-text-details"
-      :class="{ invalid__input: isInvalid }"
-    >
-      <div class="cc__input-messages">
-        <template v-if="_errorMessages">
-          <div class="cc__input-message">{{ _errorMessages }}</div>
-        </template>
-
-        <template v-else>
-          <div class="cc__input-message">
-            <template v-if="slots.hint">
-              <slot name="hint" />
-            </template>
-            <template v-if="hint">
-              {{ hint }}
-            </template>
-          </div>
-        </template>
       </div>
     </div>
   </div>

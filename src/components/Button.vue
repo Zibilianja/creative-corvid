@@ -145,5 +145,14 @@ defineProps({
       background-color: #f1f1f1;
     }
   }
+
+  &.CC__text-button:not([disabled]) {
+    background-color: transparent;
+    color: var(--CC-color-blue);
+    border: none;
+    &:hover {
+      color: var(--CC-color-blue-gray);
+    }
+  }
 }
 </style>

@@ -1509,6 +1509,19 @@ body {
 .cc-text-gray {
   color: var(--CC-color-gray);
 }
+.cc-text-purple {
+  color: var(--CC-color-purple-dark);
+}
+.cc-text-blue {
+  color: var(--CC-color-blue);
+}
+.cc-text-link {
+  color: var(--CC-color-blue);
+  text-decoration: underline;
+}
+.cc-text-link:hover {
+  color: var(--CC-color-blue-dark);
+}
 // #endregion - Text color utilities
 // #endregion - Text utilities
 

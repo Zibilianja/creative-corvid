@@ -10,7 +10,7 @@ const file = ref([]);
 /* Template ============================================================== */
 <template>
   <div class="CC__demo-container">
-    <h2 class="demo__input-title">File Upload Demo</h2>
+    <h2 class="demo__input-title cc-text-purple">File Upload Demo</h2>
     <div class="demo__input-btn-container">
       <div class="cc-w-75">
         <FileUpload

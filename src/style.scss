@@ -1730,4 +1730,21 @@ body {
 }
 // #endregion - Animations
 
+// #region - Opacity 
+.cc-opacity-0 {
+  opacity: 0;
+}
+.cc-opacity-25 {
+  opacity: 0.25;
+}
+.cc-opacity-50 {
+  opacity: 0.5;
+}
+.cc-opacity-75 {
+  opacity: 0.75;
+}
+.cc-opacity-100 {
+  opacity: 1;
+}
+// #endregion - Opacity
 // #endregion - Utility classes

@@ -41,6 +41,22 @@ defineProps({
 
 /* Styles ================================================================ */
 <style lang="scss">
+.CC__button-text {
+  display: inline-flex;
+  align-items: center;
+
+  font-size: 0.8rem;
+  width: fit-content;
+
+  &:hover {
+    color: var(--CC-color-gray-darker);
+    text-decoration: underline;
+    cursor: pointer;
+    .clear-selection-button {
+      background-color: var(--CC-color-gray);
+    }
+  }
+}
 .CC__button {
   display: inline-flex;
   align-items: center;

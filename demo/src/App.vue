@@ -2,6 +2,7 @@
 ==========================================================================
 <script lang="ts" setup>
 import ButtonDemo from '~/demo-components/ButtonDemo.vue';
+import DropdownDemo from '~/demo-components/DropdownDemo.vue';
 import Logo from '~/demo-components/Logo.vue';
 import InfoPanelDemo from '~/demo-components/InfoPanelDemo.vue';
 import InputTextDemo from '~/demo-components/InputTextDemo.vue';
@@ -33,6 +34,7 @@ defineExpose({
       <h1>Creative Corvid Component and Style Library:</h1>
       <h2>Components Demo</h2>
       <ButtonDemo />
+      <DropdownDemo />
       <CheckboxRadioDemo />
       <InputTextDemo />
       <InputTextAreaInputDemo />
